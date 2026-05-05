@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0061)file:///C:/Users/ellarang/Downloads/ellarang_dashboard_8.html -->
-<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ellarang 콘텐츠 대시보드</title>
 <style>
@@ -168,20 +168,21 @@
         <div class="header-sub">서대문구·마포구 부동산 1등을 향해</div>
       </div>
     </div>
-    <div class="header-date" id="today-date">2026년 5월 2일</div>
+    <div class="header-date" id="today-date"></div>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="showTab(&#39;dashboard&#39;)">대시보드</button>
-    <button class="tab" onclick="showTab(&#39;plan&#39;)">기획</button>
-    <button class="tab" onclick="showTab(&#39;blog&#39;)">블로그</button>
-    <button class="tab" onclick="showTab(&#39;reels&#39;)">릴스</button>
-    <button class="tab" onclick="showTab(&#39;archive&#39;)">아카이브</button>
-    <button class="tab" onclick="showTab(&#39;goals&#39;)">목표</button>
+    <button class="tab active" onclick="showTab('dashboard')">대시보드</button>
+    <button class="tab" onclick="showTab('plan')">기획</button>
+    <button class="tab" onclick="showTab('blog')">블로그</button>
+    <button class="tab" onclick="showTab('reels')">릴스</button>
+    <button class="tab" onclick="showTab('complex')">단지</button>
+    <button class="tab" onclick="showTab('archive')">아카이브</button>
+    <button class="tab" onclick="showTab('goals')">목표</button>
   </div>
 
   <div id="sec-dashboard" class="section active">
-    <div class="motivation-card" id="motivation-card"><div class="motivation-text">900개의 글이 증명하는 것 — 꾸준함은 쌓인다.</div><div class="motivation-sub">오늘도 한 걸음 — ellarang</div></div>
+    <div class="motivation-card" id="motivation-card"></div>
     <div class="stats-grid">
       <div class="stat">
         <div class="stat-label">이번 달 블로그</div>
@@ -201,7 +202,7 @@
       <div class="stat">
         <div class="stat-label">이번 달 릴스</div>
         <div class="stat-value" id="stat-month-reels">0</div>
-        <div class="stat-sub" id="stat-month-reels-sub">0개 채널 배포</div>
+        <div class="stat-sub" id="stat-month-reels-sub"></div>
       </div>
     </div>
     <div class="progress-bar-wrap">
@@ -218,8 +219,8 @@
     </div>
 
     <div class="card">
-      <div class="card-title">이번 달 최근 작성 <span class="count" id="recent-count">0개</span></div>
-      <div id="recent-list"><div class="empty">아직 작성된 글이 없어요. 오늘 첫 글을 추가해봐요!</div></div>
+      <div class="card-title">이번 달 최근 작성 <span class="count" id="recent-count"></span></div>
+      <div id="recent-list"></div>
     </div>
   </div>
 
@@ -230,64 +231,15 @@
         <button class="btn" onclick="changeCalWeek(-1)" style="padding:6px 12px; font-size:12px;">◀ 이전</button>
         <button class="btn" onclick="changeCalWeek(0)" style="padding:6px 12px; font-size:12px;">이번 주</button>
         <button class="btn" onclick="changeCalWeek(1)" style="padding:6px 12px; font-size:12px;">다음 주 ▶</button>
-        <span id="cal-week-label" style="margin-left:auto; font-size:12px; color:var(--text2); align-self:center; font-weight:500;">이번 주 (4/26 ~ 5/2)</span>
+        <span id="cal-week-label" style="margin-left:auto; font-size:12px; color:var(--text2); align-self:center; font-weight:500;"></span>
       </div>
-      <div id="cal-week-list"><div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; ">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">일 4/26</span>
-        
-        
-      </div>
-      <div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>
-    </div><div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; ">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">월 4/27</span>
-        
-        
-      </div>
-      <div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>
-    </div><div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; ">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">화 4/28</span>
-        
-        
-      </div>
-      <div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>
-    </div><div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; ">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">수 4/29</span>
-        
-        
-      </div>
-      <div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>
-    </div><div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; ">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">목 4/30</span>
-        
-        
-      </div>
-      <div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>
-    </div><div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; ">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">금 5/1</span>
-        
-        
-      </div>
-      <div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>
-    </div><div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; background:var(--teal-bg); border-color:var(--teal);">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">토 5/2</span>
-        <span style="background:var(--teal); color:white; font-size:10px; padding:2px 6px; border-radius:3px; margin-left:6px; font-weight:600;">오늘</span>
-        
-      </div>
-      <div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>
-    </div></div>
+      <div id="cal-week-list"></div>
     </div>
 
     <div class="card">
       <div class="card-title">📝 블로그 기획</div>
       <div class="add-row">
-        <input type="text" id="plan-blog-input" placeholder="발행 예정 글 제목">
+        <input type="text" id="plan-blog-input" placeholder="발행 예정 글 제목" />
         <select id="plan-blog-type">
           <option value="info">정보글</option>
           <option value="listing">매물글</option>
@@ -298,7 +250,7 @@
         <button class="btn btn-primary" onclick="addPlanBlog()">추가</button>
       </div>
       <div class="add-row">
-        <input type="date" id="plan-blog-date" style="flex:1">
+        <input type="date" id="plan-blog-date" style="flex:1" />
       </div>
       <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 발행 예정 날짜</div>
     </div>
@@ -306,15 +258,15 @@
     <div class="card">
       <div class="card-title">
         <span>발행 예정 블로그 글</span>
-        <span class="count" id="plan-blog-count">0개</span>
+        <span class="count" id="plan-blog-count"></span>
       </div>
-      <div id="plan-blog-list"><div class="empty">발행 예정 글이 없어요. 위에서 추가해보세요!</div></div>
+      <div id="plan-blog-list"></div>
     </div>
 
     <div class="card">
       <div class="card-title">🎬 릴스 기획</div>
       <div class="add-row">
-        <input type="text" id="plan-reel-input" placeholder="발행 예정 릴스 제목">
+        <input type="text" id="plan-reel-input" placeholder="발행 예정 릴스 제목" />
         <select id="plan-reel-type">
           <option value="listing">매물 소개</option>
           <option value="info">정보 요약</option>
@@ -323,7 +275,7 @@
         <button class="btn btn-primary" onclick="addPlanReel()">추가</button>
       </div>
       <div class="add-row">
-        <input type="date" id="plan-reel-date" style="flex:1">
+        <input type="date" id="plan-reel-date" style="flex:1" />
       </div>
       <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 발행 예정 날짜</div>
     </div>
@@ -331,9 +283,9 @@
     <div class="card">
       <div class="card-title">
         <span>발행 예정 릴스</span>
-        <span class="count" id="plan-reel-count">0개</span>
+        <span class="count" id="plan-reel-count"></span>
       </div>
-      <div id="plan-reel-list"><div class="empty">발행 예정 릴스가 없어요. 위에서 추가해보세요!</div></div>
+      <div id="plan-reel-list"></div>
     </div>
 
     <div class="card" style="background: var(--teal-bg); border: 0.5px solid var(--teal);">
@@ -362,7 +314,7 @@
     <div class="card">
       <div class="card-title">블로그 글 추가</div>
       <div class="add-row">
-        <input type="text" id="blog-input" placeholder="글 제목 입력">
+        <input type="text" id="blog-input" placeholder="글 제목 입력" />
         <select id="blog-type">
           <option value="info">정보글</option>
           <option value="listing">매물글</option>
@@ -373,7 +325,7 @@
         <button class="btn btn-primary" onclick="addBlogPost()">추가</button>
       </div>
       <div class="add-row">
-        <input type="date" id="blog-date" style="flex:1">
+        <input type="date" id="blog-date" style="flex:1" />
       </div>
       <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 작성한 날짜 선택 (전날 글도 추가 가능)</div>
     </div>
@@ -381,9 +333,9 @@
     <div class="card">
       <div class="card-title">
         <span>전체 블로그 글</span>
-        <span class="count" id="blog-list-count">0개</span>
+        <span class="count" id="blog-list-count"></span>
       </div>
-      <div id="blog-list"><div class="empty">아직 작성된 글이 없어요.</div></div>
+      <div id="blog-list"></div>
     </div>
   </div>
 
@@ -391,7 +343,7 @@
     <div class="card">
       <div class="card-title">릴스 추가</div>
       <div class="add-row">
-        <input type="text" id="reel-input" placeholder="릴스 제목 입력">
+        <input type="text" id="reel-input" placeholder="릴스 제목 입력" />
         <select id="reel-type">
           <option value="listing">매물 소개</option>
           <option value="info">정보 요약</option>
@@ -401,36 +353,88 @@
         <button class="btn btn-primary" onclick="addReel()">추가</button>
       </div>
       <div class="add-row">
-        <input type="date" id="reel-date" style="flex:1">
+        <input type="date" id="reel-date" style="flex:1" />
       </div>
       <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 작성한 날짜 선택 (지난 릴스도 추가 가능)</div>
     </div>
 
     <div class="card">
-      <div class="card-title">이번 주 릴스 <span class="count" id="reel-week-count">0개</span></div>
-      <div class="week-grid" id="week-grid"><div class="day-btn  ">일<br><span style="font-size:12px;font-weight:500">26</span></div><div class="day-btn  ">월<br><span style="font-size:12px;font-weight:500">27</span></div><div class="day-btn  ">화<br><span style="font-size:12px;font-weight:500">28</span></div><div class="day-btn  ">수<br><span style="font-size:12px;font-weight:500">29</span></div><div class="day-btn  ">목<br><span style="font-size:12px;font-weight:500">30</span></div><div class="day-btn  ">금<br><span style="font-size:12px;font-weight:500">1</span></div><div class="day-btn  ">토<br><span style="font-size:12px;font-weight:500">2</span></div></div>
-      <div id="reel-list-week"><div class="empty">이번 주 릴스가 없어요.</div></div>
+      <div class="card-title">이번 주 릴스 <span class="count" id="reel-week-count"></span></div>
+      <div class="week-grid" id="week-grid"></div>
+      <div id="reel-list-week"></div>
     </div>
 
     <div class="card">
       <div class="card-title">
         <span>전체 릴스</span>
-        <span class="count" id="reel-all-count">0개</span>
+        <span class="count" id="reel-all-count"></span>
       </div>
-      <div id="reel-list-all"><div class="empty">아직 등록된 릴스가 없어요.</div></div>
+      <div id="reel-list-all"></div>
+    </div>
+  </div>
+
+  <div id="sec-complex" class="section">
+    <div class="card">
+      <div class="card-title">🏢 단지 추가</div>
+      <div class="add-row">
+        <input type="text" id="complex-name" placeholder="단지명 (예: 신촌자이엘라)" />
+        <button class="btn btn-primary" onclick="addComplex()">추가</button>
+      </div>
+      <div style="font-size:11px; color:var(--muted); margin-top:6px;">단지를 먼저 추가한 후 카드를 클릭해서 상세정보를 입력하세요</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>등록된 단지</span>
+        <span class="count" id="complex-count"></span>
+      </div>
+      <div id="complex-list"></div>
     </div>
   </div>
 
   <div id="sec-archive" class="section">
     <div style="font-size:13px; color:var(--text2); margin-bottom:14px;">완료된 달의 기록 — 내가 해낸 것들</div>
-    <div id="archive-list"><div class="empty">아직 완료된 달이 없어요. 이번 달이 첫 기록이 될 거예요!</div></div>
+    <div id="archive-list"></div>
   </div>
 
   <div id="sec-goals" class="section">
     <div class="goal-card">
-      <div class="goal-title">1년 목표</div>
-      <div class="goal-item"><span>블로그 월 발행</span><span class="tag info">15~20개</span></div>
-      <div class="goal-item"><span>연간 총 발행</span><span class="tag info">180개+</span></div>
+      <div class="goal-title">📊 1년 진행률</div>
+      <div style="margin-top:14px;">
+        <div class="progress-label">
+          <span>블로그 (목표 192개)</span>
+          <span id="year-blog-text">0 / 192개</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="year-blog-fill" style="width:0%"></div></div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="progress-label">
+          <span>릴스 (목표 192개)</span>
+          <span id="year-reel-text">0 / 192개</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="year-reel-fill" style="width:0%"></div></div>
+      </div>
+      <div style="font-size:11px; color:var(--muted); margin-top:10px;">월 16개 × 12개월 = 연 192개 기준</div>
+    </div>
+
+    <div class="goal-card">
+      <div class="goal-title">📈 팔로워 추적</div>
+      <div style="font-size:12px; color:var(--text2); margin-bottom:12px;">매월 1일 또는 원하는 날에 입력하면 추세가 그려져요</div>
+      <div style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
+        <input type="month" id="follower-month" style="padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
+        <input type="number" id="follower-insta" placeholder="인스타" style="width:90px; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
+        <input type="number" id="follower-youtube" placeholder="유튜브" style="width:90px; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
+        <input type="number" id="follower-clip" placeholder="네이버 클립" style="width:110px; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
+        <button class="btn btn-primary" onclick="addFollower()">기록</button>
+      </div>
+      <div id="follower-chart" style="margin-top:14px;"></div>
+      <div id="follower-list" style="margin-top:14px;"></div>
+    </div>
+
+    <div class="goal-card">
+      <div class="goal-title">🎯 1년 목표</div>
+      <div class="goal-item"><span>블로그 월 발행</span><span class="tag info">16개</span></div>
+      <div class="goal-item"><span>연간 총 발행</span><span class="tag info">192개</span></div>
       <div class="goal-item"><span>인스타 팔로워</span><span class="tag teal">1만명</span></div>
       <div class="goal-item"><span>릴스 주간</span><span class="tag amber">3~4개</span></div>
       <div class="goal-item"><span>네이버 cRank</span><span class="tag coral">서대문·마포 1위</span></div>
@@ -466,7 +470,7 @@
 
 <script>
 const STORAGE_KEY = 'ellarang-dashboard-v1';
-let data = { posts: [], reels: [], planPosts: [], planReels: [] };
+let data = { posts: [], reels: [], planPosts: [], planReels: [], complexes: [], followers: [] };
 
 const motivations = [
   "서대문구·마포구 부동산은 나한테 물어봐. 그 자리를 오늘도 한 걸음씩.",
@@ -484,6 +488,8 @@ function loadData() {
   // 이전 버전 데이터 호환
   if(!data.planPosts) data.planPosts = [];
   if(!data.planReels) data.planReels = [];
+  if(!data.complexes) data.complexes = [];
+  if(!data.followers) data.followers = [];
   render();
 }
 
@@ -800,6 +806,254 @@ function renderItem(item, toggleFn, deleteFn, showDate) {
   </div>`;
 }
 
+// ===== 단지 관리 함수 =====
+
+function addComplex() {
+  const name = document.getElementById('complex-name').value.trim();
+  if(!name) { alert('단지명을 입력해주세요!'); return; }
+  data.complexes.push({
+    id: Date.now(),
+    name,
+    address: '', built: '', units: '', size: '', options: '', parking: '',
+    deposit: '', rent: '', moveIn: '',
+    blogLink: '', memo: '',
+    expanded: false
+  });
+  document.getElementById('complex-name').value = '';
+  saveData(); render();
+}
+
+function deleteComplex(id) {
+  if(!confirm('이 단지 카드를 삭제하시겠어요?')) return;
+  data.complexes = data.complexes.filter(c=>c.id!==id);
+  saveData(); render();
+}
+
+function toggleComplex(id) {
+  const c = data.complexes.find(x=>x.id===id);
+  if(c) { c.expanded = !c.expanded; saveData(); render(); }
+}
+
+function updateComplex(id, field, value) {
+  const c = data.complexes.find(x=>x.id===id);
+  if(c) { c[field] = value; saveData(); }
+}
+
+function copyComplex(id) {
+  const c = data.complexes.find(x=>x.id===id);
+  if(!c) return;
+  let text = `🏢 ${c.name}\n`;
+  if(c.address) text += `📍 ${c.address}\n`;
+  if(c.built) text += `🏗️ 준공 ${c.built}\n`;
+  if(c.units) text += `🏠 세대수 ${c.units}\n`;
+  if(c.size) text += `📐 평형 ${c.size}\n`;
+  if(c.options) text += `✨ 옵션 ${c.options}\n`;
+  if(c.parking) text += `🚗 주차 ${c.parking}\n`;
+  text += `\n`;
+  if(c.deposit || c.rent) {
+    text += `💰 매물 정보\n`;
+    if(c.deposit) text += `보증금 ${c.deposit}\n`;
+    if(c.rent) text += `월세 ${c.rent}\n`;
+    if(c.moveIn) text += `입주 가능일 ${c.moveIn}\n`;
+    text += `\n`;
+  }
+  if(c.memo) text += `📝 ${c.memo}\n\n`;
+  if(c.blogLink) text += `자세한 정보 👇\n${c.blogLink}\n\n`;
+  text += `📞 착한언니복덕방\n02-364-4080 / 02-707-3434`;
+
+  navigator.clipboard.writeText(text).then(()=>{
+    alert('카톡으로 보낼 내용이 복사됐어요!\n카톡 열고 붙여넣기 하세요 📋');
+  }).catch(()=>{
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    alert('복사됐어요!');
+  });
+}
+
+function renderComplexes() {
+  const el = document.getElementById('complex-list');
+  if(!el) return;
+  document.getElementById('complex-count').textContent = data.complexes.length+'개';
+  if(data.complexes.length === 0) {
+    el.innerHTML = '<div class="empty">아직 등록된 단지가 없어요.</div>';
+    return;
+  }
+  el.innerHTML = data.complexes.map(c => {
+    if(!c.expanded) {
+      return `<div style="border:0.5px solid var(--border); border-radius:8px; padding:14px; margin-bottom:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="toggleComplex(${c.id})">
+        <div>
+          <div style="font-weight:700; font-size:15px; color:var(--text);">🏢 ${c.name}</div>
+          ${c.address ? `<div style="font-size:12px; color:var(--text2); margin-top:3px;">📍 ${c.address}</div>` : ''}
+        </div>
+        <div style="font-size:11px; color:var(--muted);">클릭해서 열기 ▼</div>
+      </div>`;
+    }
+    return `<div style="border:0.5px solid var(--border); border-radius:8px; padding:14px; margin-bottom:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="font-weight:700; font-size:15px; color:var(--text);">🏢 ${c.name}</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn-primary" onclick="copyComplex(${c.id})" style="padding:6px 12px; font-size:12px;">📋 복사</button>
+          <button class="btn" onclick="toggleComplex(${c.id})" style="padding:6px 10px; font-size:12px;">접기 ▲</button>
+          <button class="btn" onclick="deleteComplex(${c.id})" style="padding:6px 10px; font-size:12px; color:#c54;">삭제</button>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        ${complexField('주소', 'address', c.address, c.id, true)}
+        ${complexField('준공년도', 'built', c.built, c.id)}
+        ${complexField('세대수', 'units', c.units, c.id)}
+        ${complexField('평형', 'size', c.size, c.id)}
+        ${complexField('옵션', 'options', c.options, c.id, true)}
+        ${complexField('주차', 'parking', c.parking, c.id)}
+      </div>
+      <div style="margin-top:14px; padding-top:14px; border-top:0.5px dashed var(--border);">
+        <div style="font-size:12px; font-weight:600; color:var(--text2); margin-bottom:8px;">💰 매물 정보 (수시 변경)</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+          ${complexField('보증금', 'deposit', c.deposit, c.id)}
+          ${complexField('월세', 'rent', c.rent, c.id)}
+          ${complexField('입주 가능일', 'moveIn', c.moveIn, c.id)}
+        </div>
+      </div>
+      <div style="margin-top:14px; padding-top:14px; border-top:0.5px dashed var(--border);">
+        ${complexField('블로그 링크', 'blogLink', c.blogLink, c.id, true)}
+        ${complexField('메모', 'memo', c.memo, c.id, true, true)}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function complexField(label, field, value, id, fullWidth, isMemo) {
+  const safeValue = (value||'').replace(/"/g,'&quot;');
+  const style = fullWidth ? 'grid-column: 1 / -1;' : '';
+  if(isMemo) {
+    return `<div style="${style}">
+      <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">${label}</div>
+      <textarea onchange="updateComplex(${id}, '${field}', this.value)" placeholder="${label} 입력" style="width:100%; min-height:50px; padding:6px 8px; border:0.5px solid var(--border); border-radius:4px; background:var(--bg); color:var(--text); font-size:12px; outline:none; box-sizing:border-box; font-family:inherit; resize:vertical;">${safeValue}</textarea>
+    </div>`;
+  }
+  return `<div style="${style}">
+    <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">${label}</div>
+    <input type="text" value="${safeValue}" onchange="updateComplex(${id}, '${field}', this.value)" placeholder="${label} 입력" style="width:100%; padding:6px 8px; border:0.5px solid var(--border); border-radius:4px; background:var(--bg); color:var(--text); font-size:12px; outline:none; box-sizing:border-box;" />
+  </div>`;
+}
+
+// ===== 팔로워 추적 함수 =====
+
+function addFollower() {
+  const month = document.getElementById('follower-month').value;
+  const insta = parseInt(document.getElementById('follower-insta').value) || 0;
+  const youtube = parseInt(document.getElementById('follower-youtube').value) || 0;
+  const clip = parseInt(document.getElementById('follower-clip').value) || 0;
+  if(!month) { alert('월을 선택해주세요!'); return; }
+  if(!insta && !youtube && !clip) { alert('팔로워 수를 하나 이상 입력해주세요!'); return; }
+
+  // 같은 달 데이터 있으면 덮어쓰기
+  data.followers = data.followers.filter(f=>f.month!==month);
+  data.followers.push({ id: Date.now(), month, insta, youtube, clip });
+  data.followers.sort((a,b) => a.month.localeCompare(b.month));
+  document.getElementById('follower-insta').value = '';
+  document.getElementById('follower-youtube').value = '';
+  document.getElementById('follower-clip').value = '';
+  saveData(); render();
+}
+
+function deleteFollower(id) {
+  if(!confirm('이 기록을 삭제하시겠어요?')) return;
+  data.followers = data.followers.filter(f=>f.id!==id);
+  saveData(); render();
+}
+
+function renderFollowers() {
+  const chartEl = document.getElementById('follower-chart');
+  const listEl = document.getElementById('follower-list');
+  if(!chartEl || !listEl) return;
+
+  // 월 input 기본값
+  const monthInput = document.getElementById('follower-month');
+  if(monthInput && !monthInput.value) {
+    const d = now();
+    monthInput.value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  }
+
+  if(data.followers.length === 0) {
+    chartEl.innerHTML = '';
+    listEl.innerHTML = '<div class="empty" style="padding:20px;">아직 기록이 없어요. 위에서 첫 번째 기록을 남겨보세요!</div>';
+    return;
+  }
+
+  // 차트
+  const maxVal = Math.max(...data.followers.flatMap(f=>[f.insta||0, f.youtube||0, f.clip||0]), 100);
+  const chartHeight = 160;
+  const padding = 30;
+  const w = 100; // viewBox 단위
+  const points = (key, color) => {
+    const filtered = data.followers.filter(f=>f[key]>0);
+    if(filtered.length === 0) return '';
+    const step = filtered.length > 1 ? (w-2*padding/3) / (filtered.length-1) : 0;
+    return filtered.map((f,i) => {
+      const x = padding/3 + i*step;
+      const y = chartHeight - (f[key]/maxVal)*(chartHeight-20) - 10;
+      return `${x},${y}`;
+    }).join(' ');
+  };
+
+  const instaPts = points('insta', '#E1306C');
+  const ytPts = points('youtube', '#FF0000');
+  const clipPts = points('clip', '#03C75A');
+
+  chartEl.innerHTML = `
+    <svg viewBox="0 0 ${w} ${chartHeight}" preserveAspectRatio="none" style="width:100%; height:${chartHeight}px; background:var(--bg); border-radius:8px; padding:0;">
+      ${instaPts ? `<polyline points="${instaPts}" fill="none" stroke="#E1306C" stroke-width="0.6" />` : ''}
+      ${ytPts ? `<polyline points="${ytPts}" fill="none" stroke="#FF0000" stroke-width="0.6" />` : ''}
+      ${clipPts ? `<polyline points="${clipPts}" fill="none" stroke="#03C75A" stroke-width="0.6" />` : ''}
+    </svg>
+    <div style="display:flex; gap:14px; margin-top:8px; font-size:11px; flex-wrap:wrap; justify-content:center;">
+      <span><span style="display:inline-block; width:10px; height:10px; background:#E1306C; border-radius:2px; margin-right:4px;"></span>인스타</span>
+      <span><span style="display:inline-block; width:10px; height:10px; background:#FF0000; border-radius:2px; margin-right:4px;"></span>유튜브</span>
+      <span><span style="display:inline-block; width:10px; height:10px; background:#03C75A; border-radius:2px; margin-right:4px;"></span>네이버 클립</span>
+    </div>
+  `;
+
+  // 리스트 (최신이 위)
+  const sorted = [...data.followers].sort((a,b) => b.month.localeCompare(a.month));
+  listEl.innerHTML = `<div style="font-size:12px; font-weight:600; color:var(--text2); margin-bottom:8px;">📋 기록 내역</div>` +
+    sorted.map((f,idx) => {
+      const prev = sorted[idx+1];
+      const instaDiff = prev ? f.insta - prev.insta : 0;
+      const ytDiff = prev ? f.youtube - prev.youtube : 0;
+      const clipDiff = prev ? f.clip - prev.clip : 0;
+      const formatDiff = (d) => d > 0 ? `<span style="color:var(--teal); font-size:11px;">▲${d}</span>` : d < 0 ? `<span style="color:#c54; font-size:11px;">▼${Math.abs(d)}</span>` : '';
+      return `<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:0.5px solid var(--border); font-size:13px;">
+        <span style="font-weight:600; min-width:80px;">${f.month.replace('-','년 ')}월</span>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; flex:1; justify-content:center;">
+          <span>📷 ${f.insta||0} ${idx<sorted.length-1?formatDiff(instaDiff):''}</span>
+          <span>▶️ ${f.youtube||0} ${idx<sorted.length-1?formatDiff(ytDiff):''}</span>
+          <span>🟢 ${f.clip||0} ${idx<sorted.length-1?formatDiff(clipDiff):''}</span>
+        </div>
+        <span class="item-del" onclick="deleteFollower(${f.id})" style="cursor:pointer; color:var(--muted);">×</span>
+      </div>`;
+    }).join('');
+}
+
+// ===== 1년 진행률 렌더링 =====
+
+function renderYearProgress() {
+  const yearStart = new Date(2026, 0, 1); // 2026년 1월 1일 기준
+  const yearBlogs = data.posts.filter(p=>p.date && new Date(p.date) >= yearStart).length;
+  const yearReels = data.reels.filter(r=>r.date && new Date(r.date) >= yearStart).length;
+
+  const blogText = document.getElementById('year-blog-text');
+  const blogFill = document.getElementById('year-blog-fill');
+  const reelText = document.getElementById('year-reel-text');
+  const reelFill = document.getElementById('year-reel-fill');
+
+  if(blogText) blogText.textContent = `${yearBlogs} / 192개`;
+  if(blogFill) blogFill.style.width = Math.min(100, (yearBlogs/192)*100)+'%';
+  if(reelText) reelText.textContent = `${yearReels} / 192개`;
+  if(reelFill) reelFill.style.width = Math.min(100, (yearReels/192)*100)+'%';
+}
+
 function render() {
   const d = now();
   document.getElementById('today-date').textContent = d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일';
@@ -926,6 +1180,12 @@ function render() {
     </div>`;
   }).join('');
   document.getElementById('archive-list').innerHTML = archiveHtml || '<div class="empty">아직 완료된 달이 없어요. 이번 달이 첫 기록이 될 거예요!</div>';
+
+  // ===== 단지·팔로워·연간진행률 =====
+  renderComplexes();
+  renderFollowers();
+  renderYearProgress();
+
   // ===== 기획 탭 렌더링 =====
   renderWeekCalendar();
   const planBlogDateInput = document.getElementById('plan-blog-date');
@@ -957,6 +1217,5 @@ function showTab(name) {
 
 loadData();
 </script>
-
-
-</body></html>
+</body>
+</html>
