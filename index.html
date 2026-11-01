@@ -3,1219 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ellarang 콘텐츠 대시보드</title>
+<title>착한언니복덕방 콘텐츠 아카이브</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #f8f7f4;
-    --surface: #ffffff;
-    --surface2: #f1efe8;
-    --border: rgba(0,0,0,0.1);
-    --text: #1a1a1a;
-    --text2: #666;
-    --text3: #999;
-    --blue: #185FA5;
-    --blue-bg: #E6F1FB;
-    --blue-text: #0C447C;
-    --teal: #0F6E56;
-    --teal-bg: #E1F5EE;
-    --teal-text: #085041;
-    --amber: #854F0B;
-    --amber-bg: #FAEEDA;
-    --amber-text: #633806;
-    --coral: #993C1D;
-    --coral-bg: #FAECE7;
-    --coral-text: #712B13;
-    --purple-bg: #EEEDFE;
-    --purple-text: #3C3489;
-    --green-bg: #EAF3DE;
-    --green-text: #27500A;
-    --radius: 10px;
-    --radius-sm: 6px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1a1a18;
-      --surface: #242422;
-      --surface2: #2e2e2b;
-      --border: rgba(255,255,255,0.1);
-      --text: #f0ede8;
-      --text2: #aaa;
-      --text3: #666;
-      --blue-bg: #0c2d4a;
-      --blue-text: #85B7EB;
-      --teal-bg: #04342C;
-      --teal-text: #9FE1CB;
-      --amber-bg: #412402;
-      --amber-text: #FAC775;
-      --coral-bg: #4A1B0C;
-      --coral-text: #F0997B;
-      --purple-bg: #26215C;
-      --purple-text: #AFA9EC;
-      --green-bg: #173404;
-      --green-text: #C0DD97;
-    }
-  }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-  .app { max-width: 800px; margin: 0 auto; padding: 24px 16px 60px; }
-  
-  .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-  .header-left { display: flex; align-items: center; gap: 12px; }
-  .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--blue-bg); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; color: var(--blue-text); }
-  .header-name { font-size: 16px; font-weight: 500; }
-  .header-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .header-date { font-size: 13px; color: var(--text3); }
-
-  .tabs { display: flex; gap: 4px; margin-bottom: 20px; background: var(--surface2); border-radius: var(--radius); padding: 4px; }
-  .tab { flex: 1; padding: 8px; text-align: center; font-size: 13px; font-weight: 500; color: var(--text2); border-radius: var(--radius-sm); cursor: pointer; border: none; background: none; transition: background 0.15s; }
-  .tab.active { background: var(--surface); color: var(--text); }
-
-  .section { display: none; }
-  .section.active { display: block; }
-
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-  .stat { background: var(--surface2); border-radius: var(--radius); padding: 14px; }
-  .stat-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; }
-  .stat-value { font-size: 24px; font-weight: 500; }
-  .stat-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
-
-  .progress-bar-wrap { background: var(--surface2); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px; }
-  .progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
-  .progress-label span:first-child { color: var(--text2); }
-  .progress-label span:last-child { font-weight: 500; }
-  .bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-  .bar-fill { height: 100%; background: var(--blue); border-radius: 99px; transition: width 0.4s; }
-  .bar-fill.teal { background: var(--teal); }
-  .bar-fill.amber { background: var(--amber); }
-
-  .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
-  .card-title { font-size: 14px; font-weight: 500; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
-  .card-title .count { font-size: 12px; color: var(--text2); font-weight: 400; }
-
-  .add-row { display: flex; gap: 8px; margin-bottom: 12px; }
-  .add-row input { flex: 1; padding: 8px 12px; border: 0.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); font-size: 13px; outline: none; }
-  .add-row input:focus { border-color: var(--blue); }
-  .add-row select { padding: 8px 10px; border: 0.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); font-size: 13px; outline: none; cursor: pointer; }
-  .btn { padding: 8px 14px; border-radius: var(--radius-sm); border: 0.5px solid var(--border); background: var(--surface); color: var(--text); font-size: 13px; cursor: pointer; white-space: nowrap; }
-  .btn:hover { background: var(--surface2); }
-  .btn-primary { background: var(--blue-bg); color: var(--blue-text); border-color: transparent; }
-  .btn-primary:hover { opacity: 0.85; background: var(--blue-bg); }
-
-  .item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid var(--border); }
-  .item:last-child { border-bottom: none; }
-  .item-check { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--border); background: var(--bg); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-  .item-check.done { background: var(--teal); border-color: var(--teal); }
-  .item-check.done::after { content: ''; display: block; width: 5px; height: 9px; border-right: 2px solid white; border-bottom: 2px solid white; transform: rotate(45deg) translate(-1px, -1px); }
-  .item-text { flex: 1; font-size: 13px; line-height: 1.4; }
-  .item-text.done { color: var(--text3); text-decoration: line-through; }
-  .tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 99px; margin-right: 5px; white-space: nowrap; }
-  .tag.info { background: var(--blue-bg); color: var(--blue-text); }
-  .tag.teal { background: var(--teal-bg); color: var(--teal-text); }
-  .tag.amber { background: var(--amber-bg); color: var(--amber-text); }
-  .tag.coral { background: var(--coral-bg); color: var(--coral-text); }
-  .tag.purple { background: var(--purple-bg); color: var(--purple-text); }
-  .tag.green { background: var(--green-bg); color: var(--green-text); }
-  .item-date { font-size: 11px; color: var(--text3); white-space: nowrap; }
-  .item-del { font-size: 16px; color: var(--text3); cursor: pointer; padding: 0 4px; line-height: 1; }
-  .item-del:hover { color: #E24B4A; }
-  .btn-publish { font-size: 11px; padding: 4px 10px; border-radius: 99px; background: #E8005A; color: white; border: none; cursor: pointer; white-space: nowrap; font-weight: 600; }
-  .btn-publish:hover { opacity: 0.85; }
-
-  .empty { text-align: center; padding: 24px 0; color: var(--text3); font-size: 13px; }
-
-  .goal-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
-  .goal-title { font-size: 13px; font-weight: 500; margin-bottom: 10px; color: var(--text2); }
-  .goal-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 0.5px solid var(--border); font-size: 13px; }
-  .goal-item:last-child { border-bottom: none; }
-
-  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 12px; }
-  .day-btn { padding: 8px 4px; border-radius: var(--radius-sm); background: var(--surface2); border: 0.5px solid var(--border); font-size: 11px; text-align: center; cursor: pointer; color: var(--text2); }
-  .day-btn.has-reel { background: var(--teal-bg); color: var(--teal-text); font-weight: 500; border-color: transparent; }
-  .day-btn.today { border-color: var(--blue); color: var(--blue-text); }
-
-  .archive-month { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
-  .archive-month:hover { background: var(--surface2); }
-  .archive-month-header { display: flex; align-items: center; justify-content: space-between; }
-  .archive-month-title { font-size: 14px; font-weight: 500; }
-  .archive-stats { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-  .archive-stat { font-size: 12px; color: var(--text2); }
-  .archive-stat span { font-weight: 500; color: var(--text); }
-
-  .motivation-card { background: var(--teal-bg); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; }
-  .motivation-text { font-size: 14px; color: var(--teal-text); line-height: 1.6; font-weight: 500; }
-  .motivation-sub { font-size: 12px; color: var(--teal); margin-top: 6px; opacity: 0.8; }
-
-  .streak-row { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 20px; }
-  .streak-dot { width: 14px; height: 14px; border-radius: 3px; }
-  .streak-dot.active { background: var(--teal); }
-  .streak-dot.inactive { background: var(--surface2); }
-
-  .divider { border: none; border-top: 0.5px solid var(--border); margin: 16px 0; }
-
-  @media (max-width: 500px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .add-row { flex-wrap: wrap; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f7f6f3;--sf:#fff;--sf2:#f0eee8;--bd:rgba(0,0,0,.09);--tx:#1c1c1a;--tx2:#5f5e5a;--tx3:#8e8d88;
+--ac:#2f5d8a;--S:#0f6e56;--Sbg:#e1f5ee;--A:#2f5d8a;--Abg:#e6f1fb;--B:#7a5a12;--Bbg:#faf0da;--C:#9a3c1d;--Cbg:#fbebe5;--r:12px}
+@media (prefers-color-scheme:dark){:root{--bg:#191917;--sf:#232321;--sf2:#2c2c29;--bd:rgba(255,255,255,.1);--tx:#efece6;--tx2:#b0aea8;--tx3:#7c7a75;
+--ac:#8cb8e6;--S:#8fdcc1;--Sbg:#0d3a2f;--A:#8cb8e6;--Abg:#13304d;--B:#f1c879;--Bbg:#3d2a07;--C:#f0a183;--Cbg:#45200f}}
+body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;font-size:15px}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;letter-spacing:-.02em}
+header p{color:var(--tx2);margin-top:4px;font-size:14px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 8px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+nav a{font-size:13px;padding:6px 12px;border-radius:99px;background:var(--sf);border:1px solid var(--bd);color:var(--tx2);text-decoration:none}
+nav a:hover{color:var(--tx)}
+section{margin-top:36px}
+h2{font-size:19px;margin-bottom:4px;letter-spacing:-.01em}
+.sub{color:var(--tx3);font-size:13px;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px}
+.kpi .l{font-size:12px;color:var(--tx3)}.kpi .v{font-size:22px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .n{font-size:12px;color:var(--tx2);margin-top:2px}
+.kpi.warn .v{color:var(--C)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px}
+.card h3{font-size:15px;margin-bottom:6px}.card p,.card li{font-size:14px;color:var(--tx2)}
+.card ul{padding-left:18px}.card li{margin:3px 0}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.tools button,.tools select{font:inherit;font-size:13px;padding:6px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--sf);color:var(--tx2);cursor:pointer}
+.tools button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.reel{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;margin-bottom:8px;display:grid;grid-template-columns:44px 1fr;gap:12px}
+.g{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+.gS{background:var(--Sbg);color:var(--S)}.gA{background:var(--Abg);color:var(--A)}.gB{background:var(--Bbg);color:var(--B)}.gC{background:var(--Cbg);color:var(--C)}
+.rt{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.rt b{font-size:15px}.rt a{font-size:12px;color:var(--ac)}
+.meta{font-size:12px;color:var(--tx3)}
+.nums{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin:6px 0;font-variant-numeric:tabular-nums}
+.nums span{color:var(--tx2)}.nums em{font-style:normal;color:var(--tx);font-weight:600}
+.bar{height:5px;background:var(--sf2);border-radius:3px;overflow:hidden;margin:4px 0 8px}
+.bar i{display:block;height:100%;background:var(--ac);border-radius:3px}
+.memo{font-size:13.5px;color:var(--tx2)}.memo .k{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;margin-right:6px;background:var(--sf2);color:var(--tx2)}
+.memo div+div{margin-top:3px}
+table{width:100%;border-collapse:collapse;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;font-size:13.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--bd);vertical-align:top}
+th{font-size:12px;color:var(--tx3);font-weight:600;background:var(--sf2)}
+td:nth-child(4){white-space:nowrap}td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td a{color:var(--tx);text-decoration:none}td a:hover{text-decoration:underline}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.p최우선{background:var(--Sbg);color:var(--S)}.p추천{background:var(--Abg);color:var(--A)}.p보통{background:var(--Bbg);color:var(--B)}.p후순위{background:var(--Cbg);color:var(--C)}
+.tw{overflow-x:auto}
+footer{margin-top:48px;color:var(--tx3);font-size:12px}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <div class="header-left">
-      <div class="avatar">E</div>
-      <div>
-        <div class="header-name">ellarang 콘텐츠 관리</div>
-        <div class="header-sub">서대문구·마포구 부동산 1등을 향해</div>
-      </div>
-    </div>
-    <div class="header-date" id="today-date"></div>
+<div class="wrap">
+<header>
+  <h1>착한언니복덕방 콘텐츠 아카이브</h1>
+  <p>@goodsister4080 · Instagram API 기준 2026.7.21 ~ 10.30 게시물 100개 (릴스 34 · 피드 66) · 2026.11.1 업데이트</p>
+</header>
+<nav>
+  <a href="#kpi">계정 성과</a><a href="#insight">핵심 인사이트</a><a href="#reels">릴스 분석</a><a href="#feed">캐러셀 요약</a><a href="#notion">노션 소재 진단</a><a href="#plan">11월 계획</a>
+</nav>
+
+<section id="kpi">
+  <h2>최근 28일 계정 성과</h2>
+  <div class="sub">Instagram 인사이트 · 2026.10.4 ~ 11.1</div>
+  <div class="kpis" id="kpis"></div>
+</section>
+
+<section id="insight">
+  <h2>핵심 인사이트</h2>
+  <div class="sub">릴스 34개 + 캐러셀 66개 데이터에서 반복되는 패턴</div>
+  <div class="cards">
+    <div class="card"><h3>✅ 성공 공식</h3><ul>
+      <li><b>가격 비교</b>(그때 vs 지금) → 도달 최상위 (17만)</li>
+      <li><b>❌/⭕ 판정형 · 부린이 vs 고수</b> → 도달 + 저장 동시에</li>
+      <li><b>가격대별 리스트 + 댓글 자료</b> → 댓글 1천~6천</li>
+      <li><b>'모르면 내 돈 놓친다'</b> 손실 프레임 → 저장률 3%+</li>
+    </ul></div>
+    <div class="card"><h3>⚠️ 반복되는 실패 원인</h3><ul>
+      <li>인사·감사·'오래 기다리셨죠'로 시작 → 신규 유입 훅 없음</li>
+      <li>핵심 숫자·반전이 영상 <b>끝</b>에 있음</li>
+      <li>20대 자취·학부모·저가 빌라 → 핵심 팔로워(35~44세 매수자)와 불일치</li>
+      <li>도달이 터진 릴스(17만·9.6만)에 <b>댓글 CTA가 없음</b> → 팔로우·상담 전환 손실</li>
+    </ul></div>
+    <div class="card"><h3>🔁 세입자 분쟁형의 함정</h3>
+      <p>보일러·비데·수리비 릴스는 도달이 2만 안팎으로 괜찮지만 저장률이 0.1~0.5%로 가장 낮습니다. 도달은 나와도 팔로우나 상담으로 이어지지 않으니 <b>월 1회 이하</b>로 제한하는 게 좋아요.</p></div>
+    <div class="card"><h3>🔗 전환 병목</h3>
+      <p>28일 동안 프로필 방문 4,564회 중 링크 클릭은 73회(1.6%)입니다. 링크트리 맨 위를 <b>카톡 상담</b>으로 바꾸고, 릴스 캡션 끝에 상담 안내를 고정하세요.</p></div>
   </div>
+</section>
 
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('dashboard')">대시보드</button>
-    <button class="tab" onclick="showTab('plan')">기획</button>
-    <button class="tab" onclick="showTab('blog')">블로그</button>
-    <button class="tab" onclick="showTab('reels')">릴스</button>
-    <button class="tab" onclick="showTab('complex')">단지</button>
-    <button class="tab" onclick="showTab('archive')">아카이브</button>
-    <button class="tab" onclick="showTab('goals')">목표</button>
+<section id="reels">
+  <h2>릴스 개별 분석 (34개)</h2>
+  <div class="sub">등급: <b>S</b> 도달 5만+ · <b>A</b> 2만+ 또는 댓글 1천+ · <b>B</b> 8천+ · <b>C</b> 8천 미만 · 저장률 = 저장 ÷ 도달 · 막대는 최고 도달(17만) 대비</div>
+  <div class="tools">
+    <span id="gbtn"></span>
+    <select id="sort">
+      <option value="date">최신순</option><option value="reach">도달순</option><option value="saved">저장순</option><option value="sr">저장률순</option><option value="comments">댓글순</option><option value="shares">공유순</option>
+    </select>
   </div>
+  <div id="reelList"></div>
+</section>
 
-  <div id="sec-dashboard" class="section active">
-    <div class="motivation-card" id="motivation-card"></div>
-    <div class="stats-grid">
-      <div class="stat">
-        <div class="stat-label">이번 달 블로그</div>
-        <div class="stat-value" id="stat-month-blog">0</div>
-        <div class="stat-sub">목표 15~20개</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">올해 총 발행</div>
-        <div class="stat-value" id="stat-year-blog">0</div>
-        <div class="stat-sub">목표 180개</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">이번 주 릴스</div>
-        <div class="stat-value" id="stat-week-reels">0</div>
-        <div class="stat-sub">목표 3~4개</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">이번 달 릴스</div>
-        <div class="stat-value" id="stat-month-reels">0</div>
-        <div class="stat-sub" id="stat-month-reels-sub"></div>
-      </div>
-    </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-label"><span>월간 블로그 달성률</span><span id="prog-blog-text">0 / 15개</span></div>
-      <div class="bar"><div class="bar-fill" id="prog-blog-bar" style="width:0%"></div></div>
-    </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-label"><span>연간 목표 달성률</span><span id="prog-year-text">0 / 180개</span></div>
-      <div class="bar"><div class="bar-fill teal" id="prog-year-bar" style="width:0%"></div></div>
-    </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-label"><span>이번 주 릴스</span><span id="prog-reel-text">0 / 3개</span></div>
-      <div class="bar"><div class="bar-fill amber" id="prog-reel-bar" style="width:0%"></div></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">이번 달 최근 작성 <span class="count" id="recent-count"></span></div>
-      <div id="recent-list"></div>
-    </div>
+<section id="feed">
+  <h2>캐러셀 · 피드 요약</h2>
+  <div class="sub" id="feedSub"></div>
+  <div class="cards">
+    <div class="card"><h3>💾 저장률 TOP (도달 2천+)</h3><div class="tw"><table id="ftSave"></table></div></div>
+    <div class="card"><h3>📣 도달 TOP</h3><div class="tw"><table id="ftReach"></table></div></div>
   </div>
-
-  <div id="sec-plan" class="section">
-    <div class="card">
-      <div class="card-title">📅 주간 캘린더</div>
-      <div style="display:flex; gap:8px; margin-bottom:12px;">
-        <button class="btn" onclick="changeCalWeek(-1)" style="padding:6px 12px; font-size:12px;">◀ 이전</button>
-        <button class="btn" onclick="changeCalWeek(0)" style="padding:6px 12px; font-size:12px;">이번 주</button>
-        <button class="btn" onclick="changeCalWeek(1)" style="padding:6px 12px; font-size:12px;">다음 주 ▶</button>
-        <span id="cal-week-label" style="margin-left:auto; font-size:12px; color:var(--text2); align-self:center; font-weight:500;"></span>
-      </div>
-      <div id="cal-week-list"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">📝 블로그 기획</div>
-      <div class="add-row">
-        <input type="text" id="plan-blog-input" placeholder="발행 예정 글 제목" />
-        <select id="plan-blog-type">
-          <option value="info">정보글</option>
-          <option value="listing">매물글</option>
-          <option value="marathon">마라톤</option>
-          <option value="food">맛집·상권</option>
-          <option value="policy">정책</option>
-        </select>
-        <button class="btn btn-primary" onclick="addPlanBlog()">추가</button>
-      </div>
-      <div class="add-row">
-        <input type="date" id="plan-blog-date" style="flex:1" />
-      </div>
-      <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 발행 예정 날짜</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <span>발행 예정 블로그 글</span>
-        <span class="count" id="plan-blog-count"></span>
-      </div>
-      <div id="plan-blog-list"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">🎬 릴스 기획</div>
-      <div class="add-row">
-        <input type="text" id="plan-reel-input" placeholder="발행 예정 릴스 제목" />
-        <select id="plan-reel-type">
-          <option value="listing">매물 소개</option>
-          <option value="info">정보 요약</option>
-          <option value="local">임장·지역</option>
-        </select>
-        <button class="btn btn-primary" onclick="addPlanReel()">추가</button>
-      </div>
-      <div class="add-row">
-        <input type="date" id="plan-reel-date" style="flex:1" />
-      </div>
-      <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 발행 예정 날짜</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <span>발행 예정 릴스</span>
-        <span class="count" id="plan-reel-count"></span>
-      </div>
-      <div id="plan-reel-list"></div>
-    </div>
-
-    <div class="card" style="background: var(--teal-bg); border: 0.5px solid var(--teal);">
-      <div class="card-title">⚡ 한 번에 일정 등록</div>
-      <div style="font-size:12px; color:var(--text2); margin-bottom:8px; line-height:1.6;">
-        아래 형식으로 붙여넣고 "한 번에 추가" 누르면 끝!<br>
-        <code style="background:var(--bg); padding:2px 6px; border-radius:3px; font-size:11px;">날짜 카테고리 제목</code>
-        예: <code style="background:var(--bg); padding:2px 6px; border-radius:3px; font-size:11px;">5/4 매물 신촌자이엘라</code>
-      </div>
-      <textarea id="bulk-input" placeholder="여기에 일정을 붙여넣으세요" style="width:100%; min-height:140px; padding:12px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; font-family:inherit; outline:none; resize:vertical; box-sizing:border-box; line-height:1.7;"></textarea>
-      <div style="display:flex; gap:8px; margin-top:10px;">
-        <select id="bulk-target" style="padding: 8px 10px; border: 0.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); font-size: 13px; outline: none; cursor: pointer;">
-          <option value="blog">블로그 기획에 추가</option>
-          <option value="reel">릴스 기획에 추가</option>
-        </select>
-        <button class="btn btn-primary" onclick="bulkAddPlan()" style="flex:1;">한 번에 추가</button>
-      </div>
-      <div style="font-size:11px; color:var(--muted); margin-top:8px; line-height:1.5;">
-        💡 카테고리: 매물 / 정보 / 맛집 / 마라톤 / 일상 / 정책<br>
-        💡 날짜는 5/4, 5-4, 2026-05-04 다 가능
-      </div>
-    </div>
+  <div class="cards" style="margin-top:10px">
+    <div class="card"><h3>📉 10월 저장 하위</h3><div class="tw"><table id="ftWorst"></table></div>
+      <p style="margin-top:8px">주간 시세·청약 일정·세종 이전 같은 뉴스 요약형은 어디서나 볼 수 있어 저장할 이유가 없습니다. 올린다면 '실수요자라면 이 3곳만'처럼 중개사 판단을 붙이세요.</p></div>
+    <div class="card"><h3>📝 캐러셀 운영 메모</h3><ul>
+      <li>잘된 캐러셀은 모두 <b>체크리스트 · 순서 · 타임라인</b>형 (잔금일 20가지 저장률 7.0%)</li>
+      <li>청약 일정은 화제 단지일 때만 크게 확산 (신길센트럴시티 도달 15.9만 · 공유 2,212)</li>
+      <li>10월 하루 2~4개 몰아 올리기 → 게시물당 도달 중앙값 8월 12,547 → 10월 5,131</li>
+      <li>주 2회, 월·수 업로드로 축소</li>
+    </ul></div>
   </div>
+</section>
 
-  <div id="sec-blog" class="section">
-    <div class="card">
-      <div class="card-title">블로그 글 추가</div>
-      <div class="add-row">
-        <input type="text" id="blog-input" placeholder="글 제목 입력" />
-        <select id="blog-type">
-          <option value="info">정보글</option>
-          <option value="listing">매물글</option>
-          <option value="marathon">마라톤</option>
-          <option value="food">맛집·상권</option>
-          <option value="policy">정책</option>
-        </select>
-        <button class="btn btn-primary" onclick="addBlogPost()">추가</button>
-      </div>
-      <div class="add-row">
-        <input type="date" id="blog-date" style="flex:1" />
-      </div>
-      <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 작성한 날짜 선택 (전날 글도 추가 가능)</div>
-    </div>
+<section id="notion">
+  <h2>노션 릴스 소재 DB 진단</h2>
+  <div class="sub">🎬 착한언니 릴스 소재·대본 DB의 13개 소재를 실제 성과 패턴과 비교한 우선순위 · 노션 DB의 조회수·댓글수 칸은 아직 비어 있어요</div>
+  <div class="tw"><table id="nt"></table></div>
+</section>
 
-    <div class="card">
-      <div class="card-title">
-        <span>전체 블로그 글</span>
-        <span class="count" id="blog-list-count"></span>
-      </div>
-      <div id="blog-list"></div>
-    </div>
+<section id="plan">
+  <h2>11월 운영 계획 요약</h2>
+  <div class="sub">상세 캘린더: <a href="instagram/2026-11-content-plan.md">instagram/2026-11-content-plan.md</a></div>
+  <div class="cards">
+    <div class="card"><h3>📅 리듬</h3><ul><li>주 5개: 릴스 화·목·토 / 카드뉴스 월·수</li><li>밤 9~11시 업로드 (오전 시간대 도달 최저)</li><li>하루 1개 이하</li></ul></div>
+    <div class="card"><h3>🎬 릴스 대본 공식</h3><ul><li>0~3초: 숫자 + 충격 사실 (인사 금지)</li><li>15초: "자료 받는 법은 끝에서" 예고</li><li>40~50초: 주제 하나만, 마지막에 댓글 키워드</li></ul></div>
+    <div class="card"><h3>🎯 11월 목표</h3><ul><li>게시물당 도달 중앙값 5,131 → 10,000+</li><li>카드뉴스 저장률 3%+</li><li>링크 클릭 73 → 300+</li></ul></div>
   </div>
+</section>
 
-  <div id="sec-reels" class="section">
-    <div class="card">
-      <div class="card-title">릴스 추가</div>
-      <div class="add-row">
-        <input type="text" id="reel-input" placeholder="릴스 제목 입력" />
-        <select id="reel-type">
-          <option value="listing">매물 소개</option>
-          <option value="info">정보 요약</option>
-          <option value="local">임장·지역</option>
-          <option value="life">일상·마라톤</option>
-        </select>
-        <button class="btn btn-primary" onclick="addReel()">추가</button>
-      </div>
-      <div class="add-row">
-        <input type="date" id="reel-date" style="flex:1" />
-      </div>
-      <div style="font-size:11px; color:var(--muted); margin-top:6px;">↑ 작성한 날짜 선택 (지난 릴스도 추가 가능)</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">이번 주 릴스 <span class="count" id="reel-week-count"></span></div>
-      <div class="week-grid" id="week-grid"></div>
-      <div id="reel-list-week"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <span>전체 릴스</span>
-        <span class="count" id="reel-all-count"></span>
-      </div>
-      <div id="reel-list-all"></div>
-    </div>
-  </div>
-
-  <div id="sec-complex" class="section">
-    <div class="card">
-      <div class="card-title">🏢 단지 추가</div>
-      <div class="add-row">
-        <input type="text" id="complex-name" placeholder="단지명 (예: 신촌자이엘라)" />
-        <button class="btn btn-primary" onclick="addComplex()">추가</button>
-      </div>
-      <div style="font-size:11px; color:var(--muted); margin-top:6px;">단지를 먼저 추가한 후 카드를 클릭해서 상세정보를 입력하세요</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <span>등록된 단지</span>
-        <span class="count" id="complex-count"></span>
-      </div>
-      <div id="complex-list"></div>
-    </div>
-  </div>
-
-  <div id="sec-archive" class="section">
-    <div style="font-size:13px; color:var(--text2); margin-bottom:14px;">완료된 달의 기록 — 내가 해낸 것들</div>
-    <div id="archive-list"></div>
-  </div>
-
-  <div id="sec-goals" class="section">
-    <div class="goal-card">
-      <div class="goal-title">📊 1년 진행률</div>
-      <div style="margin-top:14px;">
-        <div class="progress-label">
-          <span>블로그 (목표 192개)</span>
-          <span id="year-blog-text">0 / 192개</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" id="year-blog-fill" style="width:0%"></div></div>
-      </div>
-      <div style="margin-top:14px;">
-        <div class="progress-label">
-          <span>릴스 (목표 192개)</span>
-          <span id="year-reel-text">0 / 192개</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" id="year-reel-fill" style="width:0%"></div></div>
-      </div>
-      <div style="font-size:11px; color:var(--muted); margin-top:10px;">월 16개 × 12개월 = 연 192개 기준</div>
-    </div>
-
-    <div class="goal-card">
-      <div class="goal-title">📈 팔로워 추적</div>
-      <div style="font-size:12px; color:var(--text2); margin-bottom:12px;">매월 1일 또는 원하는 날에 입력하면 추세가 그려져요</div>
-      <div style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
-        <input type="month" id="follower-month" style="padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
-        <input type="number" id="follower-insta" placeholder="인스타" style="width:90px; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
-        <input type="number" id="follower-youtube" placeholder="유튜브" style="width:90px; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
-        <input type="number" id="follower-clip" placeholder="네이버 클립" style="width:110px; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); font-size:13px; outline:none;" />
-        <button class="btn btn-primary" onclick="addFollower()">기록</button>
-      </div>
-      <div id="follower-chart" style="margin-top:14px;"></div>
-      <div id="follower-list" style="margin-top:14px;"></div>
-    </div>
-
-    <div class="goal-card">
-      <div class="goal-title">🎯 1년 목표</div>
-      <div class="goal-item"><span>블로그 월 발행</span><span class="tag info">16개</span></div>
-      <div class="goal-item"><span>연간 총 발행</span><span class="tag info">192개</span></div>
-      <div class="goal-item"><span>인스타 팔로워</span><span class="tag teal">1만명</span></div>
-      <div class="goal-item"><span>릴스 주간</span><span class="tag amber">3~4개</span></div>
-      <div class="goal-item"><span>네이버 cRank</span><span class="tag coral">서대문·마포 1위</span></div>
-    </div>
-
-    <div class="goal-card">
-      <div class="goal-title">콘텐츠 구성비 (월)</div>
-      <div class="goal-item"><span>정보글 (전세권·정책·체크리스트)</span><span class="tag info">4~5개</span></div>
-      <div class="goal-item"><span>매물·지역글 (이대·신촌·마포·서대문)</span><span class="tag teal">6~8개</span></div>
-      <div class="goal-item"><span>마라톤·일상 (지역 키워드 포함)</span><span class="tag amber">2~3개</span></div>
-      <div class="goal-item"><span>맛집·상권 (상가 매물 연결)</span><span class="tag coral">2~3개</span></div>
-    </div>
-
-    <div class="goal-card">
-      <div class="goal-title">릴스 4채널 배포</div>
-      <div class="goal-item"><span>인스타그램 릴스</span><span style="font-size:12px;color:var(--text2)">팔로워 성장 핵심</span></div>
-      <div class="goal-item"><span>유튜브 숏츠</span><span style="font-size:12px;color:var(--text2)">장기 노출 누적</span></div>
-      <div class="goal-item"><span>네이버 클립</span><span style="font-size:12px;color:var(--text2)">블로그 cRank 연결</span></div>
-      <div class="goal-item"><span>카카오</span><span style="font-size:12px;color:var(--text2)">기존 고객 재접촉</span></div>
-    </div>
-
-    <div class="goal-card">
-      <div class="goal-title">월별 집중 테마</div>
-      <div class="goal-item"><span>5~6월</span><span class="tag info">정보글 집중 · cRank 점수 쌓기</span></div>
-      <div class="goal-item"><span>7~8월</span><span class="tag teal">이대·신촌 자취 수요 공략</span></div>
-      <div class="goal-item"><span>9~10월</span><span class="tag amber">마포 아파트 시세 · 기존 글 리뉴얼</span></div>
-      <div class="goal-item"><span>11~12월</span><span class="tag coral">성수기 최대 공략</span></div>
-      <div class="goal-item"><span>1~2월</span><span class="tag purple">신학기·봄 이사 선점</span></div>
-      <div class="goal-item"><span>3~4월</span><span class="tag green">1주년 점검 · 고도화</span></div>
-    </div>
-  </div>
+<footer>데이터 출처: Instagram Graph API (게시물 인사이트 · 계정 인사이트), Notion 릴스 소재 DB. 도달·조회수는 Instagram 추산치입니다.</footer>
 </div>
 
 <script>
-const STORAGE_KEY = 'ellarang-dashboard-v1';
-let data = { posts: [], reels: [], planPosts: [], planReels: [], complexes: [], followers: [] };
-
-const motivations = [
-  "서대문구·마포구 부동산은 나한테 물어봐. 그 자리를 오늘도 한 걸음씩.",
-  "방치했던 1,200명이 10,000명이 되는 날까지. 오늘 하나 더.",
-  "900개의 글이 증명하는 것 — 꾸준함은 쌓인다.",
-  "비수기에 쌓은 정보글이 성수기에 폭발한다. 지금이 바로 그 시간.",
-  "이대·신촌·마포·서대문. 내 이름이 먼저 뜨게 만들자.",
-];
-
-function loadData() {
-  try {
-    const r = localStorage.getItem('ellarang-data');
-    if (r) data = JSON.parse(r);
-  } catch(e) {}
-  // 이전 버전 데이터 호환
-  if(!data.planPosts) data.planPosts = [];
-  if(!data.planReels) data.planReels = [];
-  if(!data.complexes) data.complexes = [];
-  if(!data.followers) data.followers = [];
-  render();
+const D={"acct": {"reach": 275906, "views": 817890, "profile_views": 4564, "website_clicks": 73, "accounts_engaged": 11370, "total_interactions": 19598, "saves": 6911, "shares": 3611}, "reels": [{"date": "2026-07-21", "day": "Tue", "time": "22:17", "title": "서울 25개구 최고가 BEST5", "reach": 3860, "views": 5500, "saved": 29, "shares": 10, "comments": 0, "likes": 19, "sr": 0.8, "grade": "C", "why": "250억 같은 초고가는 7~9억 실수요 팔로워와 거리가 멀고, 댓글 유도가 없음", "next": "'내 예산으로 갈 수 있는 구' 관점으로 재구성", "url": "https://www.instagram.com/reel/DbDmglQS-yJ/"}, {"date": "2026-07-22", "day": "Wed", "time": "22:17", "title": "생애최초 4.2억 대출 · 6억 이하", "reach": 9360, "views": 12424, "saved": 106, "shares": 40, "comments": 459, "likes": 64, "sr": 1.1, "grade": "B", "why": "숫자 조건(4.2억/1억8천) + 자료 댓글로 댓글 459. 계정 초기라 도달은 중앙값 이하", "next": "11/10 '생애최초 서울 6억 이하 리스트'로 리메이크", "url": "https://www.instagram.com/reel/DbGLCmZSXUv/"}, {"date": "2026-07-24", "day": "Fri", "time": "15:35", "title": "부동산 줄임말 정리", "reach": 5528, "views": 7472, "saved": 26, "shares": 12, "comments": 2, "likes": 29, "sr": 0.5, "grade": "C", "why": "용어 나열형, '모르면 손해' 동기와 CTA 없음. 같은 용어 주제인 10/13 릴스는 손실 프레임으로 저장 680", "next": "용어 콘텐츠는 '모르면 내 돈 놓친다' 프레임으로만", "url": "https://www.instagram.com/reel/DbKmfMwSigI/"}, {"date": "2026-07-26", "day": "Sun", "time": "00:12", "title": "서울 7~9억대 아파트 리스트", "reach": 84012, "views": 116450, "saved": 839, "shares": 581, "comments": 6110, "likes": 663, "sr": 1.0, "grade": "S", "why": "타깃 예산과 정확히 맞는 가격대 + 댓글 자료 배포 → 댓글 6,110, 저장 839. 계정 대표 포맷", "next": "월 1회 업데이트로 정례화", "url": "https://www.instagram.com/reel/DbOGqN5y_-a/"}, {"date": "2026-07-28", "day": "Tue", "time": "19:08", "title": "실전 부동산 특약", "reach": 5883, "views": 7627, "saved": 87, "shares": 27, "comments": 222, "likes": 76, "sr": 1.5, "grade": "C", "why": "저장률 1.5%로 내용은 좋음. 1만 팔로워 감사 인사로 시작해 신규 유입 훅이 약함", "next": "특약 1개만 깊게 + 손실 숫자로 시작 (11/21)", "url": "https://www.instagram.com/reel/DbVSN0Ty1-G/"}, {"date": "2026-07-29", "day": "Wed", "time": "15:27", "title": "등기부등본 확인", "reach": 4032, "views": 5022, "saved": 8, "shares": 4, "comments": 14, "likes": 16, "sr": 0.2, "grade": "C", "why": "'기본 중의 기본' 원론적 시작, 서류 실물이 화면에 없음", "next": "실제 등기부 샘플 + 빨간 표시로 재제작 (11/18)", "url": "https://www.instagram.com/reel/DbXc_NPS69d/"}, {"date": "2026-07-30", "day": "Thu", "time": "21:25", "title": "지금 사야 하나, 기다려야 하나", "reach": 79560, "views": 97048, "saved": 827, "shares": 598, "comments": 551, "likes": 352, "sr": 1.0, "grade": "S", "why": "누구나 하는 질문을 뒤집는 첫 문장 + 시리즈 예고 → 저장 827, 공유 598", "next": "연말판으로 재활용 (11/26)", "url": "https://www.instagram.com/reel/DbarYHrSTcz/"}, {"date": "2026-08-01", "day": "Sat", "time": "13:33", "title": "분양가 vs 2026 실거래가", "reach": 170389, "views": 258961, "saved": 420, "shares": 516, "comments": 27, "likes": 299, "sr": 0.2, "grade": "S", "why": "가격 비교 숫자 + '고분양가 논란 → 지금 가격' 반전으로 최고 도달. 다만 CTA가 없어 댓글 27", "next": "같은 포맷에 마지막 3초 '리스트' 키워드 추가 (11/14)", "url": "https://www.instagram.com/reel/Dbe-zMeyhSu/"}, {"date": "2026-08-04", "day": "Tue", "time": "15:09", "title": "경기 갈아타기 추천", "reach": 7924, "views": 11405, "saved": 52, "shares": 29, "comments": 466, "likes": 149, "sr": 0.7, "grade": "C", "why": "팔로워 요청에서 출발한 자료라 댓글 466. '오래 기다리셨죠' 오프닝은 기존 팔로워용이라 도달 제한", "next": "첫 3초를 숫자로 바꿔 경기 리스트 재제작 (11/24)", "url": "https://www.instagram.com/reel/Dbm4gyWyRg_/"}, {"date": "2026-08-05", "day": "Wed", "time": "20:06", "title": "빌라 사이 나홀로아파트", "reach": 114800, "views": 171951, "saved": 894, "shares": 455, "comments": 48, "likes": 246, "sr": 0.8, "grade": "S", "why": "❌/⭕ 판정형으로 기준이 명확함 → 저장 894(전체 1위), 도달 11만", "next": "'사면 안 되는 아파트 TOP5' 시리즈화 (11/5)", "url": "https://www.instagram.com/reel/Dbp_R9zS3SO/"}, {"date": "2026-08-08", "day": "Sat", "time": "16:45", "title": "똘똘한 한 채 · 세제개편", "reach": 14681, "views": 20016, "saved": 139, "shares": 77, "comments": 1167, "likes": 122, "sr": 0.9, "grade": "A", "why": "정책 발표 직후 타이밍 + 자료 배포 → 댓글 1,167", "next": "정책 이슈는 발표 2~3일 안에 빠르게", "url": "https://www.instagram.com/reel/DbxWTgESWqI/"}, {"date": "2026-08-11", "day": "Tue", "time": "15:03", "title": "분양가 vs 실거래 (정정본)", "reach": 24538, "views": 35953, "saved": 112, "shares": 139, "comments": 15, "likes": 85, "sr": 0.5, "grade": "A", "why": "7번 후속이라 공유 139. 정정 공지로 시작해 훅을 잃음", "next": "데이터 검수 후 업로드, 정정은 고정 댓글로", "url": "https://www.instagram.com/reel/Db45nK_SPOW/"}, {"date": "2026-08-13", "day": "Thu", "time": "16:14", "title": "광명 하안주공 족보 BEST5", "reach": 59782, "views": 75374, "saved": 316, "shares": 599, "comments": 731, "likes": 245, "sr": 0.5, "grade": "S", "why": "지역 특화 자료 + 현장 발품 → 공유 599(전체 1위), 지역 커뮤니티로 확산", "next": "노션 R-005 '하안주공 근조화환'으로 바로 후속", "url": "https://www.instagram.com/reel/Db-KcaVy44C/"}, {"date": "2026-08-17", "day": "Mon", "time": "21:40", "title": "8.13 대책 실수요자 리포트", "reach": 9308, "views": 12809, "saved": 52, "shares": 37, "comments": 174, "likes": 68, "sr": 0.6, "grade": "B", "why": "자료 배포로 댓글 174는 확보했지만, 정책 요약은 경쟁 계정이 많아 도달은 평범", "next": "정책은 '실수요자가 할 일 1가지'로 압축", "url": "https://www.instagram.com/reel/DcJDkvtyaLn/"}, {"date": "2026-08-19", "day": "Wed", "time": "21:45", "title": "대학생활권 아파트 BEST", "reach": 4924, "views": 6730, "saved": 9, "shares": 15, "comments": 54, "likes": 24, "sr": 0.2, "grade": "C", "why": "학부모라는 좁은 타깃 + 감성형 첫 문장 → 하위권", "next": "노션 '연대·이대·서강대 6선'은 숫자 훅으로 바꾸거나 보류", "url": "https://www.instagram.com/reel/DcON4ppScDG/"}, {"date": "2026-08-21", "day": "Fri", "time": "18:39", "title": "서울 5~10억 아파트 자료", "reach": 12547, "views": 17573, "saved": 87, "shares": 72, "comments": 1221, "likes": 156, "sr": 0.7, "grade": "A", "why": "리스트 공식 재현으로 댓글 1,221. 도달은 7/26보다 낮음 (같은 형식 반복 피로)", "next": "리스트는 월 1회만, 매번 새 각도(생애최초·경기 등)", "url": "https://www.instagram.com/reel/DcTBuHQyrSY/"}, {"date": "2026-08-24", "day": "Mon", "time": "22:07", "title": "재건축 사업성 용어", "reach": 6323, "views": 7838, "saved": 70, "shares": 15, "comments": 39, "likes": 44, "sr": 1.1, "grade": "C", "why": "용어 설명형이라 손실 훅이 약함", "next": "노션 '재건축 용어' 대본의 '모르면 사지 마세요' 훅이 더 강함", "url": "https://www.instagram.com/reel/DcbIRyBSVEG/"}, {"date": "2026-08-25", "day": "Tue", "time": "21:04", "title": "아파트 집보기 체크리스트", "reach": 44127, "views": 52968, "saved": 845, "shares": 290, "comments": 324, "likes": 208, "sr": 1.9, "grade": "A", "why": "현장 체크리스트 → 저장 845, 저장률 1.9%", "next": "겨울판 체크리스트로 후속 (11/9)", "url": "https://www.instagram.com/reel/Dcdloijyvl0/"}, {"date": "2026-08-27", "day": "Thu", "time": "20:00", "title": "중개사는 집 볼 때 모르는 척", "reach": 17798, "views": 25436, "saved": 369, "shares": 104, "comments": 0, "likes": 67, "sr": 2.1, "grade": "B", "why": "중개사 반전 썰 → 저장률 2.1%. 댓글 CTA가 없어 댓글 0", "next": "썰형에도 마지막 키워드 CTA 추가", "url": "https://www.instagram.com/reel/DcinUoOywz9/"}, {"date": "2026-09-01", "day": "Tue", "time": "21:18", "title": "전세 보증금 사수 특약 5", "reach": 40315, "views": 48030, "saved": 281, "shares": 97, "comments": 181, "likes": 79, "sr": 0.7, "grade": "A", "why": "'보증금 잃는다' 손실 프레임 → 도달 4만", "next": "매수 특약 버전으로 확장", "url": "https://www.instagram.com/reel/DcvomfYScAN/"}, {"date": "2026-09-03", "day": "Thu", "time": "16:21", "title": "하안·철산 공공임대 분담금", "reach": 13050, "views": 17054, "saved": 43, "shares": 55, "comments": 108, "likes": 59, "sr": 0.3, "grade": "B", "why": "12번 후속 지역 이슈. 범위가 좁아 도달은 12번의 1/4", "next": "지역 이슈는 '족보형 자료'와 묶을 때만", "url": "https://www.instagram.com/reel/Dc0QkSqSaJv/"}, {"date": "2026-09-08", "day": "Tue", "time": "22:29", "title": "2억 재개발 빌라 · 마피 오피스텔", "reach": 5946, "views": 7905, "saved": 20, "shares": 9, "comments": 39, "likes": 23, "sr": 0.3, "grade": "C", "why": "저가 매물 주제가 아파트 실수요 타깃과 어긋남, 메시지가 추상적", "next": "보류", "url": "https://www.instagram.com/reel/DdBy4E4SmzT/"}, {"date": "2026-10-06", "day": "Tue", "time": "21:43", "title": "20년 된 보일러 교체비", "reach": 22574, "views": 30983, "saved": 54, "shares": 29, "comments": 8, "likes": 85, "sr": 0.2, "grade": "A", "why": "보편적 분쟁 주제라 도달 2.2만. 세입자 대상이라 저장 54, 전환 약함", "next": "도달용으로만 가끔 (월 1회 이하)", "url": "https://www.instagram.com/reel/DeJyE6FS-rT/"}, {"date": "2026-10-12", "day": "Mon", "time": "19:15", "title": "비데티슈 막힘 수리비", "reach": 20058, "views": 26680, "saved": 25, "shares": 16, "comments": 15, "likes": 66, "sr": 0.1, "grade": "A", "why": "22번과 같은 패턴: 도달은 나오는데 저장·팔로우 전환이 낮음", "next": "같은 주제 연속 금지", "url": "https://www.instagram.com/reel/DeY_e8RSCWI/"}, {"date": "2026-10-13", "day": "Tue", "time": "02:45", "title": "헷갈리는 부동산 용어", "reach": 20759, "views": 24903, "saved": 680, "shares": 75, "comments": 0, "likes": 96, "sr": 3.3, "grade": "A", "why": "'모르면 내 돈 놓친다' 프레임 → 저장 680, 저장률 3.3%(릴스 1위). 새벽 업로드에도 성과", "next": "저장형 릴스의 기준 포맷으로 사용", "url": "https://www.instagram.com/reel/DeZzBVcS2FB/"}, {"date": "2026-10-15", "day": "Thu", "time": "15:07", "title": "부린이 vs 고수", "reach": 95840, "views": 129609, "saved": 783, "shares": 516, "comments": 10, "likes": 241, "sr": 0.8, "grade": "S", "why": "대조 구조로 자기 투영 → 도달 9.6만. CTA가 없어 댓글 10", "next": "2편 '계약서 쓸 때' + 키워드 CTA (11/17)", "url": "https://www.instagram.com/reel/DegRqBKyHKU/"}, {"date": "2026-10-19", "day": "Mon", "time": "18:16", "title": "결정 못 하는 사람 특징", "reach": 34329, "views": 40617, "saved": 167, "shares": 129, "comments": 4, "likes": 103, "sr": 0.5, "grade": "A", "why": "매수 고민층 공감형 → 도달 3.4만", "next": "'지금 사야 하나' 시리즈와 묶기", "url": "https://www.instagram.com/reel/Deq6JCoyNoI/"}, {"date": "2026-10-20", "day": "Tue", "time": "23:56", "title": "서울 7·8·9억대 22곳", "reach": 12985, "views": 17850, "saved": 146, "shares": 95, "comments": 2085, "likes": 130, "sr": 1.1, "grade": "A", "why": "리스트 공식 → 댓글 2,085. 도달은 중앙값 수준", "next": "리스트 릴스 첫 3초에 '최저가 단지 + 가격' 노출", "url": "https://www.instagram.com/reel/DeuFw_TSA_a/"}, {"date": "2026-10-23", "day": "Fri", "time": "12:53", "title": "실거주 거절 3,080만원 판례", "reach": 7042, "views": 9160, "saved": 17, "shares": 10, "comments": 1, "likes": 29, "sr": 0.2, "grade": "C", "why": "집주인·세입자 분쟁 판례로 매수자 타깃이 아님", "next": "보류", "url": "https://www.instagram.com/reel/De0njMGSm46/"}, {"date": "2026-10-24", "day": "Sat", "time": "18:02", "title": "10년 월세, 남은 건 보증금뿐", "reach": 4655, "views": 5994, "saved": 9, "shares": 2, "comments": 29, "likes": 26, "sr": 0.2, "grade": "C", "why": "소재는 강한데 '4억 8천 → 14억' 반전이 영상 끝에 있음 (PDF 지적과 일치)", "next": "반전 숫자를 첫 3초로 옮겨 재촬영", "url": "https://www.instagram.com/reel/De3wwvnyKXJ/"}, {"date": "2026-10-27", "day": "Tue", "time": "16:14", "title": "수리비, 집주인 몫 vs 세입자 몫", "reach": 19077, "views": 26844, "saved": 86, "shares": 47, "comments": 2, "likes": 75, "sr": 0.5, "grade": "B", "why": "세입자 분쟁형 3번째 → 도달 1.9만이지만 저장 86", "next": "분쟁형은 월 1회로 제한", "url": "https://www.instagram.com/reel/De_Sp-VSEBT/"}, {"date": "2026-10-28", "day": "Wed", "time": "16:19", "title": "중도 퇴실 복비", "reach": 4105, "views": 5319, "saved": 11, "shares": 8, "comments": 0, "likes": 27, "sr": 0.3, "grade": "C", "why": "19초에 케이스가 몰려 있고 세입자 니치 → 하위권", "next": "보류", "url": "https://www.instagram.com/reel/DfB4Fi9yeTh/"}, {"date": "2026-10-28", "day": "Wed", "time": "18:33", "title": "집이 안 팔리는 사람 TOP5", "reach": 33064, "views": 36324, "saved": 80, "shares": 30, "comments": 10, "likes": 65, "sr": 0.2, "grade": "A", "why": "카운트다운 + '매도 실수 = 매수 기준' 전환 → 3.3만. CTA 약함", "next": "항목당 5초 + '체크' 키워드", "url": "https://www.instagram.com/reel/DfCHSd-SU4T/"}, {"date": "2026-10-30", "day": "Fri", "time": "17:49", "title": "첫 자취방 체크", "reach": 3678, "views": 4304, "saved": 10, "shares": 21, "comments": 25, "likes": 37, "sr": 0.3, "grade": "C", "why": "20대 자취 타깃이 핵심 팔로워(35~44세)와 불일치, 감성 오프닝 → 릴스 최저", "next": "자취 주제 중단", "url": "https://www.instagram.com/reel/DfHLzbSO0_9/"}], "feed": {"n": 66, "reach": 6136, "saved": 58, "shares": 25, "topsave": [{"date": "2026-10-21", "t": "공인중개사가 알려주는 ", "reach": 25886, "saved": 1823, "sr": 7.0, "url": "https://www.instagram.com/p/DewlcLnkmqC/"}, {"date": "2026-08-26", "t": "집 보러 갈 때마다", "reach": 30051, "saved": 1459, "sr": 4.9, "url": "https://www.instagram.com/p/DcfD5PUErtg/"}, {"date": "2026-07-29", "t": "📍일단 저장!", "reach": 6812, "saved": 295, "sr": 4.3, "url": "https://www.instagram.com/p/DbWwLkUkq3j/"}, {"date": "2026-10-19", "t": "토지거래허가 매매, ", "reach": 6673, "saved": 253, "sr": 3.8, "url": "https://www.instagram.com/p/DerWhTkks54/"}, {"date": "2026-10-21", "t": "서울 아파트 매수, ", "reach": 5626, "saved": 211, "sr": 3.8, "url": "https://www.instagram.com/p/DeuOkpWElRD/"}, {"date": "2026-07-29", "t": "⚠️일단 저장", "reach": 32894, "saved": 1045, "sr": 3.2, "url": "https://www.instagram.com/p/DbYU-mYkoIx/"}], "topreach": [{"date": "2026-08-08", "t": "✅️무조건 접수!", "reach": 159186, "shares": 2212, "url": "https://www.instagram.com/p/Dbx9P3Vkk4Z/"}, {"date": "2026-09-02", "t": "🏠 성남복정2 A1 신혼희망타운, ", "reach": 76130, "shares": 588, "url": "https://www.instagram.com/p/DcxxBPMEgRv/"}, {"date": "2026-08-10", "t": "✅️무조건 저장", "reach": 67201, "shares": 1519, "url": "https://www.instagram.com/p/Db3DBeNkgMZ/"}, {"date": "2026-07-22", "t": "📝 집값 6억까지", "reach": 58312, "shares": 597, "url": "https://www.instagram.com/p/DbD0brzknOp/"}, {"date": "2026-08-25", "t": "부부합산 연봉 1.1억,", "reach": 54896, "shares": 446, "url": "https://www.instagram.com/p/DcdrYmrEuFg/"}], "worst": [{"date": "2026-10-23", "t": "서울 89주째 상승, 이번 주 1위는?", "reach": 1998, "saved": 2, "url": "https://www.instagram.com/p/DezYRZ_Epk4/"}, {"date": "2026-10-26", "t": "11월 첫째 주, 수도권 아파트 청약 ", "reach": 3117, "saved": 4, "url": "https://www.instagram.com/p/De9HU4IksvA/"}, {"date": "2026-10-30", "t": "우리 동네 옆에 신도시?", "reach": 3173, "saved": 6, "url": "https://www.instagram.com/p/DfGbTVxkm7x/"}, {"date": "2026-10-30", "t": "오피스텔 10평 = 아파트 10평? 🤔", "reach": 1516, "saved": 7, "url": "https://www.instagram.com/p/DfH2WLAyqF4/"}, {"date": "2026-10-17", "t": "공무원 9,929명 세종행, 집값 또 움직일까? 🏛", "reach": 4597, "saved": 7, "url": "https://www.instagram.com/p/DelG0KBkqQQ/"}]}, "notion": [["서울 5억~10억대 아파트 29개 + BEST 5", "자료배포형", "2030 매수자", "촬영 대기", "최우선", "리스트 릴스(7/26 댓글 6,110 · 도달 8.4만)와 같은 공식. 첫 3초에 최저가 단지와 가격을 먼저 보여주기"], ["R-005 | 하안주공 — 광명시청 앞 근조화환", "논쟁형", "재건축 관심자", "촬영 대기", "최우선", "하안주공 족보 릴스가 공유 599·도달 6만으로 검증됨. 시의성이 있을 때 바로 촬영"], ["집값 떨어지면 사려고 기다린 지 몇 년?", "논쟁형", "매수자·갈아타기", "촬영 대기", "최우선", "'지금 사야 하나'(도달 8만·저장 827)와 같은 질문 뒤집기 구조"], ["공동명의 vs 단독명의", "논쟁형", "매수자·매도자", "소재", "추천", "매수자 타깃 + 비교형 → 저장형으로 적합. 결론을 표 한 장으로"], ["대출 안 나오면 계약금 돌려받나요?", "상황극", "세입자 → 매수자로 확장", "대본 작성", "추천", "손실 프레임이 강함. 타깃을 매수자로 넓히면 전환이 좋아짐"], ["집값 2억 올랐는데 배액배상하면 되죠?", "상황극", "매도자", "대본 작성", "추천", "숫자 훅이 강함. '매수자는 이렇게 대비' 결말 추가"], ["재건축 용어 — 이 단어 모르면 사지 마세요", "정보/저장형", "재건축·매수자", "대본 작성", "추천", "8/24 재건축 용어(6.3천)는 약했지만, 10/13 용어 릴스는 손실 프레임으로 저장 680. 지금 훅 그대로 진행"], ["R-001 | 집주인 배우자가 대신 나온 전세계약", "상황극", "세입자", "촬영 대기", "보통", "전세 특약(4만)처럼 보증금 손실형은 도달이 나옴. 세입자형은 팔로우 전환이 약하니 월 1~2회만"], ["R-006 | 전세 3천 싼 집", "상황극", "세입자", "촬영 대기", "보통", "R-001과 같은 이유. 둘 중 하나만 11월에"], ["전세대출 3억 → 2억밖에 안 나와요", "상황극", "세입자", "대본 작성", "보통", "숫자 훅은 좋지만 세입자 니치"], ["R-007 | 500가구 이하 정비구역 지정권", "논쟁형", "재건축 관심자", "대본 작성", "보통", "정책 설명형은 1.3만 수준. '어느 단지가 수혜?' 리스트로 바꾸면 상향"], ["R-002 | 강제이사 상황극", "상황극", "세입자", "촬영 대기", "후순위", "세입자 분쟁형은 도달 2만 안팎이지만 저장·팔로우 전환이 최하위권"], ["연대·이대·서강대 대학생활권 아파트 6선", "자료배포형", "학부모", "조사 필요", "후순위", "같은 소재(8/19)가 도달 4.9천으로 하위권. 숫자 훅으로 재설계 전에는 보류"]], "med": 13865.5, "gcount": {"S": 6, "A": 11, "B": 5, "C": 12}};
+const f=n=>n==null?'-':n.toLocaleString('ko-KR');
+const a=D.acct;
+const K=[['도달 계정',a.reach,'팔로워의 약 12배'],['조회수',a.views,''],['저장',a.saves,''],['공유',a.shares,''],['프로필 방문',a.profile_views,''],['링크 클릭',a.website_clicks,'방문 대비 '+(a.website_clicks/a.profile_views*100).toFixed(1)+'%','warn']];
+document.getElementById('kpis').innerHTML=K.map(k=>`<div class="kpi ${k[3]||''}"><div class="l">${k[0]}</div><div class="v">${f(k[1])}</div><div class="n">${k[2]}</div></div>`).join('');
+let G='all',S='date';
+const max=Math.max(...D.reels.map(r=>r.reach));
+const gb=document.getElementById('gbtn');
+gb.innerHTML=[['all','전체 '+D.reels.length],...'SABC'.split('').map(g=>[g,g+' '+D.gcount[g]])].map(([k,l])=>`<button data-g="${k}" class="${k==G?'on':''}">${l}</button>`).join(' ');
+gb.onclick=e=>{if(!e.target.dataset.g)return;G=e.target.dataset.g;gb.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g==G));draw()};
+document.getElementById('sort').onchange=e=>{S=e.target.value;draw()};
+function draw(){
+  let r=D.reels.filter(x=>G=='all'||x.grade==G);
+  r=r.slice().sort((x,y)=>S=='date'?y.date.localeCompare(x.date):y[S]-x[S]);
+  document.getElementById('reelList').innerHTML=r.map(x=>`<div class="reel"><div class="g g${x.grade}">${x.grade}</div><div>
+    <div class="rt"><b>${x.title}</b><a href="${x.url}" target="_blank" rel="noopener">인스타에서 보기 ↗</a></div>
+    <div class="meta">${x.date} (${x.day}) ${x.time}</div>
+    <div class="nums"><span>도달 <em>${f(x.reach)}</em></span><span>조회 <em>${f(x.views)}</em></span><span>저장 <em>${f(x.saved)}</em> (${x.sr}%)</span><span>공유 <em>${f(x.shares)}</em></span><span>댓글 <em>${f(x.comments)}</em></span><span>좋아요 <em>${f(x.likes)}</em></span></div>
+    <div class="bar"><i style="width:${Math.max(1,x.reach/max*100)}%"></i></div>
+    <div class="memo"><div><span class="k">${x.grade=='S'||x.grade=='A'?'성공 요인':'원인'}</span>${x.why}</div><div><span class="k">다음</span>${x.next}</div></div>
+  </div></div>`).join('');
 }
-
-function saveData() {
-  try {
-    localStorage.setItem('ellarang-data', JSON.stringify(data));
-  } catch(e) {}
-}
-
-function now() { return new Date(); }
-function todayStr() { const d = now(); return d.toISOString().slice(0,10); }
-function monthKey(date) { return (date||now()).toISOString().slice(0,7); }
-function weekStart() {
-  const d = now(); const day = d.getDay();
-  d.setDate(d.getDate() - day); d.setHours(0,0,0,0); return d;
-}
-function weekEnd() {
-  const d = weekStart(); d.setDate(d.getDate() + 6); return d;
-}
-function inThisWeek(dateStr) {
-  const d = new Date(dateStr); const ws = weekStart(); const we = weekEnd();
-  return d >= ws && d <= we;
-}
-function inThisMonth(dateStr) { return dateStr && dateStr.startsWith(monthKey()); }
-function inThisYear(dateStr) { return dateStr && dateStr.startsWith(now().getFullYear()+''); }
-
-const typeLabel = { info:'정보글', listing:'매물글', marathon:'마라톤', food:'맛집·상권', policy:'정책' };
-const typeClass = { info:'info', listing:'teal', marathon:'amber', food:'coral', policy:'purple' };
-const reelTypeLabel = { listing:'매물 소개', info:'정보 요약', local:'임장·지역', life:'일상·마라톤' };
-const reelTypeClass = { listing:'teal', info:'info', local:'amber', life:'coral' };
-
-function fmtDate(str) {
-  if(!str) return '';
-  const d = new Date(str);
-  return (d.getMonth()+1)+'월 '+d.getDate()+'일';
-}
-
-function addBlogPost() {
-  const title = document.getElementById('blog-input').value.trim();
-  const type = document.getElementById('blog-type').value;
-  const date = document.getElementById('blog-date').value || todayStr();
-  if(!title) return;
-  data.posts.push({ id: Date.now(), title, type, date, done: false });
-  document.getElementById('blog-input').value = '';
-  saveData(); render();
-}
-
-function addReel() {
-  const title = document.getElementById('reel-input').value.trim();
-  const type = document.getElementById('reel-type').value;
-  const date = document.getElementById('reel-date').value || todayStr();
-  if(!title) return;
-  data.reels.push({ id: Date.now(), title, type, date, done: false });
-  document.getElementById('reel-input').value = '';
-  saveData(); render();
-}
-
-function togglePost(id) {
-  const p = data.posts.find(x=>x.id===id);
-  if(p) p.done = !p.done;
-  saveData(); render();
-}
-
-function toggleReel(id) {
-  const r = data.reels.find(x=>x.id===id);
-  if(r) r.done = !r.done;
-  saveData(); render();
-}
-
-function deletePost(id) {
-  data.posts = data.posts.filter(x=>x.id!==id);
-  saveData(); render();
-}
-
-function deleteReel(id) {
-  data.reels = data.reels.filter(x=>x.id!==id);
-  saveData(); render();
-}
-
-// ===== 기획 탭 함수들 =====
-
-let calWeekOffset = 0; // 0: 이번 주, 1: 다음 주, -1: 지난 주
-
-function changeCalWeek(offset) {
-  if(offset === 0) calWeekOffset = 0;
-  else calWeekOffset += offset;
-  render();
-}
-
-function getWeekStart(offset) {
-  const today = now();
-  const day = today.getDay(); // 0=일요일
-  const sunday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - day + (offset*7));
-  return sunday;
-}
-
-function renderWeekCalendar() {
-  const weekStart = getWeekStart(calWeekOffset);
-  const days = ['일','월','화','수','목','금','토'];
-  const weekEnd = new Date(weekStart);
-  weekEnd.setDate(weekEnd.getDate() + 6);
-  const labelEl = document.getElementById('cal-week-label');
-  if(labelEl) {
-    const label = (weekStart.getMonth()+1)+'/'+weekStart.getDate()+' ~ '+(weekEnd.getMonth()+1)+'/'+weekEnd.getDate();
-    labelEl.textContent = calWeekOffset===0 ? '이번 주 ('+label+')' : label;
-  }
-
-  const today = todayStr();
-  let html = '';
-
-  for(let i=0; i<7; i++) {
-    const d = new Date(weekStart);
-    d.setDate(weekStart.getDate() + i);
-    const dStr = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    const isToday = dStr === today;
-
-    // 이 날짜의 일정들 모으기
-    const planBlogs = data.planPosts.filter(p=>p.date===dStr);
-    const planReels = data.planReels.filter(r=>r.date===dStr);
-    const donePosts = data.posts.filter(p=>p.date===dStr);
-    const doneReels = data.reels.filter(r=>r.date===dStr);
-
-    const totalCount = planBlogs.length + planReels.length + donePosts.length + doneReels.length;
-
-    let dayItems = '';
-    donePosts.forEach(p => {
-      dayItems += `<div style="font-size:12px; padding:4px 8px; background:var(--surface2); border-radius:4px; margin-top:4px; color:var(--text2); text-decoration:line-through;">📝 ${p.title} <span style="color:var(--teal); font-size:10px; font-weight:600;">완료</span></div>`;
-    });
-    doneReels.forEach(r => {
-      dayItems += `<div style="font-size:12px; padding:4px 8px; background:var(--surface2); border-radius:4px; margin-top:4px; color:var(--text2); text-decoration:line-through;">🎬 ${r.title} <span style="color:var(--teal); font-size:10px; font-weight:600;">완료</span></div>`;
-    });
-    planBlogs.forEach(p => {
-      dayItems += `<div style="font-size:12px; padding:4px 8px; background:#fff6e0; border-radius:4px; margin-top:4px; color:#8a5a00;">📝 ${p.title}</div>`;
-    });
-    planReels.forEach(r => {
-      dayItems += `<div style="font-size:12px; padding:4px 8px; background:#ffe5ed; border-radius:4px; margin-top:4px; color:#a02050;">🎬 ${r.title}</div>`;
-    });
-
-    if(totalCount === 0) {
-      dayItems = `<div style="font-size:11px; color:var(--muted); padding:4px 0;">일정 없음</div>`;
-    }
-
-    const todayStyle = isToday ? 'background:var(--teal-bg); border-color:var(--teal);' : '';
-    const todayBadge = isToday ? '<span style="background:var(--teal); color:white; font-size:10px; padding:2px 6px; border-radius:3px; margin-left:6px; font-weight:600;">오늘</span>' : '';
-
-    html += `<div style="border:0.5px solid var(--border); border-radius:6px; padding:10px 12px; margin-bottom:6px; ${todayStyle}">
-      <div style="display:flex; align-items:center; margin-bottom:4px;">
-        <span style="font-weight:600; font-size:13px; color:var(--text);">${days[i]} ${d.getMonth()+1}/${d.getDate()}</span>
-        ${todayBadge}
-        ${totalCount > 0 ? `<span style="margin-left:auto; font-size:11px; color:var(--muted);">${totalCount}건</span>` : ''}
-      </div>
-      ${dayItems}
-    </div>`;
-  }
-
-  document.getElementById('cal-week-list').innerHTML = html;
-}
-
-function bulkAddPlan() {
-  const text = document.getElementById('bulk-input').value.trim();
-  const target = document.getElementById('bulk-target').value;
-  if(!text) { alert('내용을 입력해주세요!'); return; }
-
-  const lines = text.split('\n').map(l=>l.trim()).filter(l=>l);
-  const currentYear = new Date().getFullYear();
-
-  const typeMap = {
-    '매물':'listing', '매물글':'listing',
-    '정보':'info', '정보글':'info',
-    '맛집':'food', '맛집·상권':'food', '상권':'food',
-    '마라톤':'marathon',
-    '일상':'marathon',
-    '정책':'policy'
-  };
-  const reelTypeMap = {
-    '매물':'listing', '매물글':'listing', '매물소개':'listing',
-    '정보':'info', '정보글':'info', '정보요약':'info',
-    '임장':'local', '지역':'local', '일상':'local', '맛집':'local'
-  };
-
-  let added = 0;
-  let errors = [];
-
-  lines.forEach((line, idx) => {
-    // 날짜 패턴: 5/4, 5-4, 2026-05-04, 2026/5/4
-    const dateMatch = line.match(/^(\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\d{1,2}[-\/]\d{1,2})\s+/);
-    if(!dateMatch) {
-      errors.push((idx+1)+'줄: 날짜 형식 오류');
-      return;
-    }
-
-    let dateStr = dateMatch[1];
-    let isoDate;
-    if(dateStr.match(/^\d{4}/)) {
-      // 2026-05-04 형식
-      isoDate = dateStr.replace(/\//g,'-');
-      const parts = isoDate.split('-');
-      isoDate = parts[0]+'-'+parts[1].padStart(2,'0')+'-'+parts[2].padStart(2,'0');
-    } else {
-      // 5/4 형식
-      const parts = dateStr.split(/[-\/]/);
-      isoDate = currentYear+'-'+parts[0].padStart(2,'0')+'-'+parts[1].padStart(2,'0');
-    }
-
-    // 나머지: 카테고리 + 제목
-    const rest = line.substring(dateMatch[0].length).trim();
-    const restParts = rest.split(/\s+/);
-    if(restParts.length < 2) {
-      errors.push((idx+1)+'줄: 카테고리와 제목 필요');
-      return;
-    }
-
-    const typeKey = restParts[0];
-    const title = restParts.slice(1).join(' ');
-    const map = target==='blog' ? typeMap : reelTypeMap;
-    const type = map[typeKey] || (target==='blog' ? 'info' : 'listing');
-
-    if(target==='blog') {
-      data.planPosts.push({ id: Date.now()+idx, title, type, date: isoDate });
-    } else {
-      data.planReels.push({ id: Date.now()+idx, title, type, date: isoDate });
-    }
-    added++;
-  });
-
-  saveData(); render();
-  document.getElementById('bulk-input').value = '';
-
-  let msg = added+'개 추가 완료!';
-  if(errors.length) msg += '\n\n오류:\n'+errors.join('\n');
-  alert(msg);
-}
-
-function addPlanBlog() {
-  const title = document.getElementById('plan-blog-input').value.trim();
-  const type = document.getElementById('plan-blog-type').value;
-  const date = document.getElementById('plan-blog-date').value || todayStr();
-  if(!title) return;
-  data.planPosts.push({ id: Date.now(), title, type, date });
-  document.getElementById('plan-blog-input').value = '';
-  saveData(); render();
-}
-
-function addPlanReel() {
-  const title = document.getElementById('plan-reel-input').value.trim();
-  const type = document.getElementById('plan-reel-type').value;
-  const date = document.getElementById('plan-reel-date').value || todayStr();
-  if(!title) return;
-  data.planReels.push({ id: Date.now(), title, type, date });
-  document.getElementById('plan-reel-input').value = '';
-  saveData(); render();
-}
-
-// 기획 → 발행 완료 (블로그 탭으로 이동)
-function publishPlanBlog(id) {
-  const p = data.planPosts.find(x=>x.id===id);
-  if(!p) return;
-  data.posts.push({ id: Date.now(), title: p.title, type: p.type, date: todayStr(), done: false });
-  data.planPosts = data.planPosts.filter(x=>x.id!==id);
-  saveData(); render();
-}
-
-// 기획 → 발행 완료 (릴스 탭으로 이동)
-function publishPlanReel(id) {
-  const r = data.planReels.find(x=>x.id===id);
-  if(!r) return;
-  data.reels.push({ id: Date.now(), title: r.title, type: r.type, date: todayStr(), done: false });
-  data.planReels = data.planReels.filter(x=>x.id!==id);
-  saveData(); render();
-}
-
-function deletePlanBlog(id) {
-  data.planPosts = data.planPosts.filter(x=>x.id!==id);
-  saveData(); render();
-}
-
-function deletePlanReel(id) {
-  data.planReels = data.planReels.filter(x=>x.id!==id);
-  saveData(); render();
-}
-
-function renderPlanItem(item, publishFn, deleteFn, isReel) {
-  const labels = isReel ? reelTypeLabel : typeLabel;
-  const classes = isReel ? reelTypeClass : typeClass;
-  const today = todayStr();
-  const isPast = item.date < today;
-  const isToday = item.date === today;
-  const dateBadge = isPast
-    ? `<span style="color:#d04848; font-size:11px; font-weight:600;">⚠ ${fmtDate(item.date)} 지남</span>`
-    : isToday
-    ? `<span style="color:#e8005a; font-size:11px; font-weight:600;">📅 오늘 발행 예정</span>`
-    : `<span style="color:var(--text3); font-size:11px;">📅 ${fmtDate(item.date)}</span>`;
-  return `<div class="item">
-    <div class="item-text">
-      <span class="tag ${classes[item.type]||'info'}">${labels[item.type]||item.type}</span>${item.title}
-    </div>
-    <div>${dateBadge}</div>
-    <button class="btn-publish" onclick="${publishFn}(${item.id})">발행 완료</button>
-    <div class="item-del" onclick="${deleteFn}(${item.id})">×</div>
-  </div>`;
-}
-
-function renderItem(item, toggleFn, deleteFn, showDate) {
-  const isPost = item.type in typeLabel;
-  const lbl = isPost ? typeLabel[item.type] : reelTypeLabel[item.type];
-  const cls = isPost ? typeClass[item.type] : reelTypeClass[item.type];
-  return `<div class="item">
-    <div class="item-check ${item.done?'done':''}" onclick="${toggleFn}(${item.id})"></div>
-    <div class="item-text ${item.done?'done':''}">
-      <span class="tag ${cls}">${lbl}</span>${item.title}
-    </div>
-    ${showDate?`<div class="item-date">${fmtDate(item.date)}</div>`:''}
-    <div class="item-del" onclick="${deleteFn}(${item.id})">×</div>
-  </div>`;
-}
-
-// ===== 단지 관리 함수 =====
-
-function addComplex() {
-  const name = document.getElementById('complex-name').value.trim();
-  if(!name) { alert('단지명을 입력해주세요!'); return; }
-  data.complexes.push({
-    id: Date.now(),
-    name,
-    address: '', built: '', units: '', size: '', options: '', parking: '',
-    deposit: '', rent: '', moveIn: '',
-    blogLink: '', memo: '',
-    expanded: false
-  });
-  document.getElementById('complex-name').value = '';
-  saveData(); render();
-}
-
-function deleteComplex(id) {
-  if(!confirm('이 단지 카드를 삭제하시겠어요?')) return;
-  data.complexes = data.complexes.filter(c=>c.id!==id);
-  saveData(); render();
-}
-
-function toggleComplex(id) {
-  const c = data.complexes.find(x=>x.id===id);
-  if(c) { c.expanded = !c.expanded; saveData(); render(); }
-}
-
-function updateComplex(id, field, value) {
-  const c = data.complexes.find(x=>x.id===id);
-  if(c) { c[field] = value; saveData(); }
-}
-
-function copyComplex(id) {
-  const c = data.complexes.find(x=>x.id===id);
-  if(!c) return;
-  let text = `🏢 ${c.name}\n`;
-  if(c.address) text += `📍 ${c.address}\n`;
-  if(c.built) text += `🏗️ 준공 ${c.built}\n`;
-  if(c.units) text += `🏠 세대수 ${c.units}\n`;
-  if(c.size) text += `📐 평형 ${c.size}\n`;
-  if(c.options) text += `✨ 옵션 ${c.options}\n`;
-  if(c.parking) text += `🚗 주차 ${c.parking}\n`;
-  text += `\n`;
-  if(c.deposit || c.rent) {
-    text += `💰 매물 정보\n`;
-    if(c.deposit) text += `보증금 ${c.deposit}\n`;
-    if(c.rent) text += `월세 ${c.rent}\n`;
-    if(c.moveIn) text += `입주 가능일 ${c.moveIn}\n`;
-    text += `\n`;
-  }
-  if(c.memo) text += `📝 ${c.memo}\n\n`;
-  if(c.blogLink) text += `자세한 정보 👇\n${c.blogLink}\n\n`;
-  text += `📞 착한언니복덕방\n02-364-4080 / 02-707-3434`;
-
-  navigator.clipboard.writeText(text).then(()=>{
-    alert('카톡으로 보낼 내용이 복사됐어요!\n카톡 열고 붙여넣기 하세요 📋');
-  }).catch(()=>{
-    // fallback
-    const ta = document.createElement('textarea');
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
-    alert('복사됐어요!');
-  });
-}
-
-function renderComplexes() {
-  const el = document.getElementById('complex-list');
-  if(!el) return;
-  document.getElementById('complex-count').textContent = data.complexes.length+'개';
-  if(data.complexes.length === 0) {
-    el.innerHTML = '<div class="empty">아직 등록된 단지가 없어요.</div>';
-    return;
-  }
-  el.innerHTML = data.complexes.map(c => {
-    if(!c.expanded) {
-      return `<div style="border:0.5px solid var(--border); border-radius:8px; padding:14px; margin-bottom:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="toggleComplex(${c.id})">
-        <div>
-          <div style="font-weight:700; font-size:15px; color:var(--text);">🏢 ${c.name}</div>
-          ${c.address ? `<div style="font-size:12px; color:var(--text2); margin-top:3px;">📍 ${c.address}</div>` : ''}
-        </div>
-        <div style="font-size:11px; color:var(--muted);">클릭해서 열기 ▼</div>
-      </div>`;
-    }
-    return `<div style="border:0.5px solid var(--border); border-radius:8px; padding:14px; margin-bottom:8px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <div style="font-weight:700; font-size:15px; color:var(--text);">🏢 ${c.name}</div>
-        <div style="display:flex; gap:6px;">
-          <button class="btn btn-primary" onclick="copyComplex(${c.id})" style="padding:6px 12px; font-size:12px;">📋 복사</button>
-          <button class="btn" onclick="toggleComplex(${c.id})" style="padding:6px 10px; font-size:12px;">접기 ▲</button>
-          <button class="btn" onclick="deleteComplex(${c.id})" style="padding:6px 10px; font-size:12px; color:#c54;">삭제</button>
-        </div>
-      </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-        ${complexField('주소', 'address', c.address, c.id, true)}
-        ${complexField('준공년도', 'built', c.built, c.id)}
-        ${complexField('세대수', 'units', c.units, c.id)}
-        ${complexField('평형', 'size', c.size, c.id)}
-        ${complexField('옵션', 'options', c.options, c.id, true)}
-        ${complexField('주차', 'parking', c.parking, c.id)}
-      </div>
-      <div style="margin-top:14px; padding-top:14px; border-top:0.5px dashed var(--border);">
-        <div style="font-size:12px; font-weight:600; color:var(--text2); margin-bottom:8px;">💰 매물 정보 (수시 변경)</div>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-          ${complexField('보증금', 'deposit', c.deposit, c.id)}
-          ${complexField('월세', 'rent', c.rent, c.id)}
-          ${complexField('입주 가능일', 'moveIn', c.moveIn, c.id)}
-        </div>
-      </div>
-      <div style="margin-top:14px; padding-top:14px; border-top:0.5px dashed var(--border);">
-        ${complexField('블로그 링크', 'blogLink', c.blogLink, c.id, true)}
-        ${complexField('메모', 'memo', c.memo, c.id, true, true)}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function complexField(label, field, value, id, fullWidth, isMemo) {
-  const safeValue = (value||'').replace(/"/g,'&quot;');
-  const style = fullWidth ? 'grid-column: 1 / -1;' : '';
-  if(isMemo) {
-    return `<div style="${style}">
-      <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">${label}</div>
-      <textarea onchange="updateComplex(${id}, '${field}', this.value)" placeholder="${label} 입력" style="width:100%; min-height:50px; padding:6px 8px; border:0.5px solid var(--border); border-radius:4px; background:var(--bg); color:var(--text); font-size:12px; outline:none; box-sizing:border-box; font-family:inherit; resize:vertical;">${safeValue}</textarea>
-    </div>`;
-  }
-  return `<div style="${style}">
-    <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">${label}</div>
-    <input type="text" value="${safeValue}" onchange="updateComplex(${id}, '${field}', this.value)" placeholder="${label} 입력" style="width:100%; padding:6px 8px; border:0.5px solid var(--border); border-radius:4px; background:var(--bg); color:var(--text); font-size:12px; outline:none; box-sizing:border-box;" />
-  </div>`;
-}
-
-// ===== 팔로워 추적 함수 =====
-
-function addFollower() {
-  const month = document.getElementById('follower-month').value;
-  const insta = parseInt(document.getElementById('follower-insta').value) || 0;
-  const youtube = parseInt(document.getElementById('follower-youtube').value) || 0;
-  const clip = parseInt(document.getElementById('follower-clip').value) || 0;
-  if(!month) { alert('월을 선택해주세요!'); return; }
-  if(!insta && !youtube && !clip) { alert('팔로워 수를 하나 이상 입력해주세요!'); return; }
-
-  // 같은 달 데이터 있으면 덮어쓰기
-  data.followers = data.followers.filter(f=>f.month!==month);
-  data.followers.push({ id: Date.now(), month, insta, youtube, clip });
-  data.followers.sort((a,b) => a.month.localeCompare(b.month));
-  document.getElementById('follower-insta').value = '';
-  document.getElementById('follower-youtube').value = '';
-  document.getElementById('follower-clip').value = '';
-  saveData(); render();
-}
-
-function deleteFollower(id) {
-  if(!confirm('이 기록을 삭제하시겠어요?')) return;
-  data.followers = data.followers.filter(f=>f.id!==id);
-  saveData(); render();
-}
-
-function renderFollowers() {
-  const chartEl = document.getElementById('follower-chart');
-  const listEl = document.getElementById('follower-list');
-  if(!chartEl || !listEl) return;
-
-  // 월 input 기본값
-  const monthInput = document.getElementById('follower-month');
-  if(monthInput && !monthInput.value) {
-    const d = now();
-    monthInput.value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
-  }
-
-  if(data.followers.length === 0) {
-    chartEl.innerHTML = '';
-    listEl.innerHTML = '<div class="empty" style="padding:20px;">아직 기록이 없어요. 위에서 첫 번째 기록을 남겨보세요!</div>';
-    return;
-  }
-
-  // 차트
-  const maxVal = Math.max(...data.followers.flatMap(f=>[f.insta||0, f.youtube||0, f.clip||0]), 100);
-  const chartHeight = 160;
-  const padding = 30;
-  const w = 100; // viewBox 단위
-  const points = (key, color) => {
-    const filtered = data.followers.filter(f=>f[key]>0);
-    if(filtered.length === 0) return '';
-    const step = filtered.length > 1 ? (w-2*padding/3) / (filtered.length-1) : 0;
-    return filtered.map((f,i) => {
-      const x = padding/3 + i*step;
-      const y = chartHeight - (f[key]/maxVal)*(chartHeight-20) - 10;
-      return `${x},${y}`;
-    }).join(' ');
-  };
-
-  const instaPts = points('insta', '#E1306C');
-  const ytPts = points('youtube', '#FF0000');
-  const clipPts = points('clip', '#03C75A');
-
-  chartEl.innerHTML = `
-    <svg viewBox="0 0 ${w} ${chartHeight}" preserveAspectRatio="none" style="width:100%; height:${chartHeight}px; background:var(--bg); border-radius:8px; padding:0;">
-      ${instaPts ? `<polyline points="${instaPts}" fill="none" stroke="#E1306C" stroke-width="0.6" />` : ''}
-      ${ytPts ? `<polyline points="${ytPts}" fill="none" stroke="#FF0000" stroke-width="0.6" />` : ''}
-      ${clipPts ? `<polyline points="${clipPts}" fill="none" stroke="#03C75A" stroke-width="0.6" />` : ''}
-    </svg>
-    <div style="display:flex; gap:14px; margin-top:8px; font-size:11px; flex-wrap:wrap; justify-content:center;">
-      <span><span style="display:inline-block; width:10px; height:10px; background:#E1306C; border-radius:2px; margin-right:4px;"></span>인스타</span>
-      <span><span style="display:inline-block; width:10px; height:10px; background:#FF0000; border-radius:2px; margin-right:4px;"></span>유튜브</span>
-      <span><span style="display:inline-block; width:10px; height:10px; background:#03C75A; border-radius:2px; margin-right:4px;"></span>네이버 클립</span>
-    </div>
-  `;
-
-  // 리스트 (최신이 위)
-  const sorted = [...data.followers].sort((a,b) => b.month.localeCompare(a.month));
-  listEl.innerHTML = `<div style="font-size:12px; font-weight:600; color:var(--text2); margin-bottom:8px;">📋 기록 내역</div>` +
-    sorted.map((f,idx) => {
-      const prev = sorted[idx+1];
-      const instaDiff = prev ? f.insta - prev.insta : 0;
-      const ytDiff = prev ? f.youtube - prev.youtube : 0;
-      const clipDiff = prev ? f.clip - prev.clip : 0;
-      const formatDiff = (d) => d > 0 ? `<span style="color:var(--teal); font-size:11px;">▲${d}</span>` : d < 0 ? `<span style="color:#c54; font-size:11px;">▼${Math.abs(d)}</span>` : '';
-      return `<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:0.5px solid var(--border); font-size:13px;">
-        <span style="font-weight:600; min-width:80px;">${f.month.replace('-','년 ')}월</span>
-        <div style="display:flex; gap:14px; flex-wrap:wrap; flex:1; justify-content:center;">
-          <span>📷 ${f.insta||0} ${idx<sorted.length-1?formatDiff(instaDiff):''}</span>
-          <span>▶️ ${f.youtube||0} ${idx<sorted.length-1?formatDiff(ytDiff):''}</span>
-          <span>🟢 ${f.clip||0} ${idx<sorted.length-1?formatDiff(clipDiff):''}</span>
-        </div>
-        <span class="item-del" onclick="deleteFollower(${f.id})" style="cursor:pointer; color:var(--muted);">×</span>
-      </div>`;
-    }).join('');
-}
-
-// ===== 1년 진행률 렌더링 =====
-
-function renderYearProgress() {
-  const yearStart = new Date(2026, 0, 1); // 2026년 1월 1일 기준
-  const yearBlogs = data.posts.filter(p=>p.date && new Date(p.date) >= yearStart).length;
-  const yearReels = data.reels.filter(r=>r.date && new Date(r.date) >= yearStart).length;
-
-  const blogText = document.getElementById('year-blog-text');
-  const blogFill = document.getElementById('year-blog-fill');
-  const reelText = document.getElementById('year-reel-text');
-  const reelFill = document.getElementById('year-reel-fill');
-
-  if(blogText) blogText.textContent = `${yearBlogs} / 192개`;
-  if(blogFill) blogFill.style.width = Math.min(100, (yearBlogs/192)*100)+'%';
-  if(reelText) reelText.textContent = `${yearReels} / 192개`;
-  if(reelFill) reelFill.style.width = Math.min(100, (yearReels/192)*100)+'%';
-}
-
-function render() {
-  const d = now();
-  document.getElementById('today-date').textContent = d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일';
-
-  const motivation = motivations[d.getDate() % motivations.length];
-  document.getElementById('motivation-card').innerHTML =
-    `<div class="motivation-text">${motivation}</div><div class="motivation-sub">오늘도 한 걸음 — ellarang</div>`;
-
-  const monthPosts = data.posts.filter(p=>inThisMonth(p.date));
-  const yearPosts = data.posts.filter(p=>inThisYear(p.date));
-  const weekReels = data.reels.filter(r=>inThisWeek(r.date));
-  const monthReels = data.reels.filter(r=>inThisMonth(r.date));
-
-  document.getElementById('stat-month-blog').textContent = monthPosts.length;
-  document.getElementById('stat-year-blog').textContent = yearPosts.length;
-  document.getElementById('stat-week-reels').textContent = weekReels.length;
-  document.getElementById('stat-month-reels').textContent = monthReels.length;
-  document.getElementById('stat-month-reels-sub').textContent = (monthReels.length*4)+'개 채널 배포';
-
-  const blogPct = Math.min(100, Math.round(monthPosts.length/15*100));
-  const yearPct = Math.min(100, Math.round(yearPosts.length/180*100));
-  const reelPct = Math.min(100, Math.round(weekReels.length/3*100));
-  document.getElementById('prog-blog-bar').style.width = blogPct+'%';
-  document.getElementById('prog-blog-text').textContent = monthPosts.length+' / 15개';
-  document.getElementById('prog-year-bar').style.width = yearPct+'%';
-  document.getElementById('prog-year-text').textContent = yearPosts.length+' / 180개';
-  document.getElementById('prog-reel-bar').style.width = reelPct+'%';
-  document.getElementById('prog-reel-text').textContent = weekReels.length+' / 3개';
-
-  const recent = [...data.posts].sort((a,b)=>b.id-a.id).slice(0,5);
-  document.getElementById('recent-count').textContent = monthPosts.length+'개';
-  document.getElementById('recent-list').innerHTML = recent.length
-    ? recent.map(p=>renderItem(p,'togglePost','deletePost',true)).join('')
-    : '<div class="empty">아직 작성된 글이 없어요. 오늘 첫 글을 추가해봐요!</div>';
-
-  // 날짜 input 기본값: 오늘
-  const dateInput = document.getElementById('blog-date');
-  if(dateInput && !dateInput.value) dateInput.value = todayStr();
-  const reelDateInput = document.getElementById('reel-date');
-  if(reelDateInput && !reelDateInput.value) reelDateInput.value = todayStr();
-
-  // 모든 글을 월별로 그룹핑 (최신 달이 위로)
-  const sortedPosts = [...data.posts].sort((a,b) => (b.date||'').localeCompare(a.date||''));
-  const grouped = {};
-  sortedPosts.forEach(p => {
-    if(!p.date) return;
-    const monthK = p.date.slice(0,7);
-    if(!grouped[monthK]) grouped[monthK] = [];
-    grouped[monthK].push(p);
-  });
-  const monthKeys = Object.keys(grouped).sort().reverse();
-
-  document.getElementById('blog-list-count').textContent = data.posts.length+'개';
-  document.getElementById('blog-list').innerHTML = monthKeys.length
-    ? monthKeys.map(mk => {
-        const label = mk.replace('-','년 ')+'월';
-        const posts = grouped[mk];
-        return `<div style="margin-bottom:18px;">
-          <div style="font-size:13px; font-weight:600; color:var(--muted); padding:8px 4px; border-bottom:0.5px solid var(--border); margin-bottom:8px;">${label} <span style="color:var(--muted); font-weight:400;">${posts.length}개</span></div>
-          ${posts.map(p=>renderItem(p,'togglePost','deletePost',true)).join('')}
-        </div>`;
-      }).join('')
-    : '<div class="empty">아직 작성된 글이 없어요.</div>';
-
-  document.getElementById('reel-week-count').textContent = weekReels.length+'개';
-
-  const days = ['일','월','화','수','목','금','토'];
-  const ws = weekStart();
-  let weekGridHtml = '';
-  for(let i=0;i<7;i++){
-    const dd = new Date(ws); dd.setDate(ws.getDate()+i);
-    const ds = dd.toISOString().slice(0,10);
-    const hasReel = data.reels.some(r=>r.date===ds);
-    const isToday = ds===todayStr();
-    weekGridHtml+=`<div class="day-btn ${hasReel?'has-reel':''} ${isToday?'today':''}">${days[i]}<br><span style="font-size:12px;font-weight:500">${dd.getDate()}</span>${hasReel?'<br>✓':''}</div>`;
-  }
-  document.getElementById('week-grid').innerHTML = weekGridHtml;
-
-  const sortedWeekReels = [...weekReels].sort((a,b) => (b.date||'').localeCompare(a.date||''));
-
-  document.getElementById('reel-list-week').innerHTML = sortedWeekReels.length
-    ? sortedWeekReels.map(r=>renderItem(r,'toggleReel','deleteReel',true)).join('')
-    : '<div class="empty">이번 주 릴스가 없어요.</div>';
-
-  // 전체 릴스 월별 그룹핑 (블로그처럼)
-  const sortedAllReels = [...data.reels].sort((a,b) => (b.date||'').localeCompare(a.date||''));
-  const reelGrouped = {};
-  sortedAllReels.forEach(r => {
-    if(!r.date) return;
-    const monthK = r.date.slice(0,7);
-    if(!reelGrouped[monthK]) reelGrouped[monthK] = [];
-    reelGrouped[monthK].push(r);
-  });
-  const reelMonthKeys = Object.keys(reelGrouped).sort().reverse();
-
-  document.getElementById('reel-all-count').textContent = data.reels.length+'개';
-  document.getElementById('reel-list-all').innerHTML = reelMonthKeys.length
-    ? reelMonthKeys.map(mk => {
-        const label = mk.replace('-','년 ')+'월';
-        const reels = reelGrouped[mk];
-        return `<div style="margin-bottom:18px;">
-          <div style="font-size:13px; font-weight:600; color:var(--muted); padding:8px 4px; border-bottom:0.5px solid var(--border); margin-bottom:8px;">${label} <span style="color:var(--muted); font-weight:400;">${reels.length}개</span></div>
-          ${reels.map(r=>renderItem(r,'toggleReel','deleteReel',true)).join('')}
-        </div>`;
-      }).join('')
-    : '<div class="empty">아직 등록된 릴스가 없어요.</div>';
-
-  const allMonths = [...new Set(data.posts.map(p=>p.date?p.date.slice(0,7):null).filter(Boolean))].sort().reverse();
-  const curMonth = monthKey();
-  const archiveHtml = allMonths.filter(m=>m!==curMonth).map(m=>{
-    const ps = data.posts.filter(p=>p.date&&p.date.startsWith(m));
-    const done = ps.filter(p=>p.done).length;
-    const rs = data.reels.filter(r=>r.date&&r.date.startsWith(m));
-    return `<div class="archive-month">
-      <div class="archive-month-header">
-        <div class="archive-month-title">${m.replace('-','년 ')}월</div>
-        <span class="tag ${done>=15?'teal':'amber'}">${done>=15?'목표 달성':'진행 중'}</span>
-      </div>
-      <div class="archive-stats">
-        <div class="archive-stat">블로그 <span>${ps.length}개</span></div>
-        <div class="archive-stat">완료 <span>${done}개</span></div>
-        <div class="archive-stat">릴스 <span>${rs.length}개</span></div>
-      </div>
-    </div>`;
-  }).join('');
-  document.getElementById('archive-list').innerHTML = archiveHtml || '<div class="empty">아직 완료된 달이 없어요. 이번 달이 첫 기록이 될 거예요!</div>';
-
-  // ===== 단지·팔로워·연간진행률 =====
-  renderComplexes();
-  renderFollowers();
-  renderYearProgress();
-
-  // ===== 기획 탭 렌더링 =====
-  renderWeekCalendar();
-  const planBlogDateInput = document.getElementById('plan-blog-date');
-  if(planBlogDateInput && !planBlogDateInput.value) planBlogDateInput.value = todayStr();
-  const planReelDateInput = document.getElementById('plan-reel-date');
-  if(planReelDateInput && !planReelDateInput.value) planReelDateInput.value = todayStr();
-
-  // 발행 예정 블로그 (가까운 날짜 순)
-  const sortedPlanPosts = [...data.planPosts].sort((a,b) => (a.date||'').localeCompare(b.date||''));
-  document.getElementById('plan-blog-count').textContent = sortedPlanPosts.length+'개';
-  document.getElementById('plan-blog-list').innerHTML = sortedPlanPosts.length
-    ? sortedPlanPosts.map(p=>renderPlanItem(p,'publishPlanBlog','deletePlanBlog',false)).join('')
-    : '<div class="empty">발행 예정 글이 없어요. 위에서 추가해보세요!</div>';
-
-  // 발행 예정 릴스 (가까운 날짜 순)
-  const sortedPlanReels = [...data.planReels].sort((a,b) => (a.date||'').localeCompare(b.date||''));
-  document.getElementById('plan-reel-count').textContent = sortedPlanReels.length+'개';
-  document.getElementById('plan-reel-list').innerHTML = sortedPlanReels.length
-    ? sortedPlanReels.map(r=>renderPlanItem(r,'publishPlanReel','deletePlanReel',true)).join('')
-    : '<div class="empty">발행 예정 릴스가 없어요. 위에서 추가해보세요!</div>';
-}
-
-function showTab(name) {
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('sec-'+name).classList.add('active');
-  event.target.classList.add('active');
-}
-
-loadData();
+draw();
+const F=D.feed;
+document.getElementById('feedSub').textContent=`캐러셀·이미지 ${F.n}개 · 중앙값 도달 ${f(F.reach)} · 저장 ${f(F.saved)} · 공유 ${f(F.shares)} (릴스 중앙값 도달 ${f(Math.round(D.med))})`;
+const T=(id,h,rows)=>document.getElementById(id).innerHTML='<tr>'+h.map((c,i)=>`<th${i?' style="text-align:right"':''}>${c}</th>`).join('')+'</tr>'+rows.join('');
+T('ftSave',['게시물','도달','저장률'],F.topsave.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t}</a><div class="meta">${x.date}</div></td><td class="num">${f(x.reach)}</td><td class="num"><b>${x.sr}%</b></td></tr>`));
+T('ftReach',['게시물','도달','공유'],F.topreach.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t}</a><div class="meta">${x.date}</div></td><td class="num"><b>${f(x.reach)}</b></td><td class="num">${f(x.shares)}</td></tr>`));
+T('ftWorst',['게시물','도달','저장'],F.worst.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t||'(캡션 없음)'}</a><div class="meta">${x.date}</div></td><td class="num">${f(x.reach)}</td><td class="num">${f(x.saved)}</td></tr>`));
+document.getElementById('nt').innerHTML='<tr><th>우선순위</th><th>소재</th><th>유형 · 타겟</th><th>상태</th><th>근거</th></tr>'+D.notion.map(n=>`<tr><td><span class="tag p${n[4]}">${n[4]}</span></td><td><b>${n[0]}</b></td><td class="meta">${n[1]}<br>${n[2]}</td><td class="meta">${n[3]}</td><td>${n[5]}</td></tr>`).join('');
 </script>
 </body>
 </html>
