@@ -54,6 +54,17 @@ td a{color:var(--tx);text-decoration:none}td a:hover{text-decoration:underline}
 .tw{overflow-x:auto}
 .thumbs{display:flex;gap:6px;margin:10px 0}.thumbs img{width:100%;max-width:90px;border-radius:6px;border:1px solid var(--bd)}
 code{font-size:12px;background:var(--sf2);padding:1px 6px;border-radius:4px}
+.tabs{display:flex;gap:4px;margin-top:18px;border-bottom:1px solid var(--bd)}
+.tabs button{font:inherit;font-size:15px;font-weight:600;padding:10px 18px;border:0;background:none;color:var(--tx3);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tabs button.on{color:var(--tx);border-bottom-color:var(--ac)}
+.tabs button[data-t=blog].on{border-bottom-color:#03c75a}
+.pane{display:none}.pane.on{display:block}
+.sig{white-space:pre-wrap;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;font-size:13.5px;line-height:1.7;font-family:inherit}
+.cp{font:inherit;font-size:12.5px;padding:5px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--tx);color:var(--bg);cursor:pointer;margin:8px 0 4px}
+.steps{counter-reset:s;list-style:none;padding:0}.steps li{counter-increment:s;position:relative;padding-left:30px;margin:8px 0;font-size:14px;color:var(--tx2)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:21px;height:21px;border-radius:50%;background:#03c75a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.note{font-size:13px;color:var(--tx2);background:var(--Bbg);border-radius:8px;padding:10px 12px;margin-top:10px}
+.blog h2 .g2{color:#03c75a}
 footer{margin-top:48px;color:var(--tx3);font-size:12px}
 </style>
 </head>
@@ -61,8 +72,10 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
 <div class="wrap">
 <header>
   <h1>착한언니복덕방 콘텐츠 아카이브</h1>
-  <p>@goodsister4080 · Instagram API 기준 2026.7.21 ~ 10.30 게시물 100개 (릴스 34 · 피드 66) · 2026.11.1 업데이트</p>
+  <p id="hsub">@goodsister4080 · Instagram API 기준 2026.7.21 ~ 10.30 게시물 100개 (릴스 34 · 피드 66) · 2026.11.1 업데이트</p>
+  <div class="tabs"><button data-t="ig" class="on">📸 인스타그램</button><button data-t="blog">🟢 네이버 블로그</button></div>
 </header>
+<div class="pane on" id="pane-ig">
 <nav>
   <a href="#week">이번 주 할 일</a><a href="#plan">11월 계획</a><a href="#reelplan">11월 릴스</a><a href="#ai">AI 활용 팁</a><a href="#kpi">계정 성과</a><a href="#insight">핵심 인사이트</a><a href="#reels">릴스 분석</a><a href="#feed">캐러셀 요약</a><a href="#notion">노션 소재 진단</a>
 </nav>
@@ -198,6 +211,227 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
 <footer>데이터 출처: Instagram Graph API (게시물 인사이트 · 계정 인사이트), Notion 릴스 소재 DB. 도달·조회수는 Instagram 추산치입니다.</footer>
 </div>
 
+<div class="pane blog" id="pane-blog">
+<nav>
+  <a href="#b-todo">이번 주 할 일</a><a href="#b-stat">통계 진단</a><a href="#b-area">전문 지역</a><a href="#b-apt">단지 글 소재</a><a href="#b-sig">하단 서명</a><a href="#b-write">글 공식</a><a href="#b-plan">발행 계획</a><a href="#b-clip">클립·쇼츠</a><a href="#b-check">주간 점검</a>
+</nav>
+
+<section id="b-todo">
+  <h2>📌 이번 주 할 일</h2>
+  <div class="sub">blog.naver.com/ellarang · 상세 문서: <a href="naver/blog-optimization.html">블로그 최적화 가이드</a></div>
+  <div class="cards">
+    <div class="card"><h3>🔧 바로 고치기</h3><ul>
+      <li>핀란드타워 <b>중복 글</b> 중 조회 70인 쪽 비공개 (99+70로 쪼개짐)</li>
+      <li><a href="#b-sig">하단 서명</a> → <b>내 템플릿</b> 저장 · 위젯 · 소개글</li>
+      <li><code>일상/맛집</code> 카테고리 · 고베 마라톤 후기 비공개</li>
+      <li>태그 0개 글에 태그 5~10개</li>
+    </ul></div>
+    <div class="card"><h3>✍️ 이번 주 발행 (주 3편)</h3><ul>
+      <li><b>더클래시</b> 실거래·전세 정리 → <a href="naver/drafts/2026-11-the-classy.html">초안</a> (현장 칸 채우기)</li>
+      <li><b>신촌 현대벤처빌</b> 또는 <b>신촌포스빌</b> 구조·시세 2026</li>
+      <li><b>래미안라그란데 입주민 후기</b> (거주 전문)</li>
+    </ul></div>
+    <div class="card"><h3>♻️ 기존 글 업데이트 (하루 1~2편)</h3><ul>
+      <li>2022·2025 건물 글: <b>2026 시세 한 단락 + 새 사진 + 제목 앞 2026</b></li>
+      <li>건물명 검색어는 제목에서 지우지 않기</li>
+      <li>2~3주 뒤 조회수 비교 → 효과 있으면 확대</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="b-stat">
+  <h2>📊 통계 진단</h2>
+  <div class="sub">관리자 통계 (2026.11.1 받은 자료) + 공개 글 50편 분석</div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">네이버 검색 유입</div><div class="v">46.3%</div><div class="n">목표 55%+</div></div>
+    <div class="kpi"><div class="l">Google 유입</div><div class="v">≈21%</div><div class="n">사이트 유입의 38.6%</div></div>
+    <div class="kpi warn"><div class="l">인스타 → 블로그</div><div class="v">2.0%</div><div class="n">인스타는 카톡으로 직행</div></div>
+    <div class="kpi"><div class="l">플레이스 유입</div><div class="v">6.4%</div><div class="n">모바일 4.8 + PC 1.6</div></div>
+    <div class="kpi"><div class="l">조회 1위</div><div class="v">371</div><div class="n">고덕강일3단지 본청약</div></div>
+  </div>
+  <div class="cards" style="margin-top:10px">
+    <div class="card"><h3>✅ 이 블로그를 키우는 건 '고유명사'</h3><ul>
+      <li>유입 검색어 TOP 16 <b>전부 건물·단지·브랜드명</b><br><span class="meta">신촌자이엘라 · 신촌 오피스텔 · 마포더클래시 18평 · 신촌 현대벤처빌 · 신촌포스빌 · 유씨유이대 · 핀란드타워 · 이대더가온 · 고덕강일3단지 59</span></li>
+      <li>일반 정보 글(잔금·가계약금 등)은 TOP 20에 <b>0편</b></li>
+      <li>건물 글은 2022·2025년 글도 아직 조회 → <b>오래 검색됨</b></li>
+    </ul></div>
+    <div class="card"><h3>🎯 바뀐 글 비중</h3>
+      <table><tr><th>비중</th><th>글 종류</th></tr>
+      <tr><td><b>50%</b></td><td>건물·단지 글 (신촌·이대 오피스텔, 마포·서대문·동대문 아파트)</td></tr>
+      <tr><td><b>30%</b></td><td>이름 붙은 이슈 (청약 단지명, 재건축 단지, 제도+날짜)</td></tr>
+      <tr><td>20%</td><td>일반 정보 → 새 글보다 <b>기존 글 업데이트</b></td></tr>
+      <tr><td>0%</td><td>일상·여행</td></tr></table></div>
+    <div class="card"><h3>⚠️ 고칠 것</h3><ul>
+      <li>법정 표시: 등록번호 들어간 글 <b>매물 글 2편뿐</b></li>
+      <li>최근 10편 중 7편 <b>태그 0개</b></li>
+      <li>25편 중 5편 <b>카톡 연결 없음</b></li>
+      <li>외부 링크 9~14개 몰린 글 → 공식 출처 1~2개 + 내부 링크로</li>
+      <li>하루 3~5편 몰아 발행 (7/28, 8/5) → 하루 1편 이하</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="b-area">
+  <h2>🗺️ 우리 중개 범위 · 전문 지역</h2>
+  <div class="sub">"직접 거래하고, 직접 살아본 사람" — 네이버 문서 품질(D.I.A.+)이 가장 높게 보는 직접 경험</div>
+  <div class="tw"><table>
+    <tr><th>등급</th><th>지역 · 단지</th><th>우리 경험</th><th>글 형태</th><th style="text-align:right">비중</th></tr>
+    <tr><td><span class="tag p최우선">주력 거래</span></td><td><b>더클래시 · 마포래미안푸르지오 · 마포프레스티지자이 · 신촌자이엘라</b></td><td class="meta">사무실 바로 앞, 실제 거래 최다</td><td>실거래·전세 정리, 평형 비교, 매물 글</td><td class="num"><b>50%</b></td></tr>
+    <tr><td><span class="tag p추천">생활권</span></td><td>신촌·이대 오피스텔, 북아현(힐스테이트신촌·신촌푸르지오·e편한세상신촌), 신촌럭키, 마포그랑자이</td><td class="meta">사무소 생활권</td><td>건물·단지 글</td><td class="num">20%</td></tr>
+    <tr><td><span class="tag p추천">거주 전문</span></td><td><b>이문 래미안라그란데</b>(거주) · <b>이문아이파크자이</b>(친척) · <b>장안동</b>(본가)</td><td class="meta">실제 거주 · 오래 산 동네</td><td>"입주민 시선" 후기형</td><td class="num">20%</td></tr>
+    <tr><td><span class="tag p보통">팀원 · 연고</span></td><td>자양동 · 일산 (동료 거주) · 인천 (유년기)</td><td class="meta">동료 거주 · 연고</td><td>동료 인터뷰형, 인천→서울 갈아타기</td><td class="num">10%</td></tr>
+  </table></div>
+  <div class="cards" style="margin-top:10px">
+    <div class="card"><h3>🏠 래미안라그란데 · 이문아이파크자이</h3><ul>
+      <li>매매 기록 1~3건뿐, <b>전월세 233건 · 1,048건</b> → 지금 수요는 "입주 후 전세·월세"</li>
+      <li>전세 중위 두 단지 모두 <b>59㎡ 6억 · 84㎡ 7억 5,000</b></li>
+      <li>글: 「래미안라그란데 실거주 후기」 「이문아이파크자이 vs 래미안라그란데 전세 비교」</li>
+    </ul></div>
+    <div class="card"><h3>🏘️ 장안동 84㎡ 12억대 4곳</h3><ul>
+      <li>장안현대홈타운 82건 · 11억 9,000</li><li>래미안장안2차 63건 · 12억 1,500</li><li>장안힐스테이트 42건 · 12억 3,500</li><li>래미안장안 28건 · 12억</li>
+      <li>글: 「장안동 토박이 중개사가 비교한 84㎡ 4곳」</li>
+    </ul></div>
+    <div class="card"><h3>🌉 자양동 · 일산 · 인천</h3><ul>
+      <li>자양동: 우성1 23건(59㎡ 14억 9,500), 자양우성7 18건(84㎡ 18억 5,000), 더샵스타시티 22건</li>
+      <li>일산·인천: 단지 지정해 주시면 조회</li>
+    </ul></div>
+  </div>
+  <p class="meta" style="margin-top:8px">출처: 국토교통부 실거래 (2025.11~2026.10 계약분, 해제 제외) · 84㎡=전용 80~86㎡, 59㎡=57~61㎡</p>
+</section>
+
+<section id="b-apt">
+  <h2>🏢 단지 글 소재 (마포·서대문 실거래)</h2>
+  <div class="sub">전체 표: <a href="naver/mapo-seodaemun-apt-2026.html">마포·서대문 실거래 단지표</a> · 9~10월 계약분은 신고 기한(30일)이 남아 늘어날 수 있어요</div>
+  <div class="tw"><table>
+    <tr><th>순위</th><th>단지</th><th>제목 예시</th><th>왜</th></tr>
+    <tr><td>1</td><td><b>더클래시</b></td><td>마포 더클래시 실거래가 2026｜18평·59㎡·84㎡ 매매·전세 총정리 <a href="naver/drafts/2026-11-the-classy.html" style="color:var(--ac)">초안 ↗</a></td><td class="meta">주력 거래 · 「마포더클래시 18평」 유입 · 매매 38건 · 84㎡ 최고 25억 5,000 (26.08)</td></tr>
+    <tr><td>2</td><td>신촌 현대벤처빌</td><td>2026 신촌 현대벤처빌 구조·매매·월세 시세</td><td class="meta">유입 검색어 0.55% · 매매 10건</td></tr>
+    <tr><td>3</td><td>신촌포스빌</td><td>2026 신촌포스빌 평면·실거래가·장단점</td><td class="meta">유입 검색어 0.44% · 매매 9건</td></tr>
+    <tr><td>4</td><td>마포래미안푸르지오</td><td>마래푸 1~4단지 84㎡ 실거래 비교 2026</td><td class="meta">주력 거래 · 84㎡ 중위 24억 9,000대</td></tr>
+    <tr><td>5</td><td>마포프레스티지자이</td><td>마포프레스티지자이 59㎡·84㎡ 실거래가 2026</td><td class="meta">주력 거래 · 84㎡ 중위 28억</td></tr>
+    <tr><td>6</td><td>신촌럭키</td><td>신촌럭키 84㎡ 14억대, 이대역 구축 장단점</td><td class="meta">사무소 동(대현동) · 매매 34건</td></tr>
+    <tr><td>7</td><td>북아현 신축 3총사</td><td>힐스테이트신촌 vs 신촌푸르지오 vs e편한세상신촌</td><td class="meta">84㎡ 19억 5,000~22억 비교</td></tr>
+    <tr><td>8</td><td>마포아이파크포레</td><td>마포아이파크포레 84㎡ 26억 8,000 신고가</td><td class="meta">26.09 최고가</td></tr>
+  </table></div>
+</section>
+
+<section id="b-sig">
+  <h2>🚨 하단 서명 (법정 표시)</h2>
+  <div class="sub">공인중개사가 인터넷에 중개대상물을 광고할 때 표시 의무 · 상세: <a href="naver/legal-signature.html">하단 서명 문서</a></div>
+  <div class="cards">
+    <div class="card"><h3>A안 · 모든 글 하단</h3>
+<pre class="sig" id="sigA">━━━━━━━━━━━━━━━━━━
+🏠 착한언니복덕방 | 신촌자이엘라 &amp; 마포그랑자이 부동산
+4인 전원 공인중개사 · 중개보조원 없음 · 마포·서대문 12년
+
+📩 카카오톡 채널 상담: (채널 링크)
+📍 사무실 위치: (네이버 지도 삽입)
+
+중개사무소: 신촌자이엘라부동산공인중개사사무소
+대표 공인중개사: 신수경 · 등록번호 11410-2019-00062
+소재지: 서울특별시 서대문구 대현동 104-36, B101호
+연락처: 02-364-4080
+━━━━━━━━━━━━━━━━━━</pre>
+      <button class="cp" data-c="sigA">복사</button>
+      <div class="note">마포그랑자이부동산이 별도 등록 사무소라면 그 사무소 정보로 된 서명도 따로 만들어야 해요.</div>
+    </div>
+    <div class="card"><h3>어디서 넣나요? (PC)</h3>
+      <ol class="steps">
+        <li><b>내 템플릿</b> (핵심): 글쓰기 → A안 붙여넣기 → 오른쪽 위 <b>[템플릿] → [내 템플릿] → [현재 글 저장]</b> → 새 글마다 불러오기</li>
+        <li><b>사이드바 위젯</b>: 관리 → 꾸미기 설정 → 레이아웃·위젯 설정 → <b>[+위젯 직접등록]</b> (PC에만 보임)</li>
+        <li><b>소개글</b>: 관리 → 기본 설정 → 블로그 정보 → 소개글 마지막에 등록번호 줄 추가</li>
+        <li><b>기존 글</b>: 매물·오피스텔 글 → 조회 TOP 20 순으로 하루 2~3편씩 하단만 추가</li>
+      </ol>
+      <div class="note">네이버 블로그에는 모든 글에 자동으로 붙는 서명 기능이 없어서, ① 템플릿을 기본으로 씁니다. 메뉴 이름은 화면에서 직접 확인하지 않아 조금 다를 수 있어요.</div>
+    </div>
+    <div class="card"><h3>B안 · 매물 글 추가 항목</h3>
+<pre class="sig" id="sigB">[매물 정보]  기준일: 2026.  .
+소재지:
+면적: 전용 ㎡ (공급 ㎡)
+가격: 매매 / 보증금·월세
+거래 형태:
+건축물 종류:
+총 층수 / 해당 층:
+사용승인일:
+방향 (기준: 거실):
+방 수 / 욕실 수:
+입주 가능일:
+주차 대수:
+관리비:</pre>
+      <button class="cp" data-c="sigB">복사</button>
+      <div class="note">거래 끝나면 제목에 (거래완료) 또는 비공개. 최종 항목은 국토부 「중개대상물의 표시·광고 명시사항 세부기준」 원문 확인.</div>
+    </div>
+  </div>
+</section>
+
+<section id="b-write">
+  <h2>✍️ 글 1편 공식</h2>
+  <div class="sub">네이버 C-Rank(한 주제 꾸준히) · D.I.A.+(직접 경험·정보량) · AI 브리핑(첫 요약·표)</div>
+  <div class="cards">
+    <div class="card"><h3>제목</h3><ul>
+      <li><b>검색어(단지명)를 맨 앞</b>에, 25~35자</li>
+      <li>연도 넣기: 「2026 …」 「[2026년 11월 최신] …」</li>
+      <li>인스타 손실형 제목 X → 사람들이 실제로 치는 말</li>
+    </ul></div>
+    <div class="card"><h3>본문 순서</h3><ul>
+      <li>① <b>결론 3줄 요약</b> (AI 브리핑·구글 첫 문단)</li>
+      <li>② 대표 사진 → ③ 실거래 표 → ④ 해석</li>
+      <li>⑤ <b>착한언니 체크포인트</b> 3개 → ⑥ FAQ 2~3</li>
+      <li>⑦ 내부 링크 2~3개 → ⑧ 하단 서명</li>
+    </ul></div>
+    <div class="card"><h3>할 것 / 하지 말 것</h3><ul>
+      <li>✅ 직접 찍은 사진 5~10장 · 태그 5~10개 · 공식 출처 1~2개</li>
+      <li>❌ 다른 글 복사 · 같은 키워드 10회+ · 외부 링크 남발</li>
+      <li>❌ 인스타 캡션 복붙 · 발행 직후 여러 번 수정</li>
+      <li>⚠️ 실거래·대출·세금 숫자는 원천 확인 후 기준일 표기</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="b-plan">
+  <h2>📅 11월 발행 계획</h2>
+  <div class="sub">주 3편 = 건물·단지 글 1~2 + 이름 붙은 이슈 1 · 오전 7~9시 또는 점심 전후 · 하루 1편 이하</div>
+  <div class="tw"><table>
+    <tr><th>주</th><th>건물·단지 글</th><th>이슈 글 (인스타 연계)</th></tr>
+    <tr><td>11/2~8</td><td>더클래시 실거래 · 현대벤처빌</td><td>11월 청약 <b>단지별 1편</b> (고덕강일 패턴: 단지명+59㎡+분양가·견본주택)</td></tr>
+    <tr><td>11/9~15</td><td>래미안라그란데 입주민 후기 · 신촌포스빌</td><td>위례선 트램 개통 연기 + 수도권 철도 일정</td></tr>
+    <tr><td>11/16~22</td><td>마래푸 1~4단지 비교 · 마포프레스티지자이</td><td>등기부등본 보는법 (기존 특약 글과 연결)</td></tr>
+    <tr><td>11/23~29</td><td>장안동 84㎡ 4곳 · 북아현 신축 3총사</td><td>11월 서울 84㎡ 실거래 TOP · 연말정산 집 관련 공제</td></tr>
+  </table></div>
+  <p class="meta" style="margin-top:8px">일반 정보 주제(잔금·특약·집보기)는 새 글 대신 기존 글 업데이트로 · 인스타 일정: <a href="instagram/2026-11-content-plan.html">11월 기획안</a></p>
+</section>
+
+<section id="b-clip">
+  <h2>🎬 릴스 → 네이버 클립 · 유튜브 쇼츠</h2>
+  <div class="cards">
+    <div class="card"><h3>흐름</h3><ul>
+      <li>인스타 릴스 (화·목·토 밤)</li>
+      <li>→ <b>네이버 클립</b>: 같은 날/다음 날 오전 · 설명란에 관련 블로그 글 링크</li>
+      <li>→ <b>유튜브 쇼츠</b>: 다음 날 · 제목에 검색어 · 고정 댓글에 카톡 채널</li>
+    </ul></div>
+    <div class="card"><h3>주의</h3><ul>
+      <li>세 곳 모두 <b>워터마크 없는 원본</b> (편집앱에서 내보내기)</li>
+      <li>끝 멘트: 인스타 "댓글 키워드 → DM" / 클립·쇼츠 "자료는 프로필 카톡 채널에서" 두 버전 저장</li>
+      <li>추가 촬영 0, 업로드 하루 5~10분</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="b-check">
+  <h2>🔍 매주 금요일 10분 점검</h2>
+  <div class="tw"><table>
+    <tr><th>체크</th><th>방법</th><th>기준</th></tr>
+    <tr><td>검색 누락</td><td>네이버에서 <b>제목 전체</b> 그대로 검색</td><td>1~2일 뒤에도 안 나오면 링크·복사 이미지·반복 키워드 점검</td></tr>
+    <tr><td>유입 검색어</td><td>통계 → 유입분석 → 검색 유입</td><td>새 건물·단지명이 보이면 그 이름으로 글</td></tr>
+    <tr><td>업데이트 효과</td><td>수정한 글 조회수 2~3주 비교</td><td>떨어지면 그 방식 중단</td></tr>
+    <tr><td>상담 전환</td><td>카톡 채널 유입 경로 · 톡톡 문의</td><td>주 10회+</td></tr>
+  </table></div>
+</section>
+
+<footer>데이터 출처: 네이버 블로그 통계(관리자 화면 제공분) · 공개 글 RSS · 국토교통부 실거래가 공개시스템 (2025.11~2026.10 계약분, 2026.11.1 조회)</footer>
+</div>
+</div>
+
 <script>
 const D={"acct": {"reach": 275906, "views": 817890, "profile_views": 4564, "website_clicks": 73, "accounts_engaged": 11370, "total_interactions": 19598, "saves": 6911, "shares": 3611}, "reels": [{"date": "2026-07-21", "day": "Tue", "time": "22:17", "title": "서울 25개구 최고가 BEST5", "reach": 3860, "views": 5500, "saved": 29, "shares": 10, "comments": 0, "likes": 19, "sr": 0.8, "grade": "C", "why": "250억 같은 초고가는 7~9억 실수요 팔로워와 거리가 멀고, 댓글 유도가 없음", "next": "'내 예산으로 갈 수 있는 구' 관점으로 재구성", "url": "https://www.instagram.com/reel/DbDmglQS-yJ/"}, {"date": "2026-07-22", "day": "Wed", "time": "22:17", "title": "생애최초 4.2억 대출 · 6억 이하", "reach": 9360, "views": 12424, "saved": 106, "shares": 40, "comments": 459, "likes": 64, "sr": 1.1, "grade": "B", "why": "숫자 조건(4.2억/1억8천) + 자료 댓글로 댓글 459. 계정 초기라 도달은 중앙값 이하", "next": "11/10 '생애최초 서울 6억 이하 리스트'로 리메이크", "url": "https://www.instagram.com/reel/DbGLCmZSXUv/"}, {"date": "2026-07-24", "day": "Fri", "time": "15:35", "title": "부동산 줄임말 정리", "reach": 5528, "views": 7472, "saved": 26, "shares": 12, "comments": 2, "likes": 29, "sr": 0.5, "grade": "C", "why": "용어 나열형, '모르면 손해' 동기와 CTA 없음. 같은 용어 주제인 10/13 릴스는 손실 프레임으로 저장 680", "next": "용어 콘텐츠는 '모르면 내 돈 놓친다' 프레임으로만", "url": "https://www.instagram.com/reel/DbKmfMwSigI/"}, {"date": "2026-07-26", "day": "Sun", "time": "00:12", "title": "서울 7~9억대 아파트 리스트", "reach": 84012, "views": 116450, "saved": 839, "shares": 581, "comments": 6110, "likes": 663, "sr": 1.0, "grade": "S", "why": "타깃 예산과 정확히 맞는 가격대 + 댓글 자료 배포 → 댓글 6,110, 저장 839. 계정 대표 포맷", "next": "월 1회 업데이트로 정례화", "url": "https://www.instagram.com/reel/DbOGqN5y_-a/"}, {"date": "2026-07-28", "day": "Tue", "time": "19:08", "title": "실전 부동산 특약", "reach": 5883, "views": 7627, "saved": 87, "shares": 27, "comments": 222, "likes": 76, "sr": 1.5, "grade": "C", "why": "저장률 1.5%로 내용은 좋음. 1만 팔로워 감사 인사로 시작해 신규 유입 훅이 약함", "next": "특약 1개만 깊게 + 손실 숫자로 시작 (11/21)", "url": "https://www.instagram.com/reel/DbVSN0Ty1-G/"}, {"date": "2026-07-29", "day": "Wed", "time": "15:27", "title": "등기부등본 확인", "reach": 4032, "views": 5022, "saved": 8, "shares": 4, "comments": 14, "likes": 16, "sr": 0.2, "grade": "C", "why": "'기본 중의 기본' 원론적 시작, 서류 실물이 화면에 없음", "next": "실제 등기부 샘플 + 빨간 표시로 재제작 (11/18)", "url": "https://www.instagram.com/reel/DbXc_NPS69d/"}, {"date": "2026-07-30", "day": "Thu", "time": "21:25", "title": "지금 사야 하나, 기다려야 하나", "reach": 79560, "views": 97048, "saved": 827, "shares": 598, "comments": 551, "likes": 352, "sr": 1.0, "grade": "S", "why": "누구나 하는 질문을 뒤집는 첫 문장 + 시리즈 예고 → 저장 827, 공유 598", "next": "연말판으로 재활용 (11/26)", "url": "https://www.instagram.com/reel/DbarYHrSTcz/"}, {"date": "2026-08-01", "day": "Sat", "time": "13:33", "title": "분양가 vs 2026 실거래가", "reach": 170389, "views": 258961, "saved": 420, "shares": 516, "comments": 27, "likes": 299, "sr": 0.2, "grade": "S", "why": "가격 비교 숫자 + '고분양가 논란 → 지금 가격' 반전으로 최고 도달. 다만 CTA가 없어 댓글 27", "next": "같은 포맷에 마지막 3초 '리스트' 키워드 추가 (11/14)", "url": "https://www.instagram.com/reel/Dbe-zMeyhSu/"}, {"date": "2026-08-04", "day": "Tue", "time": "15:09", "title": "경기 갈아타기 추천", "reach": 7924, "views": 11405, "saved": 52, "shares": 29, "comments": 466, "likes": 149, "sr": 0.7, "grade": "C", "why": "팔로워 요청에서 출발한 자료라 댓글 466. '오래 기다리셨죠' 오프닝은 기존 팔로워용이라 도달 제한", "next": "첫 3초를 숫자로 바꿔 경기 리스트 재제작 (11/24)", "url": "https://www.instagram.com/reel/Dbm4gyWyRg_/"}, {"date": "2026-08-05", "day": "Wed", "time": "20:06", "title": "빌라 사이 나홀로아파트", "reach": 114800, "views": 171951, "saved": 894, "shares": 455, "comments": 48, "likes": 246, "sr": 0.8, "grade": "S", "why": "❌/⭕ 판정형으로 기준이 명확함 → 저장 894(전체 1위), 도달 11만", "next": "'사면 안 되는 아파트 TOP5' 시리즈화 (11/5)", "url": "https://www.instagram.com/reel/Dbp_R9zS3SO/"}, {"date": "2026-08-08", "day": "Sat", "time": "16:45", "title": "똘똘한 한 채 · 세제개편", "reach": 14681, "views": 20016, "saved": 139, "shares": 77, "comments": 1167, "likes": 122, "sr": 0.9, "grade": "A", "why": "정책 발표 직후 타이밍 + 자료 배포 → 댓글 1,167", "next": "정책 이슈는 발표 2~3일 안에 빠르게", "url": "https://www.instagram.com/reel/DbxWTgESWqI/"}, {"date": "2026-08-11", "day": "Tue", "time": "15:03", "title": "분양가 vs 실거래 (정정본)", "reach": 24538, "views": 35953, "saved": 112, "shares": 139, "comments": 15, "likes": 85, "sr": 0.5, "grade": "A", "why": "7번 후속이라 공유 139. 정정 공지로 시작해 훅을 잃음", "next": "데이터 검수 후 업로드, 정정은 고정 댓글로", "url": "https://www.instagram.com/reel/Db45nK_SPOW/"}, {"date": "2026-08-13", "day": "Thu", "time": "16:14", "title": "광명 하안주공 족보 BEST5", "reach": 59782, "views": 75374, "saved": 316, "shares": 599, "comments": 731, "likes": 245, "sr": 0.5, "grade": "S", "why": "지역 특화 자료 + 현장 발품 → 공유 599(전체 1위), 지역 커뮤니티로 확산", "next": "노션 R-005 '하안주공 근조화환'으로 바로 후속", "url": "https://www.instagram.com/reel/Db-KcaVy44C/"}, {"date": "2026-08-17", "day": "Mon", "time": "21:40", "title": "8.13 대책 실수요자 리포트", "reach": 9308, "views": 12809, "saved": 52, "shares": 37, "comments": 174, "likes": 68, "sr": 0.6, "grade": "B", "why": "자료 배포로 댓글 174는 확보했지만, 정책 요약은 경쟁 계정이 많아 도달은 평범", "next": "정책은 '실수요자가 할 일 1가지'로 압축", "url": "https://www.instagram.com/reel/DcJDkvtyaLn/"}, {"date": "2026-08-19", "day": "Wed", "time": "21:45", "title": "대학생활권 아파트 BEST", "reach": 4924, "views": 6730, "saved": 9, "shares": 15, "comments": 54, "likes": 24, "sr": 0.2, "grade": "C", "why": "학부모라는 좁은 타깃 + 감성형 첫 문장 → 하위권", "next": "노션 '연대·이대·서강대 6선'은 숫자 훅으로 바꾸거나 보류", "url": "https://www.instagram.com/reel/DcON4ppScDG/"}, {"date": "2026-08-21", "day": "Fri", "time": "18:39", "title": "서울 5~10억 아파트 자료", "reach": 12547, "views": 17573, "saved": 87, "shares": 72, "comments": 1221, "likes": 156, "sr": 0.7, "grade": "A", "why": "리스트 공식 재현으로 댓글 1,221. 도달은 7/26보다 낮음 (같은 형식 반복 피로)", "next": "리스트는 월 1회만, 매번 새 각도(생애최초·경기 등)", "url": "https://www.instagram.com/reel/DcTBuHQyrSY/"}, {"date": "2026-08-24", "day": "Mon", "time": "22:07", "title": "재건축 사업성 용어", "reach": 6323, "views": 7838, "saved": 70, "shares": 15, "comments": 39, "likes": 44, "sr": 1.1, "grade": "C", "why": "용어 설명형이라 손실 훅이 약함", "next": "노션 '재건축 용어' 대본의 '모르면 사지 마세요' 훅이 더 강함", "url": "https://www.instagram.com/reel/DcbIRyBSVEG/"}, {"date": "2026-08-25", "day": "Tue", "time": "21:04", "title": "아파트 집보기 체크리스트", "reach": 44127, "views": 52968, "saved": 845, "shares": 290, "comments": 324, "likes": 208, "sr": 1.9, "grade": "A", "why": "현장 체크리스트 → 저장 845, 저장률 1.9%", "next": "겨울판 체크리스트로 후속 (11/9)", "url": "https://www.instagram.com/reel/Dcdloijyvl0/"}, {"date": "2026-08-27", "day": "Thu", "time": "20:00", "title": "중개사는 집 볼 때 모르는 척", "reach": 17798, "views": 25436, "saved": 369, "shares": 104, "comments": 0, "likes": 67, "sr": 2.1, "grade": "B", "why": "중개사 반전 썰 → 저장률 2.1%. 댓글 CTA가 없어 댓글 0", "next": "썰형에도 마지막 키워드 CTA 추가", "url": "https://www.instagram.com/reel/DcinUoOywz9/"}, {"date": "2026-09-01", "day": "Tue", "time": "21:18", "title": "전세 보증금 사수 특약 5", "reach": 40315, "views": 48030, "saved": 281, "shares": 97, "comments": 181, "likes": 79, "sr": 0.7, "grade": "A", "why": "'보증금 잃는다' 손실 프레임 → 도달 4만", "next": "매수 특약 버전으로 확장", "url": "https://www.instagram.com/reel/DcvomfYScAN/"}, {"date": "2026-09-03", "day": "Thu", "time": "16:21", "title": "하안·철산 공공임대 분담금", "reach": 13050, "views": 17054, "saved": 43, "shares": 55, "comments": 108, "likes": 59, "sr": 0.3, "grade": "B", "why": "12번 후속 지역 이슈. 범위가 좁아 도달은 12번의 1/4", "next": "지역 이슈는 '족보형 자료'와 묶을 때만", "url": "https://www.instagram.com/reel/Dc0QkSqSaJv/"}, {"date": "2026-09-08", "day": "Tue", "time": "22:29", "title": "2억 재개발 빌라 · 마피 오피스텔", "reach": 5946, "views": 7905, "saved": 20, "shares": 9, "comments": 39, "likes": 23, "sr": 0.3, "grade": "C", "why": "저가 매물 주제가 아파트 실수요 타깃과 어긋남, 메시지가 추상적", "next": "보류", "url": "https://www.instagram.com/reel/DdBy4E4SmzT/"}, {"date": "2026-10-06", "day": "Tue", "time": "21:43", "title": "20년 된 보일러 교체비", "reach": 22574, "views": 30983, "saved": 54, "shares": 29, "comments": 8, "likes": 85, "sr": 0.2, "grade": "A", "why": "보편적 분쟁 주제라 도달 2.2만. 세입자 대상이라 저장 54, 전환 약함", "next": "도달용으로만 가끔 (월 1회 이하)", "url": "https://www.instagram.com/reel/DeJyE6FS-rT/"}, {"date": "2026-10-12", "day": "Mon", "time": "19:15", "title": "비데티슈 막힘 수리비", "reach": 20058, "views": 26680, "saved": 25, "shares": 16, "comments": 15, "likes": 66, "sr": 0.1, "grade": "A", "why": "22번과 같은 패턴: 도달은 나오는데 저장·팔로우 전환이 낮음", "next": "같은 주제 연속 금지", "url": "https://www.instagram.com/reel/DeY_e8RSCWI/"}, {"date": "2026-10-13", "day": "Tue", "time": "02:45", "title": "헷갈리는 부동산 용어", "reach": 20759, "views": 24903, "saved": 680, "shares": 75, "comments": 0, "likes": 96, "sr": 3.3, "grade": "A", "why": "'모르면 내 돈 놓친다' 프레임 → 저장 680, 저장률 3.3%(릴스 1위). 새벽 업로드에도 성과", "next": "저장형 릴스의 기준 포맷으로 사용", "url": "https://www.instagram.com/reel/DeZzBVcS2FB/"}, {"date": "2026-10-15", "day": "Thu", "time": "15:07", "title": "부린이 vs 고수", "reach": 95840, "views": 129609, "saved": 783, "shares": 516, "comments": 10, "likes": 241, "sr": 0.8, "grade": "S", "why": "대조 구조로 자기 투영 → 도달 9.6만. CTA가 없어 댓글 10", "next": "2편 '계약서 쓸 때' + 키워드 CTA (11/17)", "url": "https://www.instagram.com/reel/DegRqBKyHKU/"}, {"date": "2026-10-19", "day": "Mon", "time": "18:16", "title": "결정 못 하는 사람 특징", "reach": 34329, "views": 40617, "saved": 167, "shares": 129, "comments": 4, "likes": 103, "sr": 0.5, "grade": "A", "why": "매수 고민층 공감형 → 도달 3.4만", "next": "'지금 사야 하나' 시리즈와 묶기", "url": "https://www.instagram.com/reel/Deq6JCoyNoI/"}, {"date": "2026-10-20", "day": "Tue", "time": "23:56", "title": "서울 7·8·9억대 22곳", "reach": 12985, "views": 17850, "saved": 146, "shares": 95, "comments": 2085, "likes": 130, "sr": 1.1, "grade": "A", "why": "리스트 공식 → 댓글 2,085. 도달은 중앙값 수준", "next": "리스트 릴스 첫 3초에 '최저가 단지 + 가격' 노출", "url": "https://www.instagram.com/reel/DeuFw_TSA_a/"}, {"date": "2026-10-23", "day": "Fri", "time": "12:53", "title": "실거주 거절 3,080만원 판례", "reach": 7042, "views": 9160, "saved": 17, "shares": 10, "comments": 1, "likes": 29, "sr": 0.2, "grade": "C", "why": "집주인·세입자 분쟁 판례로 매수자 타깃이 아님", "next": "보류", "url": "https://www.instagram.com/reel/De0njMGSm46/"}, {"date": "2026-10-24", "day": "Sat", "time": "18:02", "title": "10년 월세, 남은 건 보증금뿐", "reach": 4655, "views": 5994, "saved": 9, "shares": 2, "comments": 29, "likes": 26, "sr": 0.2, "grade": "C", "why": "소재는 강한데 '4억 8천 → 14억' 반전이 영상 끝에 있음 (PDF 지적과 일치)", "next": "반전 숫자를 첫 3초로 옮겨 재촬영", "url": "https://www.instagram.com/reel/De3wwvnyKXJ/"}, {"date": "2026-10-27", "day": "Tue", "time": "16:14", "title": "수리비, 집주인 몫 vs 세입자 몫", "reach": 19077, "views": 26844, "saved": 86, "shares": 47, "comments": 2, "likes": 75, "sr": 0.5, "grade": "B", "why": "세입자 분쟁형 3번째 → 도달 1.9만이지만 저장 86", "next": "분쟁형은 월 1회로 제한", "url": "https://www.instagram.com/reel/De_Sp-VSEBT/"}, {"date": "2026-10-28", "day": "Wed", "time": "16:19", "title": "중도 퇴실 복비", "reach": 4105, "views": 5319, "saved": 11, "shares": 8, "comments": 0, "likes": 27, "sr": 0.3, "grade": "C", "why": "19초에 케이스가 몰려 있고 세입자 니치 → 하위권", "next": "보류", "url": "https://www.instagram.com/reel/DfB4Fi9yeTh/"}, {"date": "2026-10-28", "day": "Wed", "time": "18:33", "title": "집이 안 팔리는 사람 TOP5", "reach": 33064, "views": 36324, "saved": 80, "shares": 30, "comments": 10, "likes": 65, "sr": 0.2, "grade": "A", "why": "카운트다운 + '매도 실수 = 매수 기준' 전환 → 3.3만. CTA 약함", "next": "항목당 5초 + '체크' 키워드", "url": "https://www.instagram.com/reel/DfCHSd-SU4T/"}, {"date": "2026-10-30", "day": "Fri", "time": "17:49", "title": "첫 자취방 체크", "reach": 3678, "views": 4304, "saved": 10, "shares": 21, "comments": 25, "likes": 37, "sr": 0.3, "grade": "C", "why": "20대 자취 타깃이 핵심 팔로워(35~44세)와 불일치, 감성 오프닝 → 릴스 최저", "next": "자취 주제 중단", "url": "https://www.instagram.com/reel/DfHLzbSO0_9/"}], "feed": {"n": 66, "reach": 6136, "saved": 58, "shares": 25, "topsave": [{"date": "2026-10-21", "t": "공인중개사가 알려주는 ", "reach": 25886, "saved": 1823, "sr": 7.0, "url": "https://www.instagram.com/p/DewlcLnkmqC/"}, {"date": "2026-08-26", "t": "집 보러 갈 때마다", "reach": 30051, "saved": 1459, "sr": 4.9, "url": "https://www.instagram.com/p/DcfD5PUErtg/"}, {"date": "2026-07-29", "t": "📍일단 저장!", "reach": 6812, "saved": 295, "sr": 4.3, "url": "https://www.instagram.com/p/DbWwLkUkq3j/"}, {"date": "2026-10-19", "t": "토지거래허가 매매, ", "reach": 6673, "saved": 253, "sr": 3.8, "url": "https://www.instagram.com/p/DerWhTkks54/"}, {"date": "2026-10-21", "t": "서울 아파트 매수, ", "reach": 5626, "saved": 211, "sr": 3.8, "url": "https://www.instagram.com/p/DeuOkpWElRD/"}, {"date": "2026-07-29", "t": "⚠️일단 저장", "reach": 32894, "saved": 1045, "sr": 3.2, "url": "https://www.instagram.com/p/DbYU-mYkoIx/"}], "topreach": [{"date": "2026-08-08", "t": "✅️무조건 접수!", "reach": 159186, "shares": 2212, "url": "https://www.instagram.com/p/Dbx9P3Vkk4Z/"}, {"date": "2026-09-02", "t": "🏠 성남복정2 A1 신혼희망타운, ", "reach": 76130, "shares": 588, "url": "https://www.instagram.com/p/DcxxBPMEgRv/"}, {"date": "2026-08-10", "t": "✅️무조건 저장", "reach": 67201, "shares": 1519, "url": "https://www.instagram.com/p/Db3DBeNkgMZ/"}, {"date": "2026-07-22", "t": "📝 집값 6억까지", "reach": 58312, "shares": 597, "url": "https://www.instagram.com/p/DbD0brzknOp/"}, {"date": "2026-08-25", "t": "부부합산 연봉 1.1억,", "reach": 54896, "shares": 446, "url": "https://www.instagram.com/p/DcdrYmrEuFg/"}], "worst": [{"date": "2026-10-23", "t": "서울 89주째 상승, 이번 주 1위는?", "reach": 1998, "saved": 2, "url": "https://www.instagram.com/p/DezYRZ_Epk4/"}, {"date": "2026-10-26", "t": "11월 첫째 주, 수도권 아파트 청약 ", "reach": 3117, "saved": 4, "url": "https://www.instagram.com/p/De9HU4IksvA/"}, {"date": "2026-10-30", "t": "우리 동네 옆에 신도시?", "reach": 3173, "saved": 6, "url": "https://www.instagram.com/p/DfGbTVxkm7x/"}, {"date": "2026-10-30", "t": "오피스텔 10평 = 아파트 10평? 🤔", "reach": 1516, "saved": 7, "url": "https://www.instagram.com/p/DfH2WLAyqF4/"}, {"date": "2026-10-17", "t": "공무원 9,929명 세종행, 집값 또 움직일까? 🏛", "reach": 4597, "saved": 7, "url": "https://www.instagram.com/p/DelG0KBkqQQ/"}]}, "notion": [["서울 5억~10억대 아파트 29개 + BEST 5", "자료배포형", "2030 매수자", "촬영 대기", "최우선", "리스트 릴스(7/26 댓글 6,110 · 도달 8.4만)와 같은 공식. 첫 3초에 최저가 단지와 가격을 먼저 보여주기"], ["R-005 | 하안주공 — 광명시청 앞 근조화환", "논쟁형", "재건축 관심자", "촬영 대기", "최우선", "하안주공 족보 릴스가 공유 599·도달 6만으로 검증됨. 시의성이 있을 때 바로 촬영"], ["집값 떨어지면 사려고 기다린 지 몇 년?", "논쟁형", "매수자·갈아타기", "촬영 대기", "최우선", "'지금 사야 하나'(도달 8만·저장 827)와 같은 질문 뒤집기 구조"], ["공동명의 vs 단독명의", "논쟁형", "매수자·매도자", "소재", "추천", "매수자 타깃 + 비교형 → 저장형으로 적합. 결론을 표 한 장으로"], ["대출 안 나오면 계약금 돌려받나요?", "상황극", "세입자 → 매수자로 확장", "대본 작성", "추천", "손실 프레임이 강함. 타깃을 매수자로 넓히면 전환이 좋아짐"], ["집값 2억 올랐는데 배액배상하면 되죠?", "상황극", "매도자", "대본 작성", "추천", "숫자 훅이 강함. '매수자는 이렇게 대비' 결말 추가"], ["재건축 용어 — 이 단어 모르면 사지 마세요", "정보/저장형", "재건축·매수자", "대본 작성", "추천", "8/24 재건축 용어(6.3천)는 약했지만, 10/13 용어 릴스는 손실 프레임으로 저장 680. 지금 훅 그대로 진행"], ["R-001 | 집주인 배우자가 대신 나온 전세계약", "상황극", "세입자", "촬영 대기", "보통", "전세 특약(4만)처럼 보증금 손실형은 도달이 나옴. 세입자형은 팔로우 전환이 약하니 월 1~2회만"], ["R-006 | 전세 3천 싼 집", "상황극", "세입자", "촬영 대기", "보통", "R-001과 같은 이유. 둘 중 하나만 11월에"], ["전세대출 3억 → 2억밖에 안 나와요", "상황극", "세입자", "대본 작성", "보통", "숫자 훅은 좋지만 세입자 니치"], ["R-007 | 500가구 이하 정비구역 지정권", "논쟁형", "재건축 관심자", "대본 작성", "보통", "정책 설명형은 1.3만 수준. '어느 단지가 수혜?' 리스트로 바꾸면 상향"], ["R-002 | 강제이사 상황극", "상황극", "세입자", "촬영 대기", "후순위", "세입자 분쟁형은 도달 2만 안팎이지만 저장·팔로우 전환이 최하위권"], ["연대·이대·서강대 대학생활권 아파트 6선", "자료배포형", "학부모", "조사 필요", "후순위", "같은 소재(8/19)가 도달 4.9천으로 하위권. 숫자 훅으로 재설계 전에는 보류"]], "med": 13865.5, "gcount": {"S": 6, "A": 11, "B": 5, "C": 12}};
 const f=n=>n==null?'-':n.toLocaleString('ko-KR');
@@ -230,6 +464,18 @@ T('ftReach',['게시물','도달','공유'],F.topreach.map(x=>`<tr><td><a href="
 T('ftWorst',['게시물','도달','저장'],F.worst.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t||'(캡션 없음)'}</a><div class="meta">${x.date}</div></td><td class="num">${f(x.reach)}</td><td class="num">${f(x.saved)}</td></tr>`));
 document.getElementById('nt').innerHTML='<tr><th>우선순위</th><th>소재</th><th>유형 · 타겟</th><th>상태</th><th>근거</th></tr>'+D.notion.map(n=>`<tr><td><span class="tag p${n[4]}">${n[4]}</span></td><td><b>${n[0]}</b></td><td class="meta">${n[1]}<br>${n[2]}</td><td class="meta">${n[3]}</td><td>${n[5]}</td></tr>`).join('');
 document.getElementById('rp').innerHTML='<tr><th>날짜</th><th>주제</th><th>첫 3초</th><th>키워드</th></tr>'+[["11/3(화)", "10년 전 vs 지금 (마포·창동)", "2016년 8억 5천, 지금 25억. 같은 아파트예요.", "리스트"], ["11/5(목)", "사면 안 되는 아파트 TOP 5", "이 5가지 중 하나라도 해당되면, 다시 생각하세요.", "체크"], ["11/7(토)", "잔금날 놓치면 수백만 원", "잔금날 이거 하나 빠뜨려서 수백만 원 날리는 분, 매달 봅니다.", "잔금"], ["11/10(화)", "생애최초 서울 84㎡ 6억 이하", "서울 84㎡, 아직 6억 이하로 거래돼요. 도봉구에서만 239건.", "첫집"], ["11/12(목)", "갈아타기 1.5배 원칙", "10억 집이 12억 될 때, 15억 집은 18억이 됩니다.", "갈아타기"], ["11/14(토)", "분양가 vs 실거래가 2편", "분양가 ○억이던 이 단지, 지금 실거래가 보세요.", "리스트"], ["11/17(화)", "부린이 vs 고수 2편: 계약서", "같은 계약서인데, 고수는 이 한 줄을 꼭 넣어요.", "특약"], ["11/19(목)", "수능 주간 학군지 10년", "대치·목동·중계 10년 가격부터 보세요.", "학군"], ["11/21(토)", "계약서 5천 건, 특약 하나", "계약서 5천 건 쓰면서, 제가 무조건 넣는 특약은 딱 하나예요.", "특약"], ["11/24(화)", "경기 갈아타기 징검다리", "경기 7억대 신축 84㎡, 서울 가는 징검다리가 될 수 있어요.", "경기"], ["11/26(목)", "지금 사야 하나요? 연말판", "집값 떨어지면 사겠다는 분들, 진짜 떨어지면 사실 수 있으세요?", "첫집"], ["11/28(토)", "반포 vs 내 예산 단지", "같은 10년, 반포자이는 3.1배, 창동 동아청솔은 2.5배.", "리스트"]].map(r=>`<tr><td style="white-space:nowrap"><b>${r[0]}</b></td><td>${r[1]}</td><td>"${r[2]}"</td><td><code>${r[3]}</code></td></tr>`).join('');
+</script>
+<script>
+(function(){
+const sub={ig:document.getElementById('hsub').textContent,blog:'blog.naver.com/ellarang · 네이버 블로그 통계 + 국토부 실거래 기준 · 2026.11.1 업데이트'};
+function show(t,push){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));
+ document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id=='pane-'+t));
+ document.getElementById('hsub').textContent=sub[t]; if(push) history.replaceState(null,'',t=='blog'?'#blog':'#');}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{show(b.dataset.t,true);window.scrollTo(0,0)});
+function fromHash(){const h=location.hash;if(h=='#blog'||h.startsWith('#b-')){show('blog');const el=h.length>5&&document.querySelector(h);if(el)el.scrollIntoView();}else if(h&&document.querySelector('#pane-ig '+h)){show('ig')}}
+window.addEventListener('hashchange',fromHash);fromHash();
+document.querySelectorAll('.cp').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(document.getElementById(b.dataset.c).textContent).then(()=>{b.textContent='복사됨 ✓';setTimeout(()=>b.textContent='복사',1500)})});
+})();
 </script>
 </body>
 </html>
