@@ -52,6 +52,8 @@ td a{color:var(--tx);text-decoration:none}td a:hover{text-decoration:underline}
 .tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
 .p최우선{background:var(--Sbg);color:var(--S)}.p추천{background:var(--Abg);color:var(--A)}.p보통{background:var(--Bbg);color:var(--B)}.p후순위{background:var(--Cbg);color:var(--C)}
 .tw{overflow-x:auto}
+.thumbs{display:flex;gap:6px;margin:10px 0}.thumbs img{width:100%;max-width:90px;border-radius:6px;border:1px solid var(--bd)}
+code{font-size:12px;background:var(--sf2);padding:1px 6px;border-radius:4px}
 footer{margin-top:48px;color:var(--tx3);font-size:12px}
 </style>
 </head>
@@ -62,8 +64,58 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
   <p>@goodsister4080 · Instagram API 기준 2026.7.21 ~ 10.30 게시물 100개 (릴스 34 · 피드 66) · 2026.11.1 업데이트</p>
 </header>
 <nav>
-  <a href="#kpi">계정 성과</a><a href="#insight">핵심 인사이트</a><a href="#reels">릴스 분석</a><a href="#feed">캐러셀 요약</a><a href="#notion">노션 소재 진단</a><a href="#plan">11월 계획</a><a href="#ai">AI 활용 팁</a>
+  <a href="#week">이번 주 할 일</a><a href="#plan">11월 계획</a><a href="#reelplan">11월 릴스</a><a href="#ai">AI 활용 팁</a><a href="#kpi">계정 성과</a><a href="#insight">핵심 인사이트</a><a href="#reels">릴스 분석</a><a href="#feed">캐러셀 요약</a><a href="#notion">노션 소재 진단</a>
 </nav>
+
+<section id="week">
+  <h2>📌 이번 주 할 일 (11/2 ~ 11/8)</h2>
+  <div class="sub">바로 올릴 수 있게 준비된 콘텐츠</div>
+  <div class="cards">
+    <div class="card"><h3>11/2(월) 카드뉴스 · <code>청약</code></h3>
+      <p><b>11월 청약, 실수요자라면 이 3곳만</b> (5장)</p>
+      <div class="thumbs">
+        <a href="instagram/cards/2026-11-02/card-1102-1.png"><img src="instagram/cards/2026-11-02/card-1102-1.png" alt="1"></a><a href="instagram/cards/2026-11-02/card-1102-2.png"><img src="instagram/cards/2026-11-02/card-1102-2.png" alt="2"></a><a href="instagram/cards/2026-11-02/card-1102-3.png"><img src="instagram/cards/2026-11-02/card-1102-3.png" alt="3"></a><a href="instagram/cards/2026-11-02/card-1102-4.png"><img src="instagram/cards/2026-11-02/card-1102-4.png" alt="4"></a><a href="instagram/cards/2026-11-02/card-1102-5.png"><img src="instagram/cards/2026-11-02/card-1102-5.png" alt="5"></a>
+      </div>
+      <ul><li>캡션·고정 댓글: <a href="instagram/cards/2026-11-02/README.html">README</a></li><li>보상: 노션 「11월 수도권 청약 17곳 일정표 + 단지별 판단」 → <b>웹에 게시</b> 후 DM 링크 연결</li></ul></div>
+    <div class="card"><h3>이번 주 릴스</h3><ul>
+      <li><b>11/3(화)</b> 10년 전 vs 지금 · "2016년 8억 5천, 지금 25억" · <code>리스트</code></li>
+      <li><b>11/5(목)</b> 사면 안 되는 아파트 TOP 5 · <code>체크</code></li>
+      <li><b>11/7(토)</b> 잔금날 이거 놓치면 수백만 원 · <code>잔금</code></li>
+    </ul><p style="margin-top:6px">대본: <a href="instagram/2026-11-reels-scripts.html">릴스 12편 대본</a></p></div>
+    <div class="card"><h3>이번 주 카드뉴스</h3><ul>
+      <li><b>11/2(월)</b> 청약 3곳 ✅ 준비 완료</li>
+      <li><b>11/4(수)</b> 잔금 30일 한 장 캘린더 (4장) · <code>잔금</code></li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="plan">
+  <h2>11월 운영 계획 요약</h2>
+  <div class="sub">상세 캘린더: <a href="instagram/2026-11-content-plan.html">기획안</a> · 릴스 12편 대본: <a href="instagram/2026-11-reels-scripts.html">대본</a></div>
+  <div class="cards">
+    <div class="card"><h3>📅 리듬</h3><ul><li>주 5개: 릴스 화·목·토 / 카드뉴스 월·수</li><li>밤 9~11시 업로드 (오전 시간대 도달 최저)</li><li>하루 1개 이하</li></ul></div>
+    <div class="card"><h3>🎬 릴스 대본 공식</h3><ul><li>0~3초: 숫자 + 충격 사실 (인사 금지)</li><li>15초: "자료 받는 법은 끝에서" 예고</li><li>40~50초: 주제 하나만, 마지막에 댓글 키워드</li></ul></div>
+    <div class="card"><h3>💬 카드뉴스 보상형 구조</h3><ul><li><b>4~6장</b>으로 축소 (저장률 1·2위가 모두 4장, 8~10장은 0.71%)</li><li>본문은 무료로 완결 → 저장 유지</li><li>마지막 장: 보상 미리보기 + 댓글 '키워드' → DM 확장판</li></ul></div>
+    <div class="card"><h3>🎯 11월 목표</h3><ul><li>게시물당 도달 중앙값 5,131 → 10,000+</li><li>카드뉴스 저장률 3%+</li><li>카드뉴스 댓글률(댓글÷도달) 1%+</li><li>링크 클릭 73 → 300+</li></ul></div>
+  </div>
+</section>
+
+<section id="reelplan">
+  <h2>🎬 11월 릴스 12편</h2>
+  <div class="sub">화·목·토 밤 9~11시 · 0~3초 숫자 훅 → 15초 예고 → 마지막 댓글 키워드 · <a href="instagram/2026-11-reels-scripts.html">전체 대본</a></div>
+  <div class="tw"><table id="rp"></table></div>
+</section>
+
+<section id="ai">
+  <h2>AI 활용 팁: Claude · ChatGPT · Gemini</h2>
+  <div class="sub">이 사이트의 데이터를 소재로 바꾸는 역할 분담 · 상세: <a href="instagram/ai-workflow-tips.html">ai-workflow-tips.md</a></div>
+  <div class="cards">
+    <div class="card"><h3>Claude</h3><ul><li>인스타 API·노션 연결 → 주간 성과 갱신, 등급·메모</li><li>C등급 중 '소재는 좋은데 구조 실패' 릴스 재대본</li><li>보상 자료 노션 페이지 제작, 말투 통일</li></ul></div>
+    <div class="card"><h3>ChatGPT</h3><ul><li>S등급 공식 하나로 소재·훅 20개 대량 생성</li><li>카드 표지·썸네일·블러 미리보기 시안</li></ul></div>
+    <div class="card"><h3>Gemini</h3><ul><li>정책·청약 뉴스 1차 검색 (최종 확인은 원문)</li><li>경쟁 쇼츠 링크 → 첫 문장·CTA 위치·길이 해부</li></ul></div>
+    <div class="card"><h3>⚠️ AI 금지 구역</h3><ul><li>실거래가·대출 한도·청약 일정·세법 숫자 → 원천 데이터로만</li><li>특약 문구는 직접 검수</li><li>토큰·개인정보는 다른 AI에 붙여넣지 않기</li></ul></div>
+  </div>
+</section>
 
 <section id="kpi">
   <h2>최근 28일 계정 성과</h2>
@@ -132,27 +184,9 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
   <div class="tw"><table id="nt"></table></div>
 </section>
 
-<section id="plan">
-  <h2>11월 운영 계획 요약</h2>
-  <div class="sub">상세 캘린더: <a href="instagram/2026-11-content-plan.md">기획안</a> · 릴스 12편 대본: <a href="instagram/2026-11-reels-scripts.md">대본</a></div>
-  <div class="cards">
-    <div class="card"><h3>📅 리듬</h3><ul><li>주 5개: 릴스 화·목·토 / 카드뉴스 월·수</li><li>밤 9~11시 업로드 (오전 시간대 도달 최저)</li><li>하루 1개 이하</li></ul></div>
-    <div class="card"><h3>🎬 릴스 대본 공식</h3><ul><li>0~3초: 숫자 + 충격 사실 (인사 금지)</li><li>15초: "자료 받는 법은 끝에서" 예고</li><li>40~50초: 주제 하나만, 마지막에 댓글 키워드</li></ul></div>
-    <div class="card"><h3>💬 카드뉴스 보상형 구조</h3><ul><li><b>4~6장</b>으로 축소 (저장률 1·2위가 모두 4장, 8~10장은 0.71%)</li><li>본문은 무료로 완결 → 저장 유지</li><li>마지막 장: 보상 미리보기 + 댓글 '키워드' → DM 확장판</li></ul></div>
-    <div class="card"><h3>🎯 11월 목표</h3><ul><li>게시물당 도달 중앙값 5,131 → 10,000+</li><li>카드뉴스 저장률 3%+</li><li>카드뉴스 댓글률(댓글÷도달) 1%+</li><li>링크 클릭 73 → 300+</li></ul></div>
-  </div>
-</section>
 
-<section id="ai">
-  <h2>AI 활용 팁: Claude · ChatGPT · Gemini</h2>
-  <div class="sub">이 사이트의 데이터를 소재로 바꾸는 역할 분담 · 상세: <a href="instagram/ai-workflow-tips.md">ai-workflow-tips.md</a></div>
-  <div class="cards">
-    <div class="card"><h3>Claude</h3><ul><li>인스타 API·노션 연결 → 주간 성과 갱신, 등급·메모</li><li>C등급 중 '소재는 좋은데 구조 실패' 릴스 재대본</li><li>보상 자료 노션 페이지 제작, 말투 통일</li></ul></div>
-    <div class="card"><h3>ChatGPT</h3><ul><li>S등급 공식 하나로 소재·훅 20개 대량 생성</li><li>카드 표지·썸네일·블러 미리보기 시안</li></ul></div>
-    <div class="card"><h3>Gemini</h3><ul><li>정책·청약 뉴스 1차 검색 (최종 확인은 원문)</li><li>경쟁 쇼츠 링크 → 첫 문장·CTA 위치·길이 해부</li></ul></div>
-    <div class="card"><h3>⚠️ AI 금지 구역</h3><ul><li>실거래가·대출 한도·청약 일정·세법 숫자 → 원천 데이터로만</li><li>특약 문구는 직접 검수</li><li>토큰·개인정보는 다른 AI에 붙여넣지 않기</li></ul></div>
-  </div>
-</section>
+
+
 
 <footer>데이터 출처: Instagram Graph API (게시물 인사이트 · 계정 인사이트), Notion 릴스 소재 DB. 도달·조회수는 Instagram 추산치입니다.</footer>
 </div>
@@ -188,6 +222,7 @@ T('ftSave',['게시물','도달','저장률'],F.topsave.map(x=>`<tr><td><a href=
 T('ftReach',['게시물','도달','공유'],F.topreach.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t}</a><div class="meta">${x.date}</div></td><td class="num"><b>${f(x.reach)}</b></td><td class="num">${f(x.shares)}</td></tr>`));
 T('ftWorst',['게시물','도달','저장'],F.worst.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t||'(캡션 없음)'}</a><div class="meta">${x.date}</div></td><td class="num">${f(x.reach)}</td><td class="num">${f(x.saved)}</td></tr>`));
 document.getElementById('nt').innerHTML='<tr><th>우선순위</th><th>소재</th><th>유형 · 타겟</th><th>상태</th><th>근거</th></tr>'+D.notion.map(n=>`<tr><td><span class="tag p${n[4]}">${n[4]}</span></td><td><b>${n[0]}</b></td><td class="meta">${n[1]}<br>${n[2]}</td><td class="meta">${n[3]}</td><td>${n[5]}</td></tr>`).join('');
+document.getElementById('rp').innerHTML='<tr><th>날짜</th><th>주제</th><th>첫 3초</th><th>키워드</th></tr>'+[["11/3(화)", "10년 전 vs 지금 (마포·창동)", "2016년 8억 5천, 지금 25억. 같은 아파트예요.", "리스트"], ["11/5(목)", "사면 안 되는 아파트 TOP 5", "이 5가지 중 하나라도 해당되면, 다시 생각하세요.", "체크"], ["11/7(토)", "잔금날 놓치면 수백만 원", "잔금날 이거 하나 빠뜨려서 수백만 원 날리는 분, 매달 봅니다.", "잔금"], ["11/10(화)", "생애최초 서울 84㎡ 6억 이하", "서울 84㎡, 아직 6억 이하로 거래돼요. 도봉구에서만 239건.", "첫집"], ["11/12(목)", "갈아타기 1.5배 원칙", "10억 집이 12억 될 때, 15억 집은 18억이 됩니다.", "갈아타기"], ["11/14(토)", "분양가 vs 실거래가 2편", "분양가 ○억이던 이 단지, 지금 실거래가 보세요.", "리스트"], ["11/17(화)", "부린이 vs 고수 2편: 계약서", "같은 계약서인데, 고수는 이 한 줄을 꼭 넣어요.", "특약"], ["11/19(목)", "수능 주간 학군지 10년", "대치·목동·중계 10년 가격부터 보세요.", "학군"], ["11/21(토)", "계약서 5천 건, 특약 하나", "계약서 5천 건 쓰면서, 제가 무조건 넣는 특약은 딱 하나예요.", "특약"], ["11/24(화)", "경기 갈아타기 징검다리", "경기 7억대 신축 84㎡, 서울 가는 징검다리가 될 수 있어요.", "경기"], ["11/26(목)", "지금 사야 하나요? 연말판", "집값 떨어지면 사겠다는 분들, 진짜 떨어지면 사실 수 있으세요?", "첫집"], ["11/28(토)", "반포 vs 내 예산 단지", "같은 10년, 반포자이는 3.1배, 창동 동아청솔은 2.5배.", "리스트"]].map(r=>`<tr><td style="white-space:nowrap"><b>${r[0]}</b></td><td>${r[1]}</td><td>"${r[2]}"</td><td><code>${r[3]}</code></td></tr>`).join('');
 </script>
 </body>
 </html>
