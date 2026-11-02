@@ -107,6 +107,7 @@ class Post:
             + p() +
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
             f'<span style="background-color:#ffe812">&nbsp;카카오톡 채널 <b>착한언니복덕방</b> 친구 추가 후 매수·매도·전월세 상담을 편하게 남겨 주세요.&nbsp;</span></p>'
+            + f'<p style="text-align:center;font-size:14px;line-height:1.8;margin:0;{FONT}"><a href="http://pf.kakao.com/_xcxoBxnX">pf.kakao.com/_xcxoBxnX</a></p>'
             + p() +
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
             f'<span style="background-color:#f3d6ff">&nbsp;인스타그램 <b>@goodsister4080</b> 에서는 이런 내용을 카드뉴스로 한눈에 정리해요.&nbsp;</span></p>'
@@ -120,13 +121,13 @@ class Post:
                     "소재지: 서울특별시 서대문구 대현동 104-36, B101호 · 연락처: 02-364-4080"],
         "grandxi": ["중개사무소: 마포그랑자이(착한언니)부동산공인중개사사무소",
                     "대표 공인중개사: 신혜선 · 등록번호 11440-2022-00085",
-                    "소재지: 서울특별시 마포구 대흥로 175, 상가4동 102호 일부 (대흥동) · 연락처: (전화번호 입력)"],
+                    "소재지: 서울특별시 마포구 대흥로 175, 상가4동 102호 일부 (대흥동) · 연락처: 02-707-3434"],
     }
 
     def signature(self, office="zaiella"):
         """office: zaiella = 오피스텔·신촌·이대 글 / grandxi = 아파트·마포 글 (실제 중개 사무소 기준)"""
         lines = ["착한언니복덕방 | 신촌자이엘라 & 마포그랑자이 부동산",
-                 "4인 전원 공인중개사 · 중개보조원 없음"] + self.OFFICES[office]
+                 "4인 전원 공인중개사 · 중개보조원 없음"] + self.OFFICES[office] + ["카카오톡 채널: pf.kakao.com/_xcxoBxnX"]
         self.b.append(("body", "".join(p(l, 13, "#666666") for l in lines)))
 
     # --- render ---
