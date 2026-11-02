@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>잔금 캘린더 계산기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--bg:#FFF9EC;--card:#fff;--tx:#1E2A3A;--sub:#5f6672;--ac:#E0592A;--y:#FFD84D;--line:#EFE6D2}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Pretendard,-apple-system,sans-serif;background:var(--bg);color:var(--tx);letter-spacing:-.02em}
+.w{max-width:560px;margin:0 auto;padding:24px 16px 48px}
+.top{background:#D3436E;color:#fff;border-radius:18px;padding:22px 20px;text-align:center}
+.top b{font-size:24px;font-weight:900;display:block}.top span{font-size:14px;opacity:.9}
+h1{font-size:26px;font-weight:900;margin:26px 0 6px}h1 em{font-style:normal;color:var(--ac)}
+p.d{color:var(--sub);font-size:15px;line-height:1.5}
+.in{background:var(--card);border-radius:16px;padding:18px;margin-top:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.in label{font-weight:800;font-size:16px}.in input{flex:1;min-width:160px;font:inherit;font-size:18px;padding:10px 12px;border:2px solid var(--line);border-radius:12px}
+ol{list-style:none;margin-top:20px;position:relative;padding-left:22px}
+ol:before{content:"";position:absolute;left:7px;top:10px;bottom:10px;width:4px;background:var(--line);border-radius:2px}
+li{position:relative;background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+li:before{content:"";position:absolute;left:-22px;top:18px;width:14px;height:14px;border-radius:50%;background:#fff;border:4px solid var(--tx)}
+li.k:before{background:var(--ac);border-color:var(--ac)}
+.dt{font-size:13px;font-weight:800;color:var(--ac)}.dt b{color:var(--tx);font-size:17px;margin-left:6px}
+.t{font-size:17px;font-weight:800;margin-top:4px}.n{font-size:14px;color:var(--sub);margin-top:4px;line-height:1.5}
+button{font:inherit;font-weight:800;font-size:16px;border:0;border-radius:999px;padding:14px 18px;width:100%;margin-top:8px;cursor:pointer}
+.b1{background:var(--tx);color:#fff}.b2{background:var(--y);color:var(--tx)}
+.foot{margin-top:24px;font-size:13px;color:var(--sub);line-height:1.6}
+.foot a{color:var(--tx);font-weight:700}
+</style></head><body><div class="w">
+<div class="top"><b>착한언니복덕방</b><span>@goodsister4080</span></div>
+<h1>내 <em>잔금일</em>만 넣으세요</h1>
+<p class="d">D-30부터 잔금 후 기한까지, 날짜를 자동으로 계산해 드려요.</p>
+<div class="in"><label for="d">잔금일</label><input type="date" id="d"></div>
+<ol id="list"></ol>
+<button class="b1" id="ics">📅 휴대폰 캘린더에 한 번에 넣기</button>
+<button class="b2" onclick="location.href='https://pf.kakao.com/_xcxoBxnX'">💬 잔금 일정 카톡으로 물어보기</button>
+<p class="foot">※ 전입신고는 이사 후 14일, 취득세는 잔금일부터 60일 이내가 일반 기준이에요. 대출 심사 기간은 은행·상품마다 달라요. 실제 일정은 은행·법무사와 꼭 확인하세요.<br><br><a href="https://www.instagram.com/goodsister4080/">인스타그램 @goodsister4080</a> · <a href="https://blog.naver.com/ellarang">블로그</a></p>
+</div>
+<script>
+const S=[
+[-30,'대출 은행 2곳 이상 상담·신청','심사에 2~3주 걸려요. 이사업체도 이때 예약하세요.'],
+[-21,'관리사무소에 이사 날짜·엘리베이터 예약','보양·엘리베이터 이용료도 같이 확인해요.'],
+[-14,'대출 승인 확인 · 실행일 = 잔금일','실행 시간까지 은행에 확인해요. 가스레인지 쓰면 가스 연결 예약.'],
+[-7,'잔금·취득세 돈 준비, 이체 한도 올리기','법무사 확정 · 매도인과 관리비·선수관리비 정산 방법 맞추기.'],
+[-1,'서류 준비 · 매도인 계좌 명의 확인','계좌번호는 문자만 믿지 말고 등기부상 소유자 명의인지 확인해요.'],
+[0,'잔금일','등기부 재발급 → 집 상태 확인 → 송금 → 말소 서류 → 검침 사진 → 열쇠·비밀번호 인계',1],
+[14,'전입신고 기한','이사 당일 신고가 가장 안전해요.'],
+[60,'취득세 신고·납부 기한','법무사에 맡겼어도 영수증은 꼭 받아 두세요.'],
+[90,'생애최초 감면 받았다면 전입 기한','취득일부터 3개월 안에 전입해야 감면이 유지돼요.'],
+];
+const $=id=>document.getElementById(id),W='일월화수목금토';
+function add(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function fmt(x){return `${x.getMonth()+1}/${x.getDate()}(${W[x.getDay()]})`}
+function lab(n){return n===0?'D-day':n<0?`D${n}`:`잔금 +${n}일`}
+function draw(){const v=$('d').value;if(!v)return;const b=new Date(v+'T00:00:00');
+$('list').innerHTML=S.map(([n,t,s,k])=>`<li class="${k?'k':''}"><div class="dt">${lab(n)}<b>${fmt(add(b,n))}</b></div><div class="t">${t}</div><div class="n">${s}</div></li>`).join('')}
+const t=new Date();t.setDate(t.getDate()+30);$('d').value=t.toISOString().slice(0,10);
+$('d').addEventListener('change',draw);draw();
+$('ics').onclick=()=>{const v=$('d').value;if(!v)return;const b=new Date(v+'T00:00:00');const p=x=>String(x).padStart(2,'0');
+const ds=x=>`${x.getFullYear()}${p(x.getMonth()+1)}${p(x.getDate())}`;
+let s='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//goodsister//jangeum//KO\r\n';
+S.forEach(([n,t,d],i)=>{const x=add(b,n),y=add(b,n+1);s+=`BEGIN:VEVENT\r\nUID:jg${i}-${ds(b)}@goodsister\r\nDTSTAMP:${ds(new Date())}T000000Z\r\nDTSTART;VALUE=DATE:${ds(x)}\r\nDTEND;VALUE=DATE:${ds(y)}\r\nSUMMARY:[잔금 ${lab(n)}] ${t}\r\nDESCRIPTION:${d}\r\nEND:VEVENT\r\n`});
+s+='END:VCALENDAR\r\n';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/calendar'}));a.download='잔금캘린더.ics';a.click()};
+</script></body></html>
