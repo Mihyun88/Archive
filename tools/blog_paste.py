@@ -1,0 +1,341 @@
+"""착한언니 블로그 양식 → 스마트에디터 붙여넣기용 HTML 생성기.
+
+ellarang 블로그 실제 글(2026.10, 25편)의 에디터 구성을 따라 만든다.
+- 전체 가운데 정렬 · 본문 16px · 강조 19px
+- 소제목 = 1칸 표 (왼쪽 6px #555 선, 19px 굵게, "1. ~")
+- 데이터 표 머리줄 = 남색 #1a2f5e + 흰 글씨
+- 강조색: 보라 #7b4fd6 · 분홍 #e0157a · 형광 #fff3a0
+- 마무리 3단: 이웃추가(청록 #13a89e) · 카톡(#ffe812) · 인스타(#f3d6ff) + 구분선 + 안내문
+
+사용: python3 tools/blog_paste.py  → naver/paste/*.html 생성
+"""
+import html, os
+
+OUT = os.path.join(os.path.dirname(__file__), "..", "naver", "paste")
+P = "#7b4fd6"; PK = "#e0157a"; HL = "#fff3a0"; NAVY = "#1a2f5e"
+FONT = "font-family:'나눔바른고딕',NanumBarunGothic,'Apple SD Gothic Neo',sans-serif;"
+
+
+def esc(s):
+    return html.escape(s, quote=False)
+
+
+def rich(s):
+    """**굵게**, [[보라]], {{분홍}}, ==형광== 간단 마크업."""
+    import re
+    s = esc(s)
+    s = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", s)
+    s = re.sub(r"\[\[(.+?)\]\]", rf'<b><span style="color:{P}">\1</span></b>', s)
+    s = re.sub(r"\{\{(.+?)\}\}", rf'<b><span style="color:{PK}">\1</span></b>', s)
+    s = re.sub(r"==(.+?)==", rf'<span style="background-color:{HL}">\1</span>', s)
+    return s
+
+
+def p(s="", size=16, color=None, extra=""):
+    st = f"text-align:center;font-size:{size}px;line-height:1.8;margin:0;{FONT}"
+    if color:
+        st += f"color:{color};"
+    return f'<p style="{st}{extra}">{rich(s) if s else "&nbsp;"}</p>'
+
+
+class Post:
+    def __init__(self, slug, title, meta):
+        self.slug, self.title, self.meta, self.b = slug, title, meta, []
+
+    # --- blocks ---
+    def blank(self):
+        self.b.append(("body", p()))
+
+    def text(self, *lines, size=16, color=None):
+        self.b.append(("body", "".join(p(l, size, color) for l in lines)))
+
+    def greet(self):
+        self.b.append(("body",
+            f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:0;{FONT}">안녕하세요. '
+            f'<b><span style="color:#ffffff;background-color:#ff2d8a">착한언니복덕방</span></b> '
+            f'신촌자이엘라&amp;마포그랑자이 (착한언니) 부동산입니다.</p>'))
+
+    def voice(self, *qs):
+        """손님 질문 (회색 따옴표)"""
+        self.b.append(("body", "".join(p(f"“{q}”", 16, "#999999") for q in qs)))
+
+    def head(self, n, t):
+        cell = (f'<table style="width:100%;border-collapse:collapse;margin:24px 0 12px;">'
+                f'<tr><td style="border-top:1px solid #e5e5e5;border-right:1px solid #e5e5e5;'
+                f'border-bottom:1px solid #e5e5e5;border-left:6px solid #555555;padding:10px 14px;'
+                f'font-size:19px;{FONT}"><b>{n}. {esc(t)}</b></td></tr></table>')
+        self.b.append(("head", cell))
+
+    def checks(self, *items, color=P):
+        self.b.append(("body", "".join(p(f"✔ {i}", 16) for i in items)))
+
+    def numbered(self, title, *items):
+        self.b.append(("body", p(f"[[{title}]]", 17) + "".join(p(f"✔ {i}") for i in items)))
+
+    def quote(self, text, kind="기본"):
+        """스마트에디터 인용구는 붙여넣기로 생기지 않아요 → 인용구 넣고 이 문장만 붙여넣기."""
+        box = (f'<div style="border-left:4px solid #222;margin:16px auto;max-width:560px;padding:10px 16px;'
+               f'text-align:center;font-size:19px;{FONT}"><b>{rich(text)}</b></div>')
+        self.b.append(("quote", box, kind, text))
+
+    def table(self, header, rows, note=None):
+        th = "".join(f'<td style="background-color:{NAVY};color:#ffffff;border:1px solid #d9d9d9;padding:8px;'
+                     f'text-align:center;font-size:15px;{FONT}"><b>{esc(h)}</b></td>' for h in header)
+        tr = "".join("<tr>" + "".join(
+            f'<td style="border:1px solid #d9d9d9;padding:8px;text-align:center;font-size:15px;{FONT}">{rich(c)}</td>'
+            for c in r) + "</tr>" for r in rows)
+        t = f'<table style="width:100%;border-collapse:collapse;margin:12px 0;"><tr>{th}</tr>{tr}</table>'
+        if note:
+            t += p(note, 13, "#888888")
+        self.b.append(("table", t))
+
+    def photo(self, desc):
+        self.b.append(("photo", p(f"📷 [사진: {desc}]", 14, "#2b7de9")))
+
+    def fill(self, desc):
+        """직접 채울 칸 (지어 쓰지 않음)"""
+        self.b.append(("fill", p(f"✍️ [직접 채우기: {desc}]", 15, "#d0021b")))
+
+    def hl(self, s):
+        self.b.append(("body", p(f"=={s}==", 17)))
+
+    def outro(self, follow, extra_note):
+        self.b.append(("body",
+            p() +
+            f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
+            f'<span style="background-color:#13a89e;color:#ffffff">&nbsp;{esc(follow)}&nbsp;</span></p>'
+            + p() +
+            f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
+            f'<span style="background-color:#ffe812">&nbsp;카카오톡 채널 <b>착한언니복덕방</b> 친구 추가 후 매수·매도·전월세 상담을 편하게 남겨 주세요.&nbsp;</span></p>'
+            + p() +
+            f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
+            f'<span style="background-color:#f3d6ff">&nbsp;인스타그램 <b>@goodsister4080</b> 에서는 이런 내용을 카드뉴스로 한눈에 정리해요.&nbsp;</span></p>'
+            + p("쉽고 꾸준하게, 꼭 부자되세요!")
+            + p("────────────────", 13, "#bbbbbb")
+            + p(extra_note, 13, "#888888")))
+
+    def signature(self):
+        lines = ["착한언니복덕방 | 신촌자이엘라 & 마포그랑자이 부동산",
+                 "4인 전원 공인중개사 · 중개보조원 없음",
+                 "중개사무소: 신촌자이엘라부동산공인중개사사무소",
+                 "대표 공인중개사: 신수경 · 등록번호 11410-2019-00062",
+                 "소재지: 서울특별시 서대문구 대현동 104-36, B101호 · 연락처: 02-364-4080"]
+        self.b.append(("body", "".join(p(l, 13, "#666666") for l in lines)))
+
+    # --- render ---
+    def render(self, side):
+        body_html = []
+        for blk in self.b:
+            kind, h = blk[0], blk[1]
+            if kind == "quote":
+                body_html.append(f'<div class="q" data-kind="{blk[2]}">{h}</div>')
+            else:
+                body_html.append(h)
+        article = "\n".join(body_html)
+        quotes = [b for b in self.b if b[0] == "quote"]
+        qlist = "".join(
+            f'<li><span class="qk">인용구 · {esc(k)}</span> {esc(t.replace("**",""))} '
+            f'<button class="mini" data-t="{html.escape(t.replace("**",""), quote=True)}">문장 복사</button></li>'
+            for _, _, k, t in quotes)
+        side_html = "".join(f"<li>{rich(x)}</li>" for x in side)
+        return PAGE.format(title=esc(self.title), meta=self.meta, article=article, qlist=qlist, side=side_html)
+
+
+PAGE = """<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{title} · 붙여넣기</title>
+<style>
+body{{margin:0;background:#f4f4f2;font-family:-apple-system,"Apple SD Gothic Neo",sans-serif;color:#222}}
+.bar{{position:sticky;top:0;z-index:5;background:#03c75a;color:#fff;padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}}
+.bar b{{font-size:15px;margin-right:auto}}
+.bar button{{font:inherit;font-size:13px;border:0;border-radius:99px;padding:7px 14px;background:#fff;color:#03a14a;font-weight:700;cursor:pointer}}
+.wrap{{max-width:1100px;margin:0 auto;padding:16px;display:grid;grid-template-columns:minmax(0,700px) 1fr;gap:16px}}
+@media(max-width:900px){{.wrap{{grid-template-columns:1fr}}}}
+.paper{{background:#fff;border:1px solid #e3e3e3;border-radius:8px;padding:28px 22px}}
+.q{{outline:2px dashed #f5a623;outline-offset:4px;border-radius:4px;margin:8px 0}}
+.side{{font-size:13.5px;line-height:1.6}}
+.card{{background:#fff;border:1px solid #e3e3e3;border-radius:8px;padding:14px 16px;margin-bottom:12px}}
+.card h3{{margin:0 0 8px;font-size:14px}}
+.card ul{{padding-left:18px;margin:0}}.card li{{margin:4px 0}}
+.qk{{display:inline-block;font-size:11px;font-weight:700;background:#fdebd0;color:#b9770e;border-radius:4px;padding:1px 6px}}
+.mini{{font:inherit;font-size:11px;border:1px solid #ccc;background:#fff;border-radius:99px;padding:2px 8px;cursor:pointer}}
+.toast{{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:99px;font-size:13px;display:none}}
+</style></head><body>
+<div class="bar"><b>📋 {title}</b><button id="all">본문 전체 복사</button><button id="plain">텍스트만 복사</button></div>
+<div class="wrap">
+<div class="paper" id="art">
+{article}
+</div>
+<div class="side">
+<div class="card"><h3>붙여넣는 법 (PC 스마트에디터 ONE)</h3><ul>
+<li>① <b>본문 전체 복사</b> → 글쓰기 화면 본문에 <b>Ctrl+V</b></li>
+<li>② 표·굵게·글자색·형광·가운데 정렬은 그대로 들어가요 (붙여넣은 뒤 표 색이 빠지면 표 선택 → 셀 배경색만 다시 지정)</li>
+<li>③ <span class="qk">주황 점선</span> 문장은 <b>인용구</b>로 바꿔 주세요: 붙여넣은 문장 지우고 → 상단 [인용구] → 오른쪽 목록의 「문장 복사」로 붙여넣기</li>
+<li>④ 📷 파란 줄 = 사진 넣을 자리, ✍️ 빨간 줄 = 직접 채울 자리 → 채운 뒤 줄 삭제</li>
+<li>⑤ 맨 아래 법정 표시는 「내 템플릿」에 저장해 둔 서명과 같아요 — 템플릿을 썼다면 이 부분은 지워도 돼요</li>
+</ul></div>
+<div class="card"><h3>인용구로 바꿀 문장</h3><ul>{qlist}</ul></div>
+<div class="card"><h3>발행 정보</h3><ul>{side}</ul></div>
+<div class="card" style="font-size:12px;color:#777">{meta}</div>
+</div></div>
+<div class="toast" id="toast">복사됐어요</div>
+<script>
+const t=document.getElementById('toast');function ok(m){{t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',1600)}}
+async function copyRich(el){{
+  const h=el.innerHTML, x=el.innerText;
+  try{{await navigator.clipboard.write([new ClipboardItem({{'text/html':new Blob([h],{{type:'text/html'}}),'text/plain':new Blob([x],{{type:'text/plain'}})}})]);ok('본문을 복사했어요 → 스마트에디터에 Ctrl+V');}}
+  catch(e){{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();ok('본문을 복사했어요');}}
+}}
+document.getElementById('all').onclick=()=>copyRich(document.getElementById('art'));
+document.getElementById('plain').onclick=()=>navigator.clipboard.writeText(document.getElementById('art').innerText).then(()=>ok('텍스트만 복사했어요'));
+document.querySelectorAll('.mini').forEach(b=>b.onclick=()=>navigator.clipboard.writeText(b.dataset.t).then(()=>ok('인용구 문장을 복사했어요')));
+</script></body></html>"""
+
+
+# ======================================================================
+def the_classy():
+    a = Post("2026-11-the-classy", "마포 더클래시 실거래가 2026",
+             "데이터: 국토교통부 아파트 매매·전월세 실거래 (2025.11~2026.10 계약분, 해제 제외, 2026.11.2 조회) · 작성 규칙 CONTENT WORK MASTER v1.2")
+    a.fill("도입 — 더클래시 상담에서 실제로 자주 듣는 질문 1개 (예시: “18평이 15억이면 신혼집으로 괜찮을까요?”)")
+    a.blank(); a.greet(); a.blank()
+    a.text("더클래시는 저희 사무실에서 가장 가까운 단지라", "실제로 거래를 가장 많이 하는 곳 중 하나예요.")
+    a.text("그래서 오늘은 **최근 1년 실거래와 전세**를 평형별로 정리하고,", "숫자만으로는 안 보이는 부분까지 같이 짚어볼게요.")
+    a.photo("더클래시 단지 전경 (직접 촬영)")
+    a.quote("**한 줄 요약** 18평 15억 · 59㎡ 21억 · 84㎡ 24억 5,500만 원 (최근 1년 실거래 중위값)", "기본")
+
+    a.head(1, "더클래시, 어떤 단지인가요?")
+    a.table(["항목", "내용"], [["위치", "서울 마포구 아현동"], ["준공", "2022년"],
+                              ["세대수", "✍️ 직접 확인 후 입력"], ["가까운 역", "✍️ 아현역·애오개역·이대역 도보 ○분"],
+                              ["주요 평형", "18평(전용 43㎡) · 59㎡ · 84㎡"]])
+    a.photo("지도 삽입 (단지 + 사무실)")
+
+    a.head(2, "평형별 매매 실거래, 이렇게 거래됐어요")
+    a.table(["평형", "거래", "중위값", "범위", "최근 거래"],
+            [["**18평 (43㎡)**", "13건", "[[15억]]", "11억 3,000 ~ 15억 8,000", "26.09 · 15억 3,000 (3층)"],
+             ["**59㎡**", "19건", "[[21억]]", "20억 3,500 ~ 22억 6,000", "26.07 · 21억 9,000 (5층)"],
+             ["**84㎡**", "6건", "[[24억 5,500]]", "23억 9,500 ~ 25억 5,000", "26.08 · 25억 5,000 (6층)"]],
+            note="국토부 실거래 · 2025.11~2026.10 계약분 · 계약 해제 거래 제외 · 9~10월분은 신고 기한이 남아 늘어날 수 있어요")
+    a.text("✔ 18평 최저 11억 3,000만 원(2026년 5월, 3층) 1건은", "다른 거래와 차이가 커서 {{특수 거래일 수 있어요.}}", "이 1건을 빼면 12건 모두 14억 5,000만 ~ 15억 8,000만 원 사이예요.")
+    a.text("✔ 거래는 **2026년 4~5월에 몰렸고**, 6월 이후로는 한 달 1~3건으로 줄었어요.", "그래도 84㎡ 최고가(25억 5,000만 원)는 8월에 나왔어요.")
+    a.fill("3월 이전 매매 신고가 없는 이유 — 현장에서 아시는 내용이 있으면 한 단락 (없으면 이 줄 삭제)")
+
+    a.head(3, "18평(전용 43㎡), 누가 사면 좋을까요?")
+    a.text("블로그에 [[「마포더클래시 18평」]]으로 찾아오시는 분이 많아서 따로 정리했어요.")
+    a.checks("매매 중위 **15억** · 전세 중위 **6억 5,000만 원**", "최근 3개월 신규 전세 중위는 6억 9,500만 원이에요")
+    a.fill("구조 (방·욕실·수납)")
+    a.fill("이런 분께 맞아요 (1~2인 가구 / 신혼 첫 집 / 마포 입성 후 갈아타기 등)")
+    a.fill("아쉬운 점 1가지 — 솔직하게")
+    a.photo("18평 내부 2~3장")
+
+    a.head(4, "전세는 지금 얼마에 계약되나요?")
+    a.table(["평형", "전세 건수", "전세 중위", "최근 3개월 중위", "전세가율"],
+            [["18평 (43~44㎡)", "26건", "6억 5,000", "6억 9,500", "약 43%"],
+             ["59㎡", "63건", "8억 5,000", "8억 7,250", "약 40%"],
+             ["84㎡", "38건", "10억 5,000", "10억 5,000", "약 43%"]],
+            note="전세 = 월세 0원 계약만 · 전세가율 = 전세 중위 ÷ 매매 중위")
+    a.hl("전세가율이 40% 초반이라 갭투자보다는 실거주 매수 위주 단지예요.")
+    a.text("그런데 이 숫자만 보고 판단하시면 안 됩니다.", "같은 59㎡라도 **동·층·향**에 따라 실제 호가는 꽤 차이가 나요.", "계약 전에는 지금 나와 있는 매물로 다시 비교하세요.")
+
+    a.head(5, "착한언니 현장 노트 — 더클래시 살 때 이 3가지")
+    a.numbered("① 동·라인별 차이", "✍️ 조망·소음·엘리베이터 동선 (직접 채우기)")
+    a.numbered("② 관리비와 커뮤니티", "✍️ 실제 관리비 수준 (면적·월 기준)")
+    a.numbered("③ 세입자 있는 집을 살 때", "전세 만기일과 계약갱신청구권 사용 여부를 먼저 확인해요",
+               "보증금 반환 일정과 잔금일을 같이 맞춰야 해요")
+
+    a.head(6, "자주 묻는 질문")
+    a.text("**Q. 더클래시 18평 매매가는 얼마인가요?**",
+           "최근 1년 실거래 13건 중위값은 15억 원이고,", "13건 중 12건이 14억 5,000만 ~ 15억 8,000만 원 사이에서 거래됐어요.")
+    a.blank()
+    a.text("**Q. 더클래시 84㎡ 최고가는?**", "2026년 8월 6층 25억 5,000만 원이에요.")
+    a.fill("상담에서 자주 받는 질문 1개 + 답")
+
+    a.head(7, "정리하면")
+    a.text("✔ 18평 **15억** · 59㎡ **21억** · 84㎡ **24억 5,500만 원** (1년 실거래 중위)",
+           "✔ 전세가율 40% 초반 → 실거주 매수 중심 단지",
+           "✔ 4~5월에 거래가 몰렸고, 하반기는 거래가 줄었지만 84㎡ 최고가는 8월",
+           "==숫자보다 먼저, 내 예산과 입주 시점부터 정리해 보세요.==")
+    a.outro("새 글 알림을 받고 싶으시다면 블로그 이웃 추가 해 두세요. 마포·서대문 단지 실거래를 이어서 정리할게요.",
+            "국토교통부 실거래가 공개시스템(2025.11~2026.10 계약분, 2026.11.2 조회) 기준이에요 · 개별 거래의 동·호수는 공개하지 않아요 · 실제 매물 조건은 상담 시점에 다시 확인해 드려요")
+    a.signature()
+    side = ["**제목(BEST)**: 마포 더클래시 실거래가 2026｜18평·59㎡·84㎡ 매매·전세 총정리",
+            "**태그**: 더클래시, 마포더클래시, 마포더클래시18평, 더클래시실거래가, 더클래시전세, 아현동아파트, 마포아파트, 착한언니복덕방",
+            "**썸네일**: 「18평 15억, 신혼집 될까?」 / 「59㎡ 21억 · 84㎡ 24.5억」 / 「사무실 앞 단지, 직접 정리」",
+            "**함께 링크**: 2026.3.13 「마포더클래시 투룸 18평 랜선투어」 글"]
+    return a, side
+
+
+def lagrande():
+    a = Post("2026-11-raemian-lagrande", "래미안라그란데 실거주 후기",
+             "데이터: 국토교통부 아파트 전월세·매매 실거래 (2025.11~2026.10 계약분, 2026.11.2 조회) · 단지 규모는 언론 보도 기준 · 작성 규칙 MASTER v1.2 (11-1 생활 전문지역)")
+    a.fill("도입 한 장면 — 아침 출근길이나 저녁 산책 1~2문장")
+    a.blank(); a.greet(); a.blank()
+    a.text("저는 이 단지에 **실제로 살고 있어요.**", "그래서 오늘은 [[중개사로서 본 숫자]]와 {{입주민으로서 겪은 생활}}을 나눠서 정리할게요.",
+           "사는 사람이라 좋게만 쓰지 않도록, 아쉬운 점도 같이 적을게요.")
+    a.photo("단지 전경 (직접 촬영)")
+    a.quote("**한 줄 요약** 59㎡ 신규 전세 6억 → 7억대 · 매매는 표본이 적어 아직 판단하기 어려워요", "기본")
+
+    a.head(1, "래미안라그란데, 어떤 단지인가요?")
+    a.table(["항목", "내용"], [["위치", "동대문구 이문동 (이문1구역 재개발)"], ["규모", "3,069세대 · 최고 27층 · 39개 동"],
+                              ["입주", "2025년 1월 시작"], ["시공", "삼성물산"], ["가까운 역", "✍️ 실제로 이용하는 역 · 도보 ○분"]],
+            note="세대수·층수·입주 시기는 언론 보도 기준이에요 (공식 대장 확인 예정)")
+
+    a.head(2, "전세, 지금 얼마에 계약되고 있나요?")
+    a.text("갱신 계약은 빼고 **신규 계약만** 봤어요.", "갱신은 인상 상한이 적용될 수 있어서 지금 시세와 다르거든요.")
+    a.table(["전용면적", "신규 전세", "신규 중위", "갱신 중위"],
+            [["59㎡", "27건", "[[6억 4,000]]", "5억 2,500 (3건)"], ["84㎡", "10건", "[[8억 1,000]]", "6억 6,000 (3건)"]],
+            note="국토부 전월세 실거래 · 2025.11~2026.10 계약분 · 전세 = 월세 0원")
+    a.table(["59㎡ 신규 전세", "25년 4Q", "26년 1Q", "26년 2Q", "26년 3Q"],
+            [["중위", "6억", "6억 4,000", "7억 3,000", "7억 1,000"], ["건수", "9", "9", "5", "4"]])
+    a.text("그런데 이 숫자만 보고 {{“전세가 1억 올랐다”}}고 판단하시면 안 됩니다.",
+           "2분기부터는 분기당 4~5건뿐이라 표본이 작아요.", "입주 초기에 한꺼번에 나왔던 전세 물량이 지금은 줄었다는 점도 같이 봐야 해요.")
+    a.text("✔ 84㎡는 2026년 3분기 신규 3건 중위 9억 원 → 3건이라 추세로 보지 않아요",
+           "✔ 74㎡ 전세 4억 원대 거래는 다른 거래와 차이가 커서 특수 거래일 수 있어요")
+
+    a.head(3, "옆 단지 이문아이파크자이와 비교하면?")
+    a.table(["59㎡ 신규 전세 중위", "래미안라그란데", "이문아이파크자이"],
+            [["25년 4Q", "6억 (9건)", "5억 4,750 (64건)"], ["26년 1Q", "6억 4,000 (9건)", "6억 2,000 (79건)"],
+             ["26년 2Q", "7억 3,000 (5건)", "7억 3,500 (14건)"]])
+    a.text("두 단지 모두 비슷한 흐름이에요.", "이건 [[어느 단지가 더 좋다]]가 아니라,", "같은 생활권 신축 전세가 **비슷한 수준에서 움직이고 있다** 정도로만 읽어 주세요.")
+
+    a.head(4, "실제로 살아보니 — 좋은 점 3가지")
+    a.fill("좋은 점 ①"); a.fill("좋은 점 ②"); a.fill("좋은 점 ③")
+    a.photo("커뮤니티·산책로 등 생활 사진")
+
+    a.head(5, "살아보니 아쉬운 점")
+    a.fill("아쉬운 점 — 최소 1개, 솔직하게")
+
+    a.head(6, "착한언니 현장 노트 — 전세 들어오실 때 이것부터")
+    a.fill("대단지라 동마다 다른 점 (역·정문 동선, 소음, 경사)")
+    a.fill("관리비 실제 수준 (2026년 ○월, 면적 기준)")
+    a.checks("계약 전 **등기부등본의 소유자·근저당**을 확인해요",
+             "**보증금 반환보증** 가입이 가능한지 호실별로 먼저 확인해요", "신축이라고 모두 같은 조건이 아니에요")
+
+    a.head(7, "내 상황에서는?")
+    a.numbered("전세 만기가 2027년 초라면", "입주 초기 계약이 한꺼번에 만기를 맞는 시기예요",
+               "갱신청구권을 쓸지, 신규로 다시 맞출지 만기 3~6개월 전에 정리해 두세요")
+    a.numbered("마포·서대문으로 갈아타기를 고민한다면", "이 단지 전세금이 매수 자금이 될 수 있어요",
+               "가격 비교가 아니라 **자금 흐름**으로 계산해요 — 보유 현금·대출 가능 금액부터")
+
+    a.head(8, "정리하면")
+    a.text("✔ 59㎡ 신규 전세는 6억 원대 후반 ~ 7억 원대에서 나오고 있어요",
+           "✔ 최근 표본이 적어서, 계약 전에는 지금 매물로 다시 확인해요",
+           "✔ 매매는 1년간 3건뿐이라 아직 시세를 말하기 어려워요",
+           "==제가 사는 동네라, 【동대문 생활 노트】로 계속 기록할게요.==")
+    a.outro("새 글 알림을 받고 싶으시다면 블로그 이웃 추가 해 두세요. 다음 글은 이문4구역 진행 상황이에요.",
+            "국토교통부 전월세·매매 실거래(2025.11~2026.10 계약분, 2026.11.2 조회) 기준이에요 · 단지 규모는 언론 보도 기준 · 생활 정보는 2026년 11월 기준 제 경험이에요")
+    a.signature()
+    side = ["**제목(BEST)**: 래미안라그란데 실거주 후기｜입주 2년 차 전세 시세와 장단점 2026",
+            "**태그**: 래미안라그란데, 래미안라그란데전세, 래미안라그란데후기, 이문동아파트, 이문휘경뉴타운, 동대문구아파트, 착한언니복덕방",
+            "**썸네일**: 「직접 살아요」 / 「전세 59㎡ 6억→7억대」 / 「좋은 점 3 · 아쉬운 점 1」",
+            "**⚠️ 발행 전**: ✍️ 칸 7곳 채우기 · 역 이름 확인 후 태그에 추가"]
+    return a, side
+
+
+if __name__ == "__main__":
+    os.makedirs(OUT, exist_ok=True)
+    for fn in (the_classy, lagrande):
+        post, side = fn()
+        path = os.path.join(OUT, post.slug + ".html")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(post.render(side))
+        print("생성:", os.path.relpath(path))
