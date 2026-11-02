@@ -65,6 +65,25 @@ code{font-size:12px;background:var(--sf2);padding:1px 6px;border-radius:4px}
 .steps li::before{content:counter(s);position:absolute;left:0;top:0;width:21px;height:21px;border-radius:50%;background:#03c75a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .note{font-size:13px;color:var(--tx2);background:var(--Bbg);border-radius:8px;padding:10px 12px;margin-top:10px}
 .blog h2 .g2{color:#03c75a}
+.lab-in{display:flex;gap:8px;margin-top:4px}.lab-in input{flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 14px;border-radius:10px;border:1px solid var(--bd);background:var(--sf);color:var(--tx)}
+.lab-in button{font:inherit;font-weight:700;padding:0 20px;border-radius:10px;border:0;background:var(--tx);color:var(--bg);cursor:pointer}
+.lab-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#lab-res{margin-top:14px}
+.lab-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px;display:grid;gap:14px;min-width:0}
+.lab-addr b{display:block;font-size:16px}.lab-addr span{font-size:12.5px;color:var(--tx3);overflow-wrap:anywhere}
+.lab-kpi{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.lab-kpi>div{padding:12px 10px;display:grid;gap:2px;min-width:0}.lab-kpi>div+div{border-left:1px solid var(--bd)}
+.lab-kpi span{font-size:12px;color:var(--tx3)}.lab-kpi b{font-size:15.5px;font-variant-numeric:tabular-nums}.lab-kpi small{font-size:12px;color:var(--tx2)}
+@media(max-width:700px){.lab-kpi{grid-template-columns:1fr 1fr}.lab-kpi>div:nth-child(3){border-left:0}.lab-kpi>div:nth-child(n+3){border-top:1px solid var(--bd)}}
+.lab-flags{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.lab-flag{border:1px solid var(--bd);border-radius:10px;padding:10px 12px;display:grid;gap:2px;font-size:13.5px}.lab-flag span{font-size:12px;color:var(--tx3)}
+.lab-flag.hot{border-color:var(--C);background:var(--Cbg)}.lab-flag.hot b{color:var(--C)}
+.lab-h3{font-size:14px;margin-top:4px}
+.lab-z{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:6px;background:var(--Abg);color:var(--tx);margin:1px 3px 1px 0;white-space:nowrap}.lab-z i{font-style:normal;color:var(--A);font-weight:700;margin-left:3px}
+.lab-zrow{display:grid;grid-template-columns:170px 1fr 80px;gap:12px;align-items:center;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;margin-bottom:6px;font-size:13.5px}
+.lab-zrow small{display:block;font-size:11.5px;color:var(--tx3)}.lab-zrow>span:last-child{text-align:right}
+.lab-track{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.lab-track i{height:8px;border-radius:2px;background:var(--sf2)}.lab-track i.on{background:var(--tx3)}.lab-track i.cur{background:var(--A)}
+@media(max-width:600px){.lab-zrow{grid-template-columns:1fr}.lab-zrow>span:last-child{text-align:left}}
 footer{margin-top:48px;color:var(--tx3);font-size:12px}
 </style>
 </head>
@@ -73,7 +92,7 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
 <header>
   <h1>착한언니복덕방 콘텐츠 아카이브</h1>
   <p id="hsub">@goodsister4080 · Instagram API 기준 2026.7.21 ~ 10.30 게시물 100개 (릴스 34 · 피드 66) · 2026.11.1 업데이트</p>
-  <div class="tabs"><button data-t="ig" class="on">📸 인스타그램</button><button data-t="blog">🟢 네이버 블로그</button><button data-t="plan">🧭 전략·자동화</button></div>
+  <div class="tabs"><button data-t="ig" class="on">📸 인스타그램</button><button data-t="blog">🟢 네이버 블로그</button><button data-t="plan">🧭 전략·자동화</button><button data-t="lab">🧪 실거래 랩</button></div>
 </header>
 <div class="pane on" id="pane-ig">
 <nav>
@@ -567,6 +586,39 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
 
 <footer>근거: 착한언니복덕방 블로그 통계 · 인스타 API · 호두네부동산 공개 글 50편 (2026.10.5~11.2) · 국토부 실거래</footer>
 </div>
+<div class="pane" id="pane-lab">
+<p class="note" style="margin-top:18px">🧪 <b>테스트 모드</b> · 대표님 확인용이에요. 홈페이지에는 연결하지 않았어요. 숫자는 참고용이고 구역 안 거래 여부·허가 대상은 원문으로 다시 확인해야 해요.</p>
+<section id="l-look">
+  <h2>주소로 땅 정보 보기</h2>
+  <div class="sub">브이월드 실시간 조회 · 용도지역 · 공시지가 · 토지특성 · 정비구역/토지거래허가구역 여부 + 이 지번 빌라 실거래</div>
+  <form id="lab-form" class="lab-in"><label for="lab-addr" class="lab-sr">주소</label><input id="lab-addr" placeholder="예) 서대문구 북아현동 3-66" autocomplete="off"><button type="submit">조회</button></form>
+  <div class="tools" style="margin-top:8px"><span class="meta">예시:</span><button type="button" data-lab-ex="서울특별시 서대문구 대현동 104-36">대현동 104-36 (사무실)</button><button type="button" data-lab-ex="서울특별시 서대문구 북아현동 3-66">북아현동 3-66</button><button type="button" data-lab-ex="서울특별시 서대문구 연희동 705-2">연희동 705-2</button></div>
+  <div id="lab-res"></div>
+</section>
+<section id="l-sum">
+  <h2>한눈에</h2>
+  <div class="sub" id="lab-period"></div>
+  <div class="kpis" id="lab-kpis"></div>
+</section>
+<section id="l-rh">
+  <h2>동별 빌라(연립·다세대) 거래</h2>
+  <div class="sub">대지지분 평당가 = 거래금액 ÷ 대지권 면적 × 3.3058 · 20년 넘은 집 = 2006년 이전 준공 비율 · 거래 많은 동 25곳</div>
+  <div class="tools" id="lab-seg1"></div>
+  <div class="tw"><table><thead><tr><th>동</th><th>정비구역 · 현재 단계</th><th class="num">거래</th><th class="num">거래가 중간값</th><th class="num">대지지분 평당</th><th class="num">20년+</th></tr></thead><tbody id="lab-rh"></tbody></table></div>
+</section>
+<section id="l-zone">
+  <h2>41개 정비구역 진행 단계</h2>
+  <div class="sub">서울시 도시정비사업 통계 (2026년 6월 기준, 분기 갱신) · 구역지정 → 추진위 → 조합 → 건축심의 → 사업시행 → 관리처분 → 착공</div>
+  <div class="tools" id="lab-seg2"></div>
+  <div id="lab-zones"></div>
+</section>
+<section id="l-apt">
+  <h2>분양권·입주권 거래 단지</h2>
+  <div class="sub">입주권 = 조합원 자리 · 구분 표기가 없는 거래는 기술문서 확인 전이라 따로 세지 않았어요</div>
+  <div class="tw"><table><thead><tr><th>단지</th><th class="num">거래</th><th class="num">입주권</th><th class="num">59㎡대 중간</th><th class="num">84㎡대 중간</th><th>최근 거래</th></tr></thead><tbody id="lab-apt"></tbody></table></div>
+</section>
+<footer>출처: 국토교통부 실거래가 공개시스템 오픈API(연립·다세대, 단독·다가구, 분양권·입주권 / 2025.10~2026.10 계약, 2026.11.2 조회) · 서울 열린데이터광장 「서울특별시 도시정비사업 통계」 · 브이월드 오픈API(실시간)</footer>
+</div>
 </div>
 
 <script>
@@ -604,15 +656,16 @@ document.getElementById('rp').innerHTML='<tr><th>날짜</th><th>주제</th><th>�
 </script>
 <script>
 (function(){
-const sub={ig:document.getElementById('hsub').textContent,blog:'blog.naver.com/ellarang · 네이버 블로그 통계 + 국토부 실거래 기준 · 2026.11.1 업데이트',plan:'신촌 2014~ · 자이엘라점(오피스텔) + 마포그랑자이점(아파트) · 2026.11.2 수립'};
+const sub={ig:document.getElementById('hsub').textContent,blog:'blog.naver.com/ellarang · 네이버 블로그 통계 + 국토부 실거래 기준 · 2026.11.1 업데이트',plan:'신촌 2014~ · 자이엘라점(오피스텔) + 마포그랑자이점(아파트) · 2026.11.2 수립',lab:'테스트 모드 · 국토부 실거래 + 서울시 정비사업 + 브이월드 · 2026.11.2'};
 function show(t,push){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));
  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id=='pane-'+t));
- document.getElementById('hsub').textContent=sub[t]; if(push) history.replaceState(null,'',t=='ig'?'#':'#'+t);}
+ document.getElementById('hsub').textContent=sub[t]; if(t=='lab'&&window.GS_labInit)window.GS_labInit(); if(push) history.replaceState(null,'',t=='ig'?'#':'#'+t);}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{show(b.dataset.t,true);window.scrollTo(0,0)});
-function fromHash(){const h=location.hash;if(h=='#blog'||h.startsWith('#b-')){show('blog');const el=h.length>5&&document.querySelector(h);if(el)el.scrollIntoView();}else if(h=='#plan'||h.startsWith('#s-')){show('plan');const el=h.length>5&&document.querySelector(h);if(el)el.scrollIntoView();}else if(h&&document.querySelector('#pane-ig '+h)){show('ig')}}
+function fromHash(){const h=location.hash;if(h=='#blog'||h.startsWith('#b-')){show('blog');const el=h.length>5&&document.querySelector(h);if(el)el.scrollIntoView();}else if(h=='#plan'||h.startsWith('#s-')){show('plan');const el=h.length>5&&document.querySelector(h);if(el)el.scrollIntoView();}else if(h=='#lab'||h.startsWith('#l-')){show('lab');const el=h.length>4&&document.querySelector(h);if(el)el.scrollIntoView();}else if(h&&document.querySelector('#pane-ig '+h)){show('ig')}}
 window.addEventListener('hashchange',fromHash);fromHash();
 document.querySelectorAll('.cp').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(document.getElementById(b.dataset.c).textContent).then(()=>{b.textContent='복사됨 ✓';setTimeout(()=>b.textContent='복사',1500)})});
 })();
 </script>
+<script src="assets/lab.js"></script>
 </body>
 </html>
