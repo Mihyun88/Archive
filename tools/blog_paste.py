@@ -92,6 +92,13 @@ class Post:
     def photo(self, desc):
         self.b.append(("photo", p(f"📷 [사진: {desc}]", 14, "#2b7de9")))
 
+    def image(self, rel, desc):
+        """공식 도면 등 실제 이미지: 미리보기에 표시 + 업로드 안내"""
+        self.b.append(("photo",
+            f'<p style="text-align:center;margin:12px 0 4px"><img src="{rel}" alt="{esc(desc)}" style="max-width:100%;border:1px solid #ddd"></p>'
+            + p(f"📷 [이미지 업로드: {desc} → 오른쪽 '이미지 내려받기']", 13, "#2b7de9")))
+        self.images = getattr(self, "images", []) + [(rel, desc)]
+
     def fill(self, desc):
         """직접 채울 칸 (지어 쓰지 않음)"""
         self.b.append(("fill", p(f"✍️ [직접 채우기: {desc}]", 15, "#d0021b")))
@@ -147,7 +154,10 @@ class Post:
             f'<button class="mini" data-t="{html.escape(t.replace("**",""), quote=True)}">문장 복사</button></li>'
             for _, _, k, t in quotes)
         side_html = "".join(f"<li>{rich(x)}</li>" for x in side)
-        return PAGE.format(title=esc(self.title), meta=self.meta, article=article, qlist=qlist, side=side_html)
+        ims = getattr(self, "images", [])
+        imgs = ("<div class=\"card\"><h3>이미지 내려받기 (직접 업로드)</h3><ul>" + "".join(
+            f'<li><a href="{r}" download>{esc(d)}</a></li>' for r, d in ims) + "</ul></div>") if ims else ""
+        return PAGE.format(title=esc(self.title), meta=self.meta, article=article, qlist=qlist, side=side_html, imgs=imgs)
 
 
 PAGE = """<!doctype html><html lang="ko"><head><meta charset="utf-8">
@@ -184,6 +194,7 @@ body{{margin:0;background:#f4f4f2;font-family:-apple-system,"Apple SD Gothic Neo
 <li>⑤ 맨 아래 법정 표시는 「내 템플릿」에 저장해 둔 서명과 같아요 — 템플릿을 썼다면 이 부분은 지워도 돼요</li>
 </ul></div>
 <div class="card"><h3>인용구로 바꿀 문장</h3><ul>{qlist}</ul></div>
+{imgs}
 <div class="card"><h3>발행 정보</h3><ul>{side}</ul></div>
 <div class="card" style="font-size:12px;color:#777">{meta}</div>
 </div></div>
@@ -486,7 +497,7 @@ def sillim():
            "상대적으로 **금액대가 낮은 서울 재개발**을 묻는 분들이 늘고 있어요.")
     a.text("지난번 **광명 하안주공** 정리에 이어,", "이번에는 [[신림 재개발 1~10구역]]을 Q&A와 실거래가로 한 번에 정리했습니다.")
     a.text("※ 아래 내용은 관악구 재정비촉진구역 현황(2026.10.26), 서울시·관악구 고시,", "국토교통부 실거래가 공개시스템 기준이며, 사업 단계와 수치는 계속 바뀔 수 있어요.", size=13, color="#888888")
-    a.photo("신림 일대 전경 / 3구역 서울대벤처타운역 푸르지오 (직접 촬영)")
+    a.photo("3구역 서울대벤처타운역 푸르지오 전경 (직접 촬영)")
     a.quote("**한 줄 요약** 신림은 \"뉴타운 하나\"가 아니라 단계가 제각각인 10개 사업지예요. 이름보다 **구역별 단계**부터 보세요.", "기본")
 
     a.head(1, "Q&A로 빠르게 이해하기")
@@ -539,6 +550,8 @@ def sillim():
              ["9구역", "신림동 119-1", "정비계획 수립 용역", "미확정"],
              ["10구역", "신림동 610-200", "추진위 승인 (2026.7.16)", "미확정"]],
             note="1~4구역 = 신림재정비촉진지구 · 5~10구역 = 촉진지구 밖 개별 사업지 · \"계획\" 수치는 인가 단계에서 바뀔 수 있어요")
+    a.image("img/sillim-1to4-boundary.jpg", "신림 재정비촉진지구 1~4구역 경계 (관악구 공고 제2026-1274호 변경안 도면)")
+    a.text("1구역(북쪽 가장 넓은 곳) → 2구역 → 3구역(남쪽, 입주 완료)이 한 줄로 이어지고,", "4구역은 동쪽에 따로 붙어 있어요.", size=15)
     a.text("여기서 하나는 구분해서 봐야 하는데요,", "1~3구역을 합치면 **6,186세대**지만 [[3구역 571세대는 이미 입주]]했어요.",
            "\"앞으로 6천 세대가 들어온다\"가 아니라, **입주 시기가 각각 다른 6천여 세대**예요.")
 
@@ -567,6 +580,10 @@ def sillim():
     a.fill("네이버 현재 호가 (확인 날짜 함께) — 호가는 실거래가와 다르게 표기")
 
     a.head(6, "4~10구역 : 이제 막 출발선")
+    a.image("img/sillim-6-boundary.jpg", "신림6구역 정비구역 결정도 (서울시 고시 제2026-303호)")
+    a.image("img/sillim-6-plan.jpg", "신림6구역 정비계획 결정도 — 획지·학교·공원 배치 (서울시 고시 제2026-303호)")
+    a.image("img/sillim-7-boundary.jpg", "신림7구역 정비구역 결정도 (관악구 고시 제2024-104호)")
+    a.fill("5·8구역 경계 도면 — 서울시보 제4129호(2026.2.26) 붙임 도면 확보 후 추가")
     a.table(["구역", "한 줄 정리", "주의할 점"],
             [["4구역", "학교 인접, 관악산·도림천 보행로 계획", "992세대는 기획 수치 · 촉진계획 변경 고시 확인"],
              ["5구역", "서원역 생활권, 신탁 방식", "3,973세대는 지정 후 구청 발표 · 사업시행인가는 별도"],
@@ -606,6 +623,7 @@ def sillim():
             "**태그**: 신림재개발, 신림뉴타운, 신림1구역, 신림2구역, 서울대벤처타운역푸르지오, 신림8구역, 관악구재개발, 착한언니복덕방",
             "**썸네일**: 「신림, 10개 구역 단계가 다 달라요」 / 「3구역 84㎡ 11억 8천 (26.9)」 / 「여의도 16분 · 강남은?」",
             "**⚠️ 광고 표기**: 상단·책 소개·하단 3곳 유지 (도서 협찬)",
+            "**도면 이미지**: 공식 고시·공고 붙임 도면 (저작권법 제7조) — 출처 캡션 포함, 서울시 신통기획 홈페이지 조감도·위치도는 공공누리 4유형(상업 이용·변경 금지)이라 쓰지 않음",
             "**⚠️ 발행 전**: ✍️ 칸 · 네이버 호가(날짜) · 책 쪽수 대조 · 난곡선 예타(12월) 결과 나오면 갱신"]
     return a, side
 
