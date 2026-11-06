@@ -1,0 +1,128 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Pretendard,"Apple SD Gothic Neo",sans-serif;background:#888;word-break:keep-all}
+.c{width:1080px;height:1350px;position:relative;padding:110px 96px 0;overflow:hidden;background:#FFF9F1;color:#172033}
+.c.dark{background:#172033;color:#fff}
+.foot{position:absolute;left:96px;right:96px;bottom:56px;display:flex;justify-content:space-between;font-size:26px;font-weight:600;color:#9C8B73}
+.dark .foot{color:#9AA3B5}
+.ey{font-size:32px;font-weight:600;color:#D9502C;margin-bottom:22px}
+.dark .ey{color:#FDD54D}
+h1{font-size:76px;font-weight:800;line-height:1.22;letter-spacing:-2px}
+h1 .o{color:#D9502C}.dark h1 .y{color:#FDD54D}
+.pill{display:inline-block;font-size:30px;font-weight:700;padding:16px 34px;border-radius:999px;background:#D9502C;color:#fff}
+.pill.y{background:#FDD54D;color:#172033}
+.big{font-size:118px;font-weight:900;line-height:1.12;letter-spacing:-4px}
+.big .y{color:#FDD54D}
+.sub{font-size:40px;font-weight:600;margin-top:36px;color:#E8EAF0}.sub b{color:#FDD54D}
+.ctas{position:absolute;left:96px;bottom:150px;display:grid;gap:22px;justify-items:start}
+.rows{margin-top:56px;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;background:#F1E6D6;border-radius:22px;padding:26px 34px;font-size:34px;font-weight:600}
+.row small{display:block;font-size:24px;font-weight:500;color:#7A6A55;margin-top:4px}
+.row b{font-size:46px;font-weight:800;color:#D9502C;letter-spacing:-1px}
+.row.n{background:#172033;color:#fff}.row.n small{color:#AEB6C8}.row.n b{color:#FDD54D}
+.facts{margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.f{background:#F1E6D6;border-radius:22px;padding:30px 32px}
+.f span{display:block;font-size:26px;color:#7A6A55;font-weight:600}
+.f b{display:block;font-size:42px;font-weight:800;margin-top:8px;letter-spacing:-1px}
+.f.w{grid-column:1/-1}
+table{width:100%;border-collapse:separate;border-spacing:0 14px;margin-top:40px;font-size:31px}
+td{padding:22px 24px;background:#F1E6D6}
+td:first-child{border-radius:18px 0 0 18px;font-weight:600}
+td:last-child{border-radius:0 18px 18px 0;text-align:right;font-weight:800;white-space:nowrap}
+td small{display:block;font-size:23px;color:#7A6A55;font-weight:500}
+td .r{color:#D9502C}
+tr.hl td{background:#172033;color:#fff}tr.hl td small{color:#AEB6C8}tr.hl td .r{color:#FDD54D}
+.note{font-size:25px;color:#8A7A64;margin-top:18px;line-height:1.5}
+.dark .note{color:#9AA3B5}
+.tl{margin-top:60px;display:grid;gap:0}
+.st{display:grid;grid-template-columns:270px 1fr;gap:30px;padding:24px 0;border-bottom:2px solid #2C3850;align-items:baseline}
+.st .d{font-size:40px;font-weight:800;color:#FDD54D;letter-spacing:-1px}
+.st .t{font-size:34px;font-weight:600}.st .t small{display:block;font-size:25px;color:#AEB6C8;font-weight:500;margin-top:4px}
+.st.k .d{font-size:46px}
+.chk{margin-top:50px;display:grid;gap:20px}
+.ck{display:grid;grid-template-columns:62px 1fr;gap:20px;background:#F1E6D6;border-radius:22px;padding:28px 30px}
+.ck i{font-style:normal;width:56px;height:56px;border-radius:50%;background:#D9502C;color:#fff;font-weight:800;font-size:30px;display:flex;align-items:center;justify-content:center}
+.ck b{font-size:34px;font-weight:800;display:block}
+.ck span{font-size:27px;color:#5D5040;line-height:1.45;display:block;margin-top:6px}
+.bgsk{position:absolute;inset:0;z-index:0}.c.dark>.pill,.c.dark>.big,.c.dark>.sub,.c.dark>.ey,.c.dark>h1,.c.dark>.tl{position:relative;z-index:1}.c.dark>.ctas,.c.dark>.foot{z-index:1}.bgsk{opacity:.55}.fade{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#172033 0%,#172033 40%,rgba(23,32,51,.35) 66%,rgba(23,32,51,.55) 85%,#172033 100%)}.photo{position:absolute;inset:0;z-index:0;background:url(bg.jpg) 62% center/cover;filter:saturate(.6) brightness(.85)}#c1 .fade{background:linear-gradient(180deg,rgba(23,32,51,.94) 0%,rgba(23,32,51,.86) 45%,rgba(23,32,51,.62) 70%,rgba(23,32,51,.9) 100%)}.ref{position:absolute;right:96px;bottom:96px;z-index:1;font-size:20px;color:#9AA3B5}
+.photo{background:url(bg.jpg) center 30%/cover;filter:grayscale(1) contrast(1.3) brightness(1.1)}
+#c1 .fade{background:linear-gradient(180deg,rgba(23,32,51,.95) 0%,rgba(23,32,51,.88) 48%,rgba(23,32,51,.72) 72%,rgba(23,32,51,.94) 100%)}
+.ad{position:absolute;left:96px;top:48px;z-index:2;font-size:24px;font-weight:700;color:#172033;background:#FDD54D;border-radius:8px;padding:6px 14px}
+.dark .ad{background:#FDD54D}
+.tag{display:inline-block;font-size:22px;font-weight:700;border-radius:8px;padding:4px 12px;margin-left:10px;vertical-align:middle}
+.tag.g{background:#2E7D5B;color:#fff}.tag.o{background:#D9502C;color:#fff}.tag.s{background:#5A6478;color:#fff}
+</style></head><body>
+
+<!-- 1 표지 -->
+<section class="c dark" id="c1"><div class="photo"></div><div class="fade"></div><span class="ad">#광고 도서협찬</span>
+  <span class="pill">신림 재개발 1~10구역</span>
+  <div class="big" style="margin-top:56px">신림 재개발,<br>구역마다<br><span class="y">단계가 달라요</span></div>
+  <p class="sub">3구역 <b>입주</b> · 2구역 <b>착공</b> · 1구역 <b>사업시행인가</b><br>나머지는 이제 출발선</p>
+  <div class="ctas">
+    <span class="pill y">💬 댓글 '오를 곳' → 22개 지역 순위 자료</span>
+    <span class="pill">🎁 11/30 《이제부터는 오를 곳만 오른다》 3권 추첨</span>
+  </div>
+  <span class="ref">배경: 관악구 공고 제2026-1274호 결정도</span><div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>1 / 5</span></div>
+</section>
+
+<!-- 2 단계 -->
+<section class="c dark" id="c2"><span class="ad">#광고 도서협찬</span>
+  <p class="ey">지금 어디까지 왔나</p>
+  <h1>신림 10개 구역,<br><span class="y">진행 단계</span></h1>
+  <div class="tl">
+    <div class="st k"><span class="d">3구역</span><span class="t">입주 완료 · 571세대<small>이전고시 2026.5.14 · 서울대벤처타운역 푸르지오</small></span></div>
+    <div class="st k"><span class="d">2구역</span><span class="t">착공 · 1,430세대<small>관악구 현황 2026.10.26</small></span></div>
+    <div class="st k"><span class="d">1구역</span><span class="t">사업시행인가 · 4,185세대<small>2025.3.13 고시</small></span></div>
+    <div class="st"><span class="d">8구역</span><span class="t">조합설립인가<small>2026.10.7 고시 · 2,257세대 계획</small></span></div>
+    <div class="st"><span class="d">5 · 6구역</span><span class="t">정비구역 지정<small>2026.2.26 · 2026.5.28</small></span></div>
+    <div class="st"><span class="d">4·7·9·10</span><span class="t">가이드라인 · 조합설립 · 용역 · 추진위<small>세대수 아직 '계획' 단계</small></span></div>
+  </div>
+  <div class="foot"><span>출처: 관악구 현황 · 서울시/관악구 고시</span><span>2 / 5</span></div>
+</section>
+
+<!-- 3 숫자 -->
+<section class="c" id="c3"><span class="ad">#광고 도서협찬</span>
+  <p class="ey">숫자 하나 짚고 갈게요</p>
+  <h1>1~3구역 합치면<br><span class="o">6,186세대</span></h1>
+  <div class="rows">
+    <div class="row"><span>1구역<small>사업시행인가 · 입주는 아직</small></span><b>4,185</b></div>
+    <div class="row"><span>2구역<small>착공 · 일반분양은 공고로 확인</small></span><b>1,430</b></div>
+    <div class="row n"><span>3구역 <span class="tag g">입주 완료</span><small>이미 사람이 살고 있어요</small></span><b>571</b></div>
+  </div>
+  <p class="note" style="font-size:30px;margin-top:40px;color:#172033"><b>"앞으로 6천 세대가 들어온다"가 아니라<br>입주 시기가 각각 다른 6천여 세대예요.</b></p>
+  <p class="note">3구역 84㎡ 실거래 11억 8,000만 원 (2026.9 · 국토부) · 1년 매매 2건이라 추세로 보지 않아요</p>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>3 / 5</span></div>
+</section>
+
+<!-- 4 교통 -->
+<section class="c" id="c4"><span class="ad">#광고 도서협찬</span>
+  <p class="ey">여의도 · 강남, 실제로는?</p>
+  <h1>교통은<br><span class="o">확정된 것</span>부터</h1>
+  <div class="facts">
+    <div class="f"><span>여의도 <span class="tag g">운행 중</span></span><b>신림선 전 구간 16분</b><span style="margin-top:8px">샛강역 9호선 환승</span></div>
+    <div class="f"><span>강남 <span class="tag g">운행 중</span></span><b>2호선 신림→강남 8개 역</b><span style="margin-top:8px">신림선 → 신림역 환승</span></div>
+    <div class="f"><span>난곡선 <span class="tag o">예타 중</span></span><b>결과 12월 예정</b><span style="margin-top:8px">통과 전엔 호재로 단정 X</span></div>
+    <div class="f"><span>서부선 <span class="tag s">추진 중</span></span><b>착공 일정 확인 필요</b><span style="margin-top:8px">보도마다 시점이 달라요</span></div>
+    <div class="f w"><span>한 줄 체크</span><b>역 이름보다 집 → 역 출입구까지 경사와 시간</b></div>
+  </div>
+  <div class="foot"><span>출처: 서울시 신림선 개통 발표 · 보도</span><span>4 / 5</span></div>
+</section>
+
+<!-- 5 체크 + CTA -->
+<section class="c" id="c5"><span class="ad">#광고 도서협찬</span>
+  <p class="ey">사기 전에 꼭</p>
+  <h1>입주권, <span class="o">물건마다</span><br>달라요</h1>
+  <div class="chk">
+    <div class="ck"><i>1</i><div><b>권리산정기준일</b><span>그 이후 지분 쪼개기·신축이면 분양대상이 아닐 수 있어요</span></div></div>
+    <div class="ck"><i>2</i><div><b>조합원 지위 양도 제한</b><span>투기과열지구 재개발은 관리처분인가 이후 원칙적 제한 · 예외 서류 확인</span></div></div>
+    <div class="ck"><i>3</i><div><b>토지거래허가 대상 여부</b><span>지번·용도·면적별 최신 공고로 확인</span></div></div>
+  </div>
+  <div class="ctas" style="bottom:130px">
+    <span class="pill">💬 댓글 '오를 곳' → 22개 지역 순위 자료 DM</span>
+    <span class="pill y">🎁 팔로우 + 댓글 → 11/30 책 3권 추첨</span>
+  </div>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>5 / 5</span></div>
+</section>
+</body></html>
