@@ -1,0 +1,121 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Pretendard,"Apple SD Gothic Neo",sans-serif;background:#888;word-break:keep-all}
+.c{width:1080px;height:1350px;position:relative;padding:110px 96px 0;overflow:hidden;background:#FFF9F1;color:#172033}
+.c.dark{background:#172033;color:#fff}
+.foot{position:absolute;left:96px;right:96px;bottom:56px;display:flex;justify-content:space-between;font-size:26px;font-weight:600;color:#9C8B73}
+.dark .foot{color:#9AA3B5}
+.ey{font-size:32px;font-weight:600;color:#D9502C;margin-bottom:22px}
+.dark .ey{color:#FDD54D}
+h1{font-size:76px;font-weight:800;line-height:1.22;letter-spacing:-2px}
+h1 .o{color:#D9502C}.dark h1 .y{color:#FDD54D}
+.pill{display:inline-block;font-size:30px;font-weight:700;padding:16px 34px;border-radius:999px;background:#D9502C;color:#fff}
+.pill.y{background:#FDD54D;color:#172033}
+.big{font-size:118px;font-weight:900;line-height:1.12;letter-spacing:-4px}
+.big .y{color:#FDD54D}
+.sub{font-size:40px;font-weight:600;margin-top:36px;color:#E8EAF0}.sub b{color:#FDD54D}
+.ctas{position:absolute;left:96px;bottom:150px;display:grid;gap:22px;justify-items:start}
+.rows{margin-top:56px;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;background:#F1E6D6;border-radius:22px;padding:26px 34px;font-size:34px;font-weight:600}
+.row small{display:block;font-size:24px;font-weight:500;color:#7A6A55;margin-top:4px}
+.row b{font-size:46px;font-weight:800;color:#D9502C;letter-spacing:-1px}
+.row.n{background:#172033;color:#fff}.row.n small{color:#AEB6C8}.row.n b{color:#FDD54D}
+.facts{margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.f{background:#F1E6D6;border-radius:22px;padding:30px 32px}
+.f span{display:block;font-size:26px;color:#7A6A55;font-weight:600}
+.f b{display:block;font-size:42px;font-weight:800;margin-top:8px;letter-spacing:-1px}
+.f.w{grid-column:1/-1}
+table{width:100%;border-collapse:separate;border-spacing:0 14px;margin-top:40px;font-size:31px}
+td{padding:22px 24px;background:#F1E6D6}
+td:first-child{border-radius:18px 0 0 18px;font-weight:600}
+td:last-child{border-radius:0 18px 18px 0;text-align:right;font-weight:800;white-space:nowrap}
+td small{display:block;font-size:23px;color:#7A6A55;font-weight:500}
+td .r{color:#D9502C}
+tr.hl td{background:#172033;color:#fff}tr.hl td small{color:#AEB6C8}tr.hl td .r{color:#FDD54D}
+.note{font-size:25px;color:#8A7A64;margin-top:18px;line-height:1.5}
+.dark .note{color:#9AA3B5}
+.tl{margin-top:60px;display:grid;gap:0}
+.st{display:grid;grid-template-columns:270px 1fr;gap:30px;padding:24px 0;border-bottom:2px solid #2C3850;align-items:baseline}
+.st .d{font-size:40px;font-weight:800;color:#FDD54D;letter-spacing:-1px}
+.st .t{font-size:34px;font-weight:600}.st .t small{display:block;font-size:25px;color:#AEB6C8;font-weight:500;margin-top:4px}
+.st.k .d{font-size:46px}
+.chk{margin-top:50px;display:grid;gap:20px}
+.ck{display:grid;grid-template-columns:62px 1fr;gap:20px;background:#F1E6D6;border-radius:22px;padding:28px 30px}
+.ck i{font-style:normal;width:56px;height:56px;border-radius:50%;background:#D9502C;color:#fff;font-weight:800;font-size:30px;display:flex;align-items:center;justify-content:center}
+.ck b{font-size:34px;font-weight:800;display:block}
+.ck span{font-size:27px;color:#5D5040;line-height:1.45;display:block;margin-top:6px}
+.bgsk{position:absolute;inset:0;z-index:0}.c.dark>.pill,.c.dark>.big,.c.dark>.sub,.c.dark>.ey,.c.dark>h1,.c.dark>.tl{position:relative;z-index:1}.c.dark>.ctas,.c.dark>.foot{z-index:1}.bgsk{opacity:.55}.fade{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#172033 0%,#172033 40%,rgba(23,32,51,.35) 66%,rgba(23,32,51,.55) 85%,#172033 100%)}.photo{position:absolute;inset:0;z-index:0;background:url(bg.jpg) 62% center/cover;filter:saturate(.6) brightness(.85)}#c1 .fade{background:linear-gradient(180deg,rgba(23,32,51,.94) 0%,rgba(23,32,51,.86) 45%,rgba(23,32,51,.62) 70%,rgba(23,32,51,.9) 100%)}.ref{position:absolute;right:96px;bottom:96px;z-index:1;font-size:20px;color:#9AA3B5}
+.ex{margin-top:46px;display:grid;gap:16px}
+.ex .r{display:grid;grid-template-columns:1fr auto;align-items:center;background:#F1E6D6;border-radius:22px;padding:24px 30px}
+.ex .r span{font-size:30px;font-weight:700}.ex .r small{display:block;font-size:22px;color:#7A6A55;font-weight:500;margin-top:4px}
+.ex .r b{font-size:44px;font-weight:900;color:#D9502C;letter-spacing:-1px}
+.ex .r.n{background:#172033;color:#fff}.ex .r.n small{color:#AEB6C8}.ex .r.n b{color:#FDD54D}
+.eq{margin-top:40px;background:#172033;color:#fff;border-radius:24px;padding:30px 34px;font-size:34px;font-weight:800;line-height:1.4}.eq .y{color:#FDD54D}
+</style></head><body>
+
+<section class="c dark" id="c1">
+  <span class="pill">11/13 시행 · 11/10부터 신청</span>
+  <div class="big" style="margin-top:56px">전세사기 피해,<br>보증금 <span class="y">1/3</span>은<br>국가가 보장해요</div>
+  <p class="sub">전세사기피해자 <b>최소보장제</b><br>LH 청약플러스 온라인 신청 시작</p>
+  <div class="ctas">
+    <span class="pill y">📌 저장하고 주변에 공유해 주세요</span>
+    <span class="pill">📞 LH 콜센터 1600-1004</span>
+  </div>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>1 / 5</span></div>
+</section>
+
+<section class="c" id="c2">
+  <p class="ey">얼마나 받을 수 있나요?</p>
+  <h1>보증금 1억 원이라면<br><span class="o">최소 3,333만 원</span></h1>
+  <div class="eq">최소지원금 = 보증금의 <span class="y">1/3</span> − 이미 회복한 금액</div>
+  <div class="ex">
+    <div class="r"><span>경매 배당 1천만 원<small>이미 회복 1,000만</small></span><b>+2,333만</b></div>
+    <div class="r"><span>회복한 금액 없음<small>이미 회복 0원</small></span><b>+3,333만</b></div>
+    <div class="r n"><span>신탁사기 · 회복 없음<small>경매 끝나기 전 선지급</small></span><b>3,333만</b></div>
+  </div>
+  <p class="note">국토교통부 보도자료 예시 (2026.11.9) · 실제 금액은 산정 결과에 따라 달라요</p>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>2 / 5</span></div>
+</section>
+
+<section class="c" id="c3">
+  <p class="ey">두 가지 제도가 있어요</p>
+  <h1>나는 <span class="o">어디</span>에<br>해당할까?</h1>
+  <table>
+    <tr><td>최소지원금<small>전세사기피해자 · 보증금 5억 이하 등</small></td><td><span class="r">경·공매 끝난 뒤</span></td></tr>
+    <tr class="hl"><td>선지급금<small>신탁사기 등 무권계약 피해자</small></td><td><span class="r">경·공매 끝나기 전</span></td></tr>
+    <tr><td>이미 경매가 끝났다면?<small>제도 시행 전 종료도 포함</small></td><td><span class="r">신청 가능</span></td></tr>
+  </table>
+  <p class="note" style="font-size:24px">이미 회복한 금액 = 경·공매 배당액 + 임대인·공인중개사 변제액 + 경매차익·임대료 지원액<br>(지방정부 지원금·금융지원은 포함 안 돼요)</p>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>3 / 5</span></div>
+</section>
+
+<section class="c dark" id="c4">
+  <p class="ey">신청은 이렇게</p>
+  <h1>LH 청약플러스에서<br><span class="y">자가진단부터</span></h1>
+  <div class="tl">
+    <div class="st k"><span class="d">11/10~</span><span class="t">온라인 신청<small>LH 청약플러스 apply.lh.or.kr</small></span></div>
+    <div class="st k"><span class="d">11/13~</span><span class="t">현장 신청<small>LH 지역본부 방문 · 우편</small></span></div>
+    <div class="st"><span class="d">90일</span><span class="t">지급 결정<small>보완 필요 시 30일 연장</small></span></div>
+    <div class="st"><span class="d">30일</span><span class="t">이의신청<small>결정 통지받은 날부터</small></span></div>
+  </div>
+  <p class="note" style="margin-top:30px">필수 서류: 피해자 결정문 · 임대차계약서 · 주민등록표 초본 · 신분증 · 등기사항전부증명서</p>
+  <div class="foot"><span>출처: 국토교통부 (2026.11.9)</span><span>4 / 5</span></div>
+</section>
+
+<section class="c" id="c5">
+  <p class="ey">놓치면 안 되는 것</p>
+  <h1>신청 기한과<br><span class="o">미리 막는 법</span></h1>
+  <div class="chk">
+    <div class="ck"><i>⏰</i><div><b>신청 기한</b><span>피해자 결정일부터 3년 또는 경·공매 완료일부터 1년<br>기존 피해자는 2029.11.13까지</span></div></div>
+    <div class="ck"><i>!</i><div><b>신청 불가</b><span>보증금 5억 초과 · 피해주택 직접 매수 · 배당요구 안 한 경우 등</span></div></div>
+    <div class="ck"><i>✔</i><div><b>계약 전 예방이 먼저</b><span>등기부(근저당·신탁) · 반환보증 가능 여부 · 전입신고+확정일자</span></div></div>
+  </div>
+  <div class="ctas" style="bottom:130px">
+    <span class="pill y">📌 저장 · 필요한 분께 공유</span>
+    <span class="pill">📞 계약 전 상담은 프로필 링크 → 카톡 채널</span>
+  </div>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>5 / 5</span></div>
+</section>
+</body></html>
