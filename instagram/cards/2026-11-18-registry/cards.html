@@ -1,0 +1,135 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Pretendard,"Apple SD Gothic Neo",sans-serif;background:#888;word-break:keep-all}
+.c{width:1080px;height:1350px;position:relative;padding:110px 96px 0;overflow:hidden;background:#FFF9F1;color:#172033}
+.c.dark{background:#172033;color:#fff}
+.foot{position:absolute;left:96px;right:96px;bottom:56px;display:flex;justify-content:space-between;font-size:26px;font-weight:600;color:#9C8B73}
+.dark .foot{color:#9AA3B5}
+.ey{font-size:32px;font-weight:600;color:#D9502C;margin-bottom:22px}
+.dark .ey{color:#FDD54D}
+h1{font-size:76px;font-weight:800;line-height:1.22;letter-spacing:-2px}
+h1 .o{color:#D9502C}.dark h1 .y{color:#FDD54D}
+.pill{display:inline-block;font-size:30px;font-weight:700;padding:16px 34px;border-radius:999px;background:#D9502C;color:#fff}
+.pill.y{background:#FDD54D;color:#172033}
+.big{font-size:118px;font-weight:900;line-height:1.12;letter-spacing:-4px}
+.big .y{color:#FDD54D}
+.sub{font-size:40px;font-weight:600;margin-top:36px;color:#E8EAF0}.sub b{color:#FDD54D}
+.ctas{position:absolute;left:96px;bottom:150px;display:grid;gap:22px;justify-items:start}
+.rows{margin-top:56px;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;background:#F1E6D6;border-radius:22px;padding:26px 34px;font-size:34px;font-weight:600}
+.row small{display:block;font-size:24px;font-weight:500;color:#7A6A55;margin-top:4px}
+.row b{font-size:46px;font-weight:800;color:#D9502C;letter-spacing:-1px}
+.row.n{background:#172033;color:#fff}.row.n small{color:#AEB6C8}.row.n b{color:#FDD54D}
+.facts{margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.f{background:#F1E6D6;border-radius:22px;padding:30px 32px}
+.f span{display:block;font-size:26px;color:#7A6A55;font-weight:600}
+.f b{display:block;font-size:42px;font-weight:800;margin-top:8px;letter-spacing:-1px}
+.f.w{grid-column:1/-1}
+table{width:100%;border-collapse:separate;border-spacing:0 14px;margin-top:40px;font-size:31px}
+td{padding:22px 24px;background:#F1E6D6}
+td:first-child{border-radius:18px 0 0 18px;font-weight:600}
+td:last-child{border-radius:0 18px 18px 0;text-align:right;font-weight:800;white-space:nowrap}
+td small{display:block;font-size:23px;color:#7A6A55;font-weight:500}
+td .r{color:#D9502C}
+tr.hl td{background:#172033;color:#fff}tr.hl td small{color:#AEB6C8}tr.hl td .r{color:#FDD54D}
+.note{font-size:25px;color:#8A7A64;margin-top:18px;line-height:1.5}
+.dark .note{color:#9AA3B5}
+.tl{margin-top:60px;display:grid;gap:0}
+.st{display:grid;grid-template-columns:270px 1fr;gap:30px;padding:24px 0;border-bottom:2px solid #2C3850;align-items:baseline}
+.st .d{font-size:40px;font-weight:800;color:#FDD54D;letter-spacing:-1px}
+.st .t{font-size:34px;font-weight:600}.st .t small{display:block;font-size:25px;color:#AEB6C8;font-weight:500;margin-top:4px}
+.st.k .d{font-size:46px}
+.chk{margin-top:50px;display:grid;gap:20px}
+.ck{display:grid;grid-template-columns:62px 1fr;gap:20px;background:#F1E6D6;border-radius:22px;padding:28px 30px}
+.ck i{font-style:normal;width:56px;height:56px;border-radius:50%;background:#D9502C;color:#fff;font-weight:800;font-size:30px;display:flex;align-items:center;justify-content:center}
+.ck b{font-size:34px;font-weight:800;display:block}
+.ck span{font-size:27px;color:#5D5040;line-height:1.45;display:block;margin-top:6px}
+.bgsk{position:absolute;inset:0;z-index:0}.c.dark>.pill,.c.dark>.big,.c.dark>.sub,.c.dark>.ey,.c.dark>h1,.c.dark>.tl{position:relative;z-index:1}.c.dark>.ctas,.c.dark>.foot{z-index:1}.bgsk{opacity:.55}.fade{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#172033 0%,#172033 40%,rgba(23,32,51,.35) 66%,rgba(23,32,51,.55) 85%,#172033 100%)}.photo{position:absolute;inset:0;z-index:0;background:url(bg.jpg) 62% center/cover;filter:saturate(.6) brightness(.85)}#c1 .fade{background:linear-gradient(180deg,rgba(23,32,51,.94) 0%,rgba(23,32,51,.86) 45%,rgba(23,32,51,.62) 70%,rgba(23,32,51,.9) 100%)}.ref{position:absolute;right:96px;bottom:96px;z-index:1;font-size:20px;color:#9AA3B5}
+.ex{margin-top:46px;display:grid;gap:16px}
+.ex .r{display:grid;grid-template-columns:1fr auto;align-items:center;background:#F1E6D6;border-radius:22px;padding:24px 30px}
+.ex .r span{font-size:30px;font-weight:700}.ex .r small{display:block;font-size:22px;color:#7A6A55;font-weight:500;margin-top:4px}
+.ex .r b{font-size:44px;font-weight:900;color:#D9502C;letter-spacing:-1px}
+.ex .r.n{background:#172033;color:#fff}.ex .r.n small{color:#AEB6C8}.ex .r.n b{color:#FDD54D}
+.eq{margin-top:40px;background:#172033;color:#fff;border-radius:24px;padding:30px 34px;font-size:34px;font-weight:800;line-height:1.4}.eq .y{color:#FDD54D}
+
+.vs{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vs div{border-radius:22px;padding:30px 30px;background:#F1E6D6}
+.vs div.n{background:#172033;color:#fff}
+.vs b{display:block;font-size:34px;font-weight:800;margin-bottom:14px}
+.vs .n b{color:#FDD54D}
+.vs span{display:block;font-size:27px;line-height:1.5;color:#5D5040}
+.vs .n span{color:#E8EAF0}
+.pct{font-size:200px;font-weight:900;letter-spacing:-8px;line-height:1;color:#FDD54D}
+</style></head><body>
+
+<section class="c dark" id="c1">
+  <span class="pill">11월 23일부터 · 20여 년 만에 인상</span>
+  <div class="big" style="margin-top:56px">등기부등본<br>열람 <span class="y">700원</span><br>→ <span class="y">1,100원</span></div>
+  <p class="sub">모든 항목 <b>400원씩</b> 올라요<br>그래도 <b>꼭 떼야 하는 3번</b>은 따로 있어요</p>
+  <div class="ctas"><span class="pill y">📌 계약 전에 꺼내 보게 저장해 두세요</span></div>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>1 / 6</span></div>
+</section>
+
+<section class="c" id="c2">
+  <p class="ey">얼마나 오르나요?</p>
+  <h1>열람은 <span class="o">57%</span>,<br>발급은 <span class="o">40%</span> 올라요</h1>
+  <table>
+    <tr><td>인터넷 열람<small>계약 전 확인용</small></td><td>700원 → <span class="r">1,100원</span></td></tr>
+    <tr><td>인터넷 · 무인 발급<small>제출용 증명서</small></td><td>1,000원 → <span class="r">1,400원</span></td></tr>
+    <tr><td>등기소 방문<small>열람 · 발급</small></td><td>1,200원 → <span class="r">1,600원</span></td></tr>
+    <tr class="hl"><td>20장 넘는 등기부<small>장당 추가 요금</small></td><td><span class="r">50원 그대로</span></td></tr>
+  </table>
+  <p class="note">대법원 「등기사항증명서 등 수수료규칙」 개정 · 2026.11.12 발표 · 11.23 시행</p>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>2 / 6</span></div>
+</section>
+
+<section class="c" id="c3">
+  <p class="ey">왜 올리는데요?</p>
+  <h1>대법원 <span class="o">"적자"</span><br>중개사협회 <span class="o">"무료로"</span></h1>
+  <div class="vs">
+    <div class="n"><b>대법원</b><span>등기특별회계 2022년부터 적자<br>22~29년 동결<br>AI 등기 시스템 구축에 사용<br>재정 회복되면 인하 검토</span></div>
+    <div><b>중개사협회 · 청원</b><span>등기 확인은 전세사기 예방의 기본<br>인터넷 열람·발급 무료화 요구<br>국회 청원 5만 명 넘어<br>법사위 회부</span></div>
+  </div>
+  <p class="note">2026.11.12~13 보도 기준 · 각 주체의 입장을 소개했어요<br>안심전세앱 무료 등기정보 확인 기능은 아직 개발 중</p>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>3 / 6</span></div>
+</section>
+
+<section class="c dark" id="c4">
+  <p class="ey">400원 올라도</p>
+  <h1>이 세 번은<br><span class="y">꼭 떼어 보세요</span></h1>
+  <div class="tl">
+    <div class="st k"><span class="d">① 계약금 전</span><span class="t">소유자 · 근저당 · 압류<small>계약하는 사람이 진짜 집주인인지</small></span></div>
+    <div class="st k"><span class="d">② 잔금 당일</span><span class="t">아침에 다시 한 번<small>계약 뒤 새로 생긴 권리가 없는지</small></span></div>
+    <div class="st k"><span class="d">③ 전입 다음 날</span><span class="t">마지막 확인<small>잔금일에 몰래 들어온 권리가 없는지</small></span></div>
+  </div>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>4 / 6</span></div>
+</section>
+
+<section class="c" id="c5">
+  <p class="ey">세 번 다 떼도</p>
+  <div class="pct" style="color:#D9502C;margin-top:30px">3,300원</div>
+  <h1 style="margin-top:30px">보증금 지키는<br><span class="o">가장 싼 보험</span>이에요</h1>
+  <div class="chk">
+    <div class="ck"><i>✔</i><div><b>계약 전 확인은 '열람'으로 충분</b><span>1,100원 · 제출용이 아니면 발급(1,400원)까지 필요 없어요</span></div></div>
+    <div class="ck"><i>✔</i><div><b>인터넷등기소에서 바로</b><span>iros.go.kr · 주소로 검색해서 열람</span></div></div>
+  </div>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>5 / 6</span></div>
+</section>
+
+<section class="c dark" id="c6">
+  <p class="ey">정리하면</p>
+  <h1>11월 23일부터<br><span class="y">400원씩</span> 올라요</h1>
+  <div class="tl">
+    <div class="st"><span class="d">1,100원</span><span class="t">인터넷 열람</span></div>
+    <div class="st"><span class="d">1,400원</span><span class="t">인터넷 · 무인 발급</span></div>
+    <div class="st"><span class="d">1,600원</span><span class="t">등기소 방문</span></div>
+  </div>
+  <div class="ctas" style="bottom:130px">
+    <span class="pill y">📌 저장 · 이사 앞둔 친구에게 공유</span>
+    <span class="pill">📞 계약 전 등기부 같이 봐요 → 프로필 카톡 채널</span>
+  </div>
+  <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>6 / 6</span></div>
+</section>
+</body></html>
