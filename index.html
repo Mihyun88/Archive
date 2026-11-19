@@ -96,7 +96,7 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
 </header>
 <div class="pane on" id="pane-ig">
 <nav>
-  <a href="#week">이번 주 할 일</a><a href="#plan">11월 계획</a><a href="#reelplan">11월 릴스</a><a href="#ai">AI 활용 팁</a><a href="#kpi">계정 성과</a><a href="#insight">핵심 인사이트</a><a href="#reels">릴스 분석</a><a href="#feed">캐러셀 요약</a><a href="#notion">노션 소재 진단</a>
+  <a href="#week">이번 주 할 일</a><a href="#plan">11월 계획</a><a href="#ai">AI 활용 팁</a><a href="#kpi">계정 성과</a><a href="#insight">핵심 인사이트</a><a href="#reels">릴스 분석</a><a href="#feed">캐러셀 요약</a><a href="#notion">노션 소재 진단</a>
 </nav>
 
 <section id="week">
@@ -235,11 +235,6 @@ footer{margin-top:48px;color:var(--tx3);font-size:12px}
   </div>
 </section>
 
-<section id="reelplan">
-  <h2>🎬 11월 릴스 12편</h2>
-  <div class="sub">화·목·토 밤 9~11시 · 0~3초 숫자 훅 → 15초 예고 → 마지막 댓글 키워드 · <a href="instagram/2026-11-reels-scripts.html">전체 대본</a></div>
-  <div class="tw"><table id="rp"></table></div>
-</section>
 
 <section id="ai">
   <h2>AI 활용 팁: Claude · ChatGPT · Gemini</h2>
@@ -772,7 +767,6 @@ T('ftSave',['게시물','도달','저장률'],F.topsave.map(x=>`<tr><td><a href=
 T('ftReach',['게시물','도달','공유'],F.topreach.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t}</a><div class="meta">${x.date}</div></td><td class="num"><b>${f(x.reach)}</b></td><td class="num">${f(x.shares)}</td></tr>`));
 T('ftWorst',['게시물','도달','저장'],F.worst.map(x=>`<tr><td><a href="${x.url}" target="_blank">${x.t||'(캡션 없음)'}</a><div class="meta">${x.date}</div></td><td class="num">${f(x.reach)}</td><td class="num">${f(x.saved)}</td></tr>`));
 document.getElementById('nt').innerHTML='<tr><th>우선순위</th><th>소재</th><th>유형 · 타겟</th><th>상태</th><th>근거</th></tr>'+D.notion.map(n=>`<tr><td><span class="tag p${n[4]}">${n[4]}</span></td><td><b>${n[0]}</b></td><td class="meta">${n[1]}<br>${n[2]}</td><td class="meta">${n[3]}</td><td>${n[5]}</td></tr>`).join('');
-document.getElementById('rp').innerHTML='<tr><th>날짜</th><th>주제</th><th>첫 3초</th><th>키워드</th></tr>'+[["11/3(화)", "10년 전 vs 지금 (마포·창동)", "2016년 8억 5천, 지금 25억. 같은 아파트예요.", "리스트"], ["11/5(목)", "사면 안 되는 아파트 TOP 5", "이 5가지 중 하나라도 해당되면, 다시 생각하세요.", "체크"], ["11/7(토)", "잔금날 놓치면 수백만 원", "잔금날 이거 하나 빠뜨려서 수백만 원 날리는 분, 매달 봅니다.", "잔금"], ["11/10(화)", "생애최초 서울 84㎡ 6억 이하", "서울 84㎡, 아직 6억 이하로 거래돼요. 도봉구에서만 239건.", "첫집"], ["11/12(목)", "갈아타기 1.5배 원칙", "10억 집이 12억 될 때, 15억 집은 18억이 됩니다.", "갈아타기"], ["11/14(토)", "분양가 vs 실거래가 2편", "분양가 ○억이던 이 단지, 지금 실거래가 보세요.", "리스트"], ["11/17(화)", "부린이 vs 고수 2편: 계약서", "같은 계약서인데, 고수는 이 한 줄을 꼭 넣어요.", "특약"], ["11/19(목)", "수능 주간 학군지 10년", "대치·목동·중계 10년 가격부터 보세요.", "학군"], ["11/21(토)", "계약서 5천 건, 특약 하나", "계약서 5천 건 쓰면서, 제가 무조건 넣는 특약은 딱 하나예요.", "특약"], ["11/24(화)", "경기 갈아타기 징검다리", "경기 7억대 신축 84㎡, 서울 가는 징검다리가 될 수 있어요.", "경기"], ["11/26(목)", "지금 사야 하나요? 연말판", "집값 떨어지면 사겠다는 분들, 진짜 떨어지면 사실 수 있으세요?", "첫집"], ["11/28(토)", "반포 vs 내 예산 단지", "같은 10년, 반포자이는 3.1배, 창동 동아청솔은 2.5배.", "리스트"]].map(r=>`<tr><td style="white-space:nowrap"><b>${r[0]}</b></td><td>${r[1]}</td><td>"${r[2]}"</td><td><code>${r[3]}</code></td></tr>`).join('');
 </script>
 <script>
 (function(){
