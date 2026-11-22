@@ -35,7 +35,45 @@ def p(s="", size=16, color=None, extra=""):
     st = f"text-align:center;font-size:{size}px;line-height:1.8;margin:0;{FONT}"
     if color:
         st += f"color:{color};"
-    return f'<p style="{st}{extra}">{rich(s) if s else "&nbsp;"}</p>'
+    body = rich(s) if s else "&nbsp;"
+    if s.startswith("✔"):
+        body = f'<b><span style="color:{P}">✔</span></b>' + body[1:]
+    return f'<p style="{st}{extra}">{body}</p>'
+
+
+import re as _re
+_MK = _re.compile(r"\*\*.+?\*\*|\[\[.+?\]\]|\{\{.+?\}\}|==.+?==")
+
+
+def vis(s):
+    """마크업 기호 뺀 실제 글자 수"""
+    return len(_re.sub(r"\*\*|\[\[|\]\]|\{\{|\}\}|==", "", s))
+
+
+def wrap(s, lim=21):
+    """모바일(한 줄 약 20자)에 맞게 긴 문장을 짧은 줄로 나눔. 굵게·색 표시 안은 자르지 않음."""
+    if not s or vis(s) <= lim:
+        return [s]
+    t = _MK.sub(lambda m: m.group(0).replace(" ", "\x00"), s)
+    if t.startswith("✔ "):
+        t = "✔\x00" + t[2:]
+    lines, cur = [], ""
+    for w in t.split(" "):
+        cand = f"{cur} {w}" if cur else w
+        if cur and vis(cand) > lim:
+            lines.append(cur); cur = w
+        else:
+            cur = cand
+        plain = _re.sub(r"\*\*|\]\]|\}\}|==", "", cur)
+        if vis(cur) >= 10 and _re.search(r"(,|—|:|\)|요|요\.|다\.|\?)$", plain):
+            lines.append(cur); cur = ""
+    if cur:
+        lines.append(cur)
+    return [l.replace("\x00", " ") for l in lines]
+
+
+def para(s, size=16, color=None, lim=21):
+    return "".join(p(l, size, color) for l in wrap(s, lim))
 
 
 class Post:
@@ -47,7 +85,15 @@ class Post:
         self.b.append(("body", p()))
 
     def text(self, *lines, size=16, color=None):
-        self.b.append(("body", "".join(p(l, size, color) for l in lines)))
+        lim = 21 if size >= 16 else 26
+        long_ = any(vis(l) > lim for l in lines) or any(l.startswith("✔") for l in lines)
+        out = ""
+        for i, l in enumerate(lines):
+            prev = _re.sub(r"\*\*|\]\]|\}\}|==", "", lines[i - 1]).rstrip() if i else ""
+            if i and long_ and (l.startswith("✔") or _re.search(r"(요|다|\.|\?|!|\))$", prev)):
+                out += p()
+            out += para(l, size, color, lim)
+        self.b.append(("body", out + p()))
 
     def greet(self):
         self.b.append(("body",
@@ -57,20 +103,21 @@ class Post:
 
     def voice(self, *qs):
         """손님 질문 (회색 따옴표)"""
-        self.b.append(("body", "".join(p(f"“{q}”", 16, "#999999") for q in qs)))
+        self.b.append(("body", p().join(para(f"“{q}”", 16, "#999999") for q in qs) + p()))
 
     def head(self, n, t):
         cell = (f'<table style="width:100%;border-collapse:collapse;margin:24px 0 12px;">'
                 f'<tr><td style="border-top:1px solid #e5e5e5;border-right:1px solid #e5e5e5;'
                 f'border-bottom:1px solid #e5e5e5;border-left:6px solid #555555;padding:10px 14px;'
                 f'font-size:19px;{FONT}"><b>{n}. {esc(t)}</b></td></tr></table>')
-        self.b.append(("head", cell))
+        self.b.append(("head", p() + cell))
+        self.cur_head = t
 
     def checks(self, *items, color=P):
-        self.b.append(("body", "".join(p(f"✔ {i}", 16) for i in items)))
+        self.b.append(("body", p().join(para(f"✔ {i}") for i in items) + p()))
 
     def numbered(self, title, *items):
-        self.b.append(("body", p(f"[[{title}]]", 17) + "".join(p(f"✔ {i}") for i in items)))
+        self.b.append(("body", p(f"[[{title}]]", 17) + p() + p().join(para(f"✔ {i}") for i in items) + p()))
 
     def quote(self, text, kind="기본"):
         """스마트에디터 인용구는 붙여넣기로 생기지 않아요 → 인용구 넣고 이 문장만 붙여넣기."""
@@ -86,25 +133,26 @@ class Post:
             for c in r) + "</tr>" for r in rows)
         t = f'<table style="width:100%;border-collapse:collapse;margin:12px 0;"><tr>{th}</tr>{tr}</table>'
         if note:
-            t += p(note, 13, "#888888")
-        self.b.append(("table", t))
+            t += para(note, 13, "#888888", 28)
+        self.b.append(("table", t + p()))
 
     def photo(self, desc):
-        self.b.append(("photo", p(f"📷 [사진: {desc}]", 14, "#2b7de9")))
+        """촬영할 사진 → 본문엔 안 넣고 오른쪽 목록으로"""
+        self.todo_photos = getattr(self, "todo_photos", []) + [(getattr(self, "cur_head", "도입"), desc)]
 
     def image(self, rel, desc):
         """공식 도면 등 실제 이미지: 미리보기에 표시 + 업로드 안내"""
         self.b.append(("photo",
             f'<p style="text-align:center;margin:12px 0 4px"><img src="{rel}" alt="{esc(desc)}" style="max-width:100%;border:1px solid #ddd"></p>'
-            + p(f"📷 [이미지 업로드: {desc} → 오른쪽 '이미지 내려받기']", 13, "#2b7de9")))
+            + para(f"▲ {desc}", 13, "#999999", 28) + p()))
         self.images = getattr(self, "images", []) + [(rel, desc)]
 
     def fill(self, desc):
         """직접 채울 칸 (지어 쓰지 않음)"""
-        self.b.append(("fill", p(f"✍️ [직접 채우기: {desc}]", 15, "#d0021b")))
+        self.b.append(("fill", p(f"✍️ [직접 채우기: {desc}]", 15, "#d0021b") + p()))
 
     def hl(self, s):
-        self.b.append(("body", p(f"=={s}==", 17)))
+        self.b.append(("body", para(f"=={s}==", 17) + p()))
 
     def outro(self, follow, extra_note):
         self.b.append(("body",
@@ -157,6 +205,10 @@ class Post:
         ims = getattr(self, "images", [])
         imgs = ("<div class=\"card\"><h3>이미지 내려받기 (직접 업로드)</h3><ul>" + "".join(
             f'<li><a href="{r}" download>{esc(d)}</a></li>' for r, d in ims) + "</ul></div>") if ims else ""
+        tp = getattr(self, "todo_photos", [])
+        if tp:
+            imgs += ("<div class=\"card\"><h3>📷 촬영해서 넣을 사진</h3><ul>" + "".join(
+                f"<li><b>{esc(h)}</b> 섹션: {esc(d)}</li>" for h, d in tp) + "</ul></div>")
         return PAGE.format(title=esc(self.title), meta=self.meta, article=article, qlist=qlist, side=side_html, imgs=imgs)
 
 
@@ -190,7 +242,7 @@ body{{margin:0;background:#f4f4f2;font-family:-apple-system,"Apple SD Gothic Neo
 <li>① <b>본문 전체 복사</b> → 글쓰기 화면 본문에 <b>Ctrl+V</b></li>
 <li>② 표·굵게·글자색·형광·가운데 정렬은 그대로 들어가요 (붙여넣은 뒤 표 색이 빠지면 표 선택 → 셀 배경색만 다시 지정)</li>
 <li>③ <span class="qk">주황 점선</span> 문장은 <b>인용구</b>로 바꿔 주세요: 붙여넣은 문장 지우고 → 상단 [인용구] → 오른쪽 목록의 「문장 복사」로 붙여넣기</li>
-<li>④ 📷 파란 줄 = 사진 넣을 자리, ✍️ 빨간 줄 = 직접 채울 자리 → 채운 뒤 줄 삭제</li>
+<li>④ 사진은 붙여넣기로 안 들어가요 → 회색 「▲ 설명」 줄 바로 위에 오른쪽 「이미지 내려받기」 파일을 올려 주세요 (▲ 줄은 사진 설명으로 그대로 두면 돼요) · ✍️ 빨간 줄 = 직접 채울 자리</li>
 <li>⑤ 맨 아래 법정 표시는 「내 템플릿」에 저장해 둔 서명과 같아요 — 템플릿을 썼다면 이 부분은 지워도 돼요</li>
 </ul></div>
 <div class="card"><h3>인용구로 바꿀 문장</h3><ul>{qlist}</ul></div>
@@ -1642,7 +1694,7 @@ def nogosan():
            "도로·공원 같은 공공용지를 내놓은 만큼 **35m를 더** 올려 165m까지 가능해졌어요",
            "✔ 서강대역에서 신촌역까지 **폭 6m 이상 평탄한 보행통로**, 경의선숲길과 이어지는 소공원, 2층 문화시설(가칭 '서강대역 스페이스')·주거안심종합센터가 들어서요",
            "✔ 단지 안에는 어린이놀이터·경로당·어린이집·주민운동시설이 계획돼 있어요")
-    a.text("✔ **현장은 지금 — 철거가 끝난 빈 땅이에요.** 해체공사 표지판 기준 노고산동 109-91 외 25필지, 해체규모 7,558㎡, 공사기간 2025.8.18~2026.1.31 (시공 자이에스앤디)")
+    a.text("✔ [[현장은 지금 — 철거가 끝난 빈 땅이에요.]] 해체공사 표지판 기준 노고산동 109-91 외 25필지, 해체규모 7,558㎡, 공사기간 2025.8.18~2026.1.31 (시공 자이에스앤디)")
     a.image(I + "site-08-mapo4-10-gate.jpg", "「신촌(마포)4-10지구 도시정비형 재개발사업」 공사장 출입구 (직접 촬영 2026.11)")
     a.image(I + "site-06-mapo4-10-cleared-lot.jpg", "가림막 안쪽 — 철거를 마치고 비어 있는 부지 (직접 촬영)")
     a.image(I + "site-09-mapo4-10-demolition-sign.jpg", "해체공사 안내 표지판 (마포구청장) — 2025.8.18~2026.1.31")
@@ -1661,7 +1713,7 @@ def nogosan():
             note="구의회 의견청취안(의안 25-139, 2025.11) 건축계획(안) · 재개발 의무 공공임대 15세대 포함 · 통합심의 조건부 의결 내용에 따라 바뀔 수 있어요")
     a.text("✔ **외국인주민센터**가 들어서는 건 연세대·이화여대·서강대 유학생이 많은 신촌 특성을 반영한 거예요",
            "==서울시 지정 글로벌 부동산중개사무소인 그랑자이점과도 연결되는 변화라 반가운 소식이에요.==")
-    a.text("✔ **현장은 지금 — 철거 중이에요.** 해체공사 표지판 기준 노고산동 31-77 외 13필지, 연면적 3,983.7㎡, **2026.9.1~2027.1.31**, 진행공정 '철거공사' (시공 자이에스앤디)",
+    a.text("✔ [[현장은 지금 — 철거 중이에요.]] 해체공사 표지판 기준 노고산동 31-77 외 13필지, 연면적 3,983.7㎡, **2026.9.1~2027.1.31**, 진행공정 '철거공사' (시공 자이에스앤디)",
            "통합심의 통과 한 달 만에 철거에 들어간 거라, 멈췄던 사업이 **다시 움직이는 건 분명**해요. 다만 철거 다음 **착공·분양 일정**은 아직 발표 전이에요")
     a.image(I + "site-01-mapo33-fence-rotary.jpg", "마포3구역 3지구 — 신촌로터리 쪽 가림막 (직접 촬영 2026.11)")
     a.image(I + "site-03-mapo33-gate.jpg", "3지구 공사장 출입구 (직접 촬영)")
