@@ -118,7 +118,20 @@ def wrap(s, lim=19):
     return res
 
 
+def hlpara(s, bg, fg=None, size=16, lim=19):
+    """배경색 강조 문장을 모바일 줄 단위로 나눠 줄마다 형광 칠하기"""
+    st = f"text-align:center;font-size:{size}px;line-height:1.9;margin:0;{FONT}"
+    fgc = f"color:{fg};" if fg else ""
+    return "".join(f'<p style="{st}"><span style="background-color:{bg};{fgc}">&nbsp;{rich(l)}&nbsp;</span></p>' for l in wrap(s, lim))
+
+
 def para(s, size=16, color=None, lim=19):
+    if size <= 14 and " · " in s:
+        # 출처·안내처럼 '·'로 나열된 작은 글씨는 항목마다 줄을 나눔
+        out = []
+        for part in s.split(" · "):
+            out += wrap(part, lim)
+        return "".join(p(l, size, color) for l in out)
     return "".join(p(l, size, color) for l in wrap(s, lim))
 
 
@@ -223,18 +236,14 @@ class Post:
             f'<span style="color:#ffffff;font-size:15px;line-height:1.8">단지&nbsp;시세&nbsp;·&nbsp;내&nbsp;예산&nbsp;진단&nbsp;리포트<br>신촌&nbsp;오피스텔&nbsp;·&nbsp;청약까지<br><br>중개사가&nbsp;매일&nbsp;보는&nbsp;시세표,<br><b>그대로&nbsp;열어&nbsp;드려요</b></span><br>'
             f'<a href="https://unnizip.kr/app/" style="color:#ffffff;font-size:16px"><b>👉 unnizip.kr/app</b></a></td></tr></table>'
             + p() +
-            f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
-            f'<span style="background-color:#13a89e;color:#ffffff">&nbsp;{esc(follow)}&nbsp;</span></p>'
-            + p() +
-            f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
-            f'<span style="background-color:#ffe812">&nbsp;@@CTA@@&nbsp;</span></p>'
+            hlpara(follow, "#13a89e", "#ffffff")
+            + p() + "@@CTA@@"
             + f'<p style="text-align:center;font-size:14px;line-height:1.8;margin:0;{FONT}"><a href="http://pf.kakao.com/_xcxoBxnX">pf.kakao.com/_xcxoBxnX</a></p>'
             + p() +
-            f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
-            f'<span style="background-color:#f3d6ff">&nbsp;인스타그램 <b>@goodsister4080</b> 에서는 이런 내용을 카드뉴스로 한눈에 정리해요.&nbsp;</span></p>'
-            + p("쉽고 꾸준하게, 꼭 부자되세요!")
+            hlpara("인스타그램 **@goodsister4080**", "#f3d6ff", lim=30) + hlpara("이런 내용을 카드뉴스로 정리해요", "#f3d6ff", lim=30)
+            + p() + p("쉽고 꾸준하게, 꼭 부자되세요!")
             + p("────────────────", 13, "#bbbbbb")
-            + p(extra_note, 13, "#888888")))
+            + para(extra_note, 13, "#888888", 24)))
 
     OFFICES = {
         "zaiella": ["중개사무소: 신촌자이엘라부동산공인중개사사무소",
@@ -249,12 +258,13 @@ class Post:
     def signature(self, office="zaiella"):
         """office: zaiella = 오피스텔·신촌·이대 글 / grandxi = 아파트·마포 글 (실제 중개 사무소 기준)"""
         self.office = office
-        cta = {"zaiella": "🏠 방 구하기 문의 — 카카오톡 채널 <b>착한언니복덕방</b>에 「원하는 동네·예산·입주 날짜」만 남겨 주세요. 맞는 방을 골라 드려요.",
-               "grandxi": "🏢 매수·매도·전세 상담 — 카카오톡 채널 <b>착한언니복덕방</b>에 「단지·평형·예산」을 남겨 주세요. 동·층까지 비교해 드려요."}[office]
+        cta = {"zaiella": "🏠 방 구하기 문의는 카카오톡 채널 **착한언니복덕방**에 「원하는 동네·예산·입주 날짜」만 남겨 주세요. 맞는 방을 골라 드려요.",
+               "grandxi": "🏢 매수·매도·전세 상담은 카카오톡 채널 **착한언니복덕방**에 「단지·평형·예산」을 남겨 주세요. 동·층까지 비교해 드려요."}[office]
+        cta = hlpara(cta, "#ffe812")
         self.b = [(b[0], b[1].replace("@@CTA@@", cta)) + tuple(b[2:]) for b in self.b]
         lines = ["착한언니복덕방 | 신촌자이엘라 & 마포그랑자이 부동산",
                  "4인 전원 공인중개사 · 중개보조원 없음"] + self.OFFICES[office] + ["카카오톡 채널: pf.kakao.com/_xcxoBxnX"]
-        self.b.append(("body", "".join(p(l, 13, "#666666") for l in lines)))
+        self.b.append(("body", "".join(para(l, 13, "#666666", 24) for l in lines)))
 
     # --- render ---
     def render(self, side):
