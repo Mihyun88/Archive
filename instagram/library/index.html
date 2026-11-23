@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>콘텐츠 보관함 · 착한언니복덕방</title>
+<style>
+:root{--bg:#f7f6f3;--card:#fff;--ink:#1c1c1a;--sub:#7a766c;--line:#e7e3d9;--navy:#1E2A3A;--y:#FFD84D}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-text-size-adjust:100%}
+.w{max-width:760px;margin:0 auto;padding:20px 16px 80px}
+a.back{font-size:14px;color:var(--sub);text-decoration:none}
+h1{font-size:24px;margin:10px 0 4px}.sub{color:var(--sub);font-size:13px}
+.tabs{display:flex;gap:8px;margin:18px 0 10px}.tabs button{flex:1;font:inherit;font-weight:800;font-size:16px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px}.chips button{flex:none;font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.chips button.on{background:var(--y);border-color:var(--y);font-weight:700}
+.it{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:10px 0;overflow:hidden}
+.hd{padding:14px 16px;cursor:pointer}.t{font-weight:800;font-size:16px;line-height:1.4}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:12px}.b{padding:3px 9px;border-radius:99px;background:#f0eee8;color:#555}
+.s-확정,.s-게시\ 완료{background:#DFF3E4;color:#1f6b3a}.s-대표님\ 확인{background:#FFF1C2;color:#7a5a00}.s-보류{background:#FBE0DD;color:#9b2c20}.s-대본\ 초안,.s-초안{background:#E3ECFA;color:#26467a}
+.memo{font-size:13px;color:#6b665c;margin-top:8px;line-height:1.5}
+.bd{display:none;border-top:1px solid var(--line);padding:14px 16px;font-size:15px;line-height:1.65}.it.open .bd{display:block}
+.bd h4{margin:16px 0 6px;font-size:15px}.bd ul{margin:6px 0;padding-left:18px}.bd li{margin:4px 0}
+.pre{position:relative;background:#faf9f6;border:1px solid var(--line);border-radius:10px;margin:8px 0}.pre pre{white-space:pre-wrap;word-break:keep-all;margin:0;padding:12px;font-family:inherit;font-size:14px;line-height:1.6}
+.pre button{position:absolute;top:6px;right:6px;font:inherit;font-size:12px;padding:4px 10px;border-radius:99px;border:0;background:var(--navy);color:#fff}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.links a{font-size:13px;padding:6px 12px;border-radius:99px;background:var(--navy);color:#fff;text-decoration:none}
+.cnt{font-size:13px;color:var(--sub);margin:4px 2px}
+</style></head><body><div class="w">
+<a class="back" href="../../">← 대시보드</a>
+<h1>📚 콘텐츠 보관함</h1><div class="sub" id="upd"></div>
+<div class="tabs"><button data-k="reels" class="on">🎬 릴스 대본</button><button data-k="cards">🖼️ 카드뉴스</button></div>
+<div class="chips" id="chips"></div><div class="cnt" id="cnt"></div><div id="list"></div>
+</div>
+<script>
+let D,K='reels',F='전체';
+const ORDER={reels:['전체','확정','대표님 확인','대본 초안','아이디어','촬영 완료','게시 완료','보류'],cards:['전체','게시 완료','대표님 확인','초안','아이디어','보류']};
+const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function md(s){if(!s)return'';const parts=s.split(/```\n?/);let h='';
+ parts.forEach((p,i)=>{if(i%2){h+='<div class="pre"><button onclick="cp(this)">복사</button><pre>'+esc(p.replace(/\n$/,''))+'</pre></div>';return}
+  let inUl=false;p.split('\n').forEach(l=>{let x=esc(l).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(https?:\/\/[^\s)]+)/g,'<a href="$1" target="_blank">$1</a>');
+   if(/^#{1,4} /.test(l)){if(inUl){h+='</ul>';inUl=false}h+='<h4>'+x.replace(/^#+ /,'')+'</h4>'}
+   else if(/^- /.test(l)){if(!inUl){h+='<ul>';inUl=true}h+='<li>'+x.slice(2)+'</li>'}
+   else{if(inUl){h+='</ul>';inUl=false}if(l.trim())h+='<div>'+x+'</div>'}});if(inUl)h+='</ul>'});return h}
+function cp(b){navigator.clipboard.writeText(b.nextElementSibling.textContent);b.textContent='복사됨 ✓';setTimeout(()=>b.textContent='복사',1500)}
+function render(){
+ document.getElementById('chips').innerHTML=ORDER[K].map(s=>`<button class="${s==F?'on':''}" onclick="F='${s}';render()">${s}</button>`).join('');
+ let L=D[K].filter(x=>F=='전체'||x.status==F);
+ if(F=='전체')L=L.filter(x=>x.status!='보류').concat(D[K].filter(x=>x.status=='보류'));
+ document.getElementById('cnt').textContent=L.length+'개';
+ document.getElementById('list').innerHTML=L.map(x=>{const m=[`<span class="b s-${x.status}">${x.status}</span>`,x.format||x.kind?`<span class="b">${x.format||x.kind}</span>`:'',x.date?`<span class="b">📅 ${x.date}</span>`:'',x.keyword?`<span class="b">💬 ${esc(x.keyword)}</span>`:''].join('');
+  const links=[x.insta?`<a href="${x.insta}" target="_blank">인스타 보기</a>`:'',x.file?`<a href="${x.file}" target="_blank">원본 파일</a>`:'',x.folder?`<a href="${x.folder}" target="_blank">원본 폴더</a>`:''].join('');
+  return `<div class="it"><div class="hd" onclick="this.parentNode.classList.toggle('open')"><div class="t">${esc(x.title)}</div><div class="meta">${m}</div>${x.memo?`<div class="memo">${esc(x.memo)}</div>`:''}</div>
+  <div class="bd">${x.resource?`<div><b>연결 자료</b> · ${esc(x.resource)}</div>`:''}${md(x.body)}<div class="links">${links}</div></div></div>`}).join('')}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(z=>z.classList.remove('on'));b.classList.add('on');K=b.dataset.k;F='전체';render()});
+fetch('data.json?v='+Date.now()).then(r=>r.json()).then(j=>{D=j;document.getElementById('upd').textContent='업데이트 '+j.updated+' · 제목을 누르면 대본·캡션이 펼쳐져요';render()});
+</script></body></html>
