@@ -26,14 +26,19 @@ h1{font-size:24px;margin:10px 0 4px}.sub{color:var(--sub);font-size:13px}
 .act button.on1{background:#FFE3EF;border-color:#f7a8c8;color:#b0105a}.act button.on2{background:#E8E1FA;border-color:#c3b3f0;color:#4b2e9b}.act button.on3{background:#FBE0DD;border-color:#f0b2aa;color:#9b2c20}.act button.del{color:#9b2c20}.act{flex-wrap:wrap}
 .it.shot{opacity:.75}
 .tk{margin-top:24px;font-size:14px;font-weight:700}.tk a{color:#b0105a}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;display:none;z-index:9}
+.act button.sh{background:var(--navy);color:#fff;border-color:var(--navy)}
+#ov{position:fixed;inset:0;background:#111;color:#f5f3ee;z-index:20;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#ov .ob{position:sticky;top:0;display:flex;gap:8px;align-items:center;padding:12px 16px;background:#111;border-bottom:1px solid #333}
+#ov .ob b{flex:1;font-size:15px;line-height:1.3}#ov .ob button{font:inherit;font-size:15px;font-weight:700;padding:8px 12px;border-radius:10px;border:0;background:#333;color:#fff}
+#ov .ot{white-space:pre-wrap;word-break:keep-all;padding:20px 20px 120px;line-height:1.75;max-width:760px;margin:0 auto}
 .note{font-size:12px;color:var(--sub);line-height:1.6;margin-top:24px;padding:12px;border:1px dashed var(--line);border-radius:10px}
 </style></head><body><div class="w">
 <a class="back" href="../../">← 대시보드</a>
 <h1>📚 콘텐츠 보관함</h1><div class="sub" id="upd"></div>
 <div class="tabs"><button data-k="reels" class="on">🎬 릴스 대본</button><button data-k="cards">🖼️ 카드뉴스</button></div>
 <div class="chips" id="chips"></div><div class="cnt" id="cnt"></div><div id="list"></div>
-<div class="tk" id="tk"></div><div class="note">🎬 릴스 대본마다 <b>📅 촬영 예정</b> · <b>✅ 촬영 완료</b> · <b>⏸ 보류</b> 버튼이 있어요. 삭제는 Claude에게 "○○ 삭제해 줘"라고 말해 주세요. 누르면 상태가 바로 바뀌고, 다시 누르면 취소돼요.<br><b>🔑 이 기기 연결</b>을 해 두면 버튼을 누를 때마다 보관함 데이터에 바로 저장돼서 폰·PC·Claude가 모두 같은 상태를 봐요. 연결 안 한 기기에서는 그 브라우저에만 저장돼요.</div>
-</div><div class="toast" id="toast"></div>
+<div class="tk" id="tk"></div><div class="note">🎬 릴스 대본마다 <b>📅 촬영 예정</b> · <b>✅ 촬영 완료</b> · <b>⏸ 보류</b> 버튼이 있어요. <b>🎤 촬영용 대본</b>을 누르면 편집 메모 없이 대사만 큰 글씨로 보여요. 삭제는 Claude에게 "○○ 삭제해 줘"라고 말해 주세요. 누르면 상태가 바로 바뀌고, 다시 누르면 취소돼요.<br><b>🔑 이 기기 연결</b>을 해 두면 버튼을 누를 때마다 보관함 데이터에 바로 저장돼서 폰·PC·Claude가 모두 같은 상태를 봐요. 연결 안 한 기기에서는 그 브라우저에만 저장돼요.</div>
+</div><div class="toast" id="toast"></div><div id="ov"><div class="ob"><b id="ovt"></b><button onclick="fz(-2)">가-</button><button onclick="fz(2)">가+</button><button onclick="cls()">닫기</button></div><div class="ot" id="ovx"></div></div>
 <script>
 let D,K='reels',F='전체';
 const ORDER={reels:['전체','촬영 예정','확정','대표님 확인','대본 초안','아이디어','촬영 완료','게시 완료','보류'],cards:['전체','게시 완료','대표님 확인','초안','아이디어','보류']};
@@ -73,6 +78,12 @@ async function setSt(id,v,ev){ev.stopPropagation();const it0=D.reels.find(z=>z.i
  catch(e){toast('저장 실패 ('+e.message+') · 이 기기에만 저장됨')}}
 function setTok(){const v=prompt('깃허브 토큰을 붙여 넣으세요 (github_pat_ 로 시작)',tok());if(v===null)return;try{v.trim()?localStorage.setItem(TK,v.trim()):localStorage.removeItem(TK)}catch(e){}tokUI()}
 function tokUI(){const e=document.getElementById('tk');if(e)e.innerHTML=tok()?'🔑 이 기기 연결됨 · <a href="#" onclick="setTok();return false">바꾸기</a>':'🔑 <a href="#" onclick="setTok();return false">이 기기 연결하기</a> (버튼 상태를 모든 기기에 저장)'}
+let FZ=24;try{FZ=+localStorage.getItem('gs-fz')||24}catch(e){}
+function fz(d){FZ=Math.max(16,Math.min(40,FZ+d));try{localStorage.setItem('gs-fz',FZ)}catch(e){}document.getElementById('ovx').style.fontSize=FZ+'px'}
+function shoot(id,ev){ev.stopPropagation();const x=D.reels.find(z=>z.id===id);document.getElementById('ovt').textContent='🎤 '+x.title;
+ const t=esc(x.shoot).replace(/\n(\d+\. )/g,'\n\n$1').replace(/^(🙅.*|🙆.*|장소.*|①.*|②.*|③.*|마무리|내레이션.*|혼자 앉아서.*)$/gm,'<span style="color:#FFD84D;font-weight:700">$1</span>').replace(/(✍️[^\n]*)/g,'<span style="color:#f7a8c8">$1</span>');
+ const o=document.getElementById('ov');document.getElementById('ovx').innerHTML=t;fz(0);o.style.display='block';o.scrollTop=0;document.body.style.overflow='hidden'}
+function cls(){document.getElementById('ov').style.display='none';document.body.style.overflow=''}
 function cp(b){navigator.clipboard.writeText(b.nextElementSibling.textContent);b.textContent='복사됨 ✓';setTimeout(()=>b.textContent='복사',1500)}
 function render(){
  const all=D[K].filter(x=>!gone(x));const cnt={};all.forEach(x=>{const v=st(x);cnt[v]=(cnt[v]||0)+1});
@@ -82,7 +93,7 @@ function render(){
  document.getElementById('cnt').textContent=L.length+'개';
  document.getElementById('list').innerHTML=L.map(x=>{const s=st(x);const m=[`<span class="b s-${s.replace(/ /g,'_')}">${s}</span>`,x.format||x.kind?`<span class="b">${x.format||x.kind}</span>`:'',x.date?`<span class="b">📅 ${x.date}</span>`:'',x.keyword?`<span class="b">💬 ${esc(x.keyword)}</span>`:''].join('');
   const links=[x.insta?`<a href="${x.insta}" target="_blank">인스타 보기</a>`:'',x.file?`<a href="${x.file}" target="_blank">원본 파일</a>`:'',x.folder?`<a href="${x.folder}" target="_blank">원본 폴더</a>`:''].join('');
-  const act=K=='reels'?`<div class="act"><button class="${s=='촬영 예정'?'on1':''}" onclick="setSt('${x.id}','촬영 예정',event)">📅 촬영 예정</button><button class="${s=='촬영 완료'?'on2':''}" onclick="setSt('${x.id}','촬영 완료',event)">✅ 촬영 완료</button><button class="${s=='보류'?'on3':''}" onclick="setSt('${x.id}','보류',event)">⏸ 보류</button></div>`:'';
+  const act=K=='reels'?`<div class="act">${x.shoot?`<button class="sh" onclick="shoot('${x.id}',event)">🎤 촬영용 대본</button>`:''}<button class="${s=='촬영 예정'?'on1':''}" onclick="setSt('${x.id}','촬영 예정',event)">📅 촬영 예정</button><button class="${s=='촬영 완료'?'on2':''}" onclick="setSt('${x.id}','촬영 완료',event)">✅ 촬영 완료</button><button class="${s=='보류'?'on3':''}" onclick="setSt('${x.id}','보류',event)">⏸ 보류</button></div>`:'';
   return `<div class="it ${s=='촬영 완료'?'shot':''}"><div class="hd" onclick="this.parentNode.classList.toggle('open')"><div class="t">${esc(x.title)}</div><div class="meta">${m}</div>${x.memo?`<div class="memo">${esc(x.memo)}</div>`:''}${act}</div>
   <div class="bd">${x.resource?`<div><b>연결 자료</b> · ${esc(x.resource)}</div>`:''}${md(x.body)}<div class="links">${links}</div></div></div>`}).join('')}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(z=>z.classList.remove('on'));b.classList.add('on');K=b.dataset.k;F='전체';render()});
