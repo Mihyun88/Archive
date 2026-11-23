@@ -20,7 +20,8 @@
      "unni": "",
      "idea": "",
      "link": "https://www.hankyung.com/article/2026112349041",
-     "press": "한국경제"
+     "press": "한국경제",
+     "track": "seoul-jungong-rental-ratio"
     },
     {
      "cat": "세금",
@@ -38,7 +39,8 @@
      "unni": "",
      "idea": "40초 설명형: \"현실화율 동결인데 왜 내 보유세는 올라요?\"",
      "link": "https://www.mk.co.kr/news/realestate/12215837",
-     "press": "매일경제"
+     "press": "매일경제",
+     "track": "gongsiga-2027-ratio"
     },
     {
      "cat": "재건축",
@@ -56,7 +58,8 @@
      "unni": "",
      "idea": "하수 vs 고수: 재건축 아파트 계약 전 \"부담금 얼마예요?\" 묻는 사람 vs 안 묻는 사람",
      "link": "https://www.mk.co.kr/news/realestate/12215892",
-     "press": "매일경제"
+     "press": "매일경제",
+     "track": "jaechohwan-first-levy"
     },
     {
      "cat": "재개발",
@@ -73,7 +76,8 @@
      "unni": "",
      "idea": "",
      "link": "https://www.hankyung.com/article/2026112349011",
-     "press": "한국경제"
+     "press": "한국경제",
+     "track": "hanyang-doseong-heritage"
     },
     {
      "cat": "세금",
@@ -89,7 +93,8 @@
      "unni": "",
      "idea": "",
      "link": "https://www.yna.co.kr/view/AKR20261123064700001",
-     "press": "연합뉴스"
+     "press": "연합뉴스",
+     "track": "tax-reform-2026"
     },
     {
      "cat": "정책·대출",
@@ -105,7 +110,8 @@
      "unni": "",
      "idea": "",
      "link": "https://www.mk.co.kr/news/realestate/12216318",
-     "press": "매일경제"
+     "press": "매일경제",
+     "track": "pf-equity-rule"
     },
     {
      "cat": "청약",

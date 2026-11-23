@@ -17,24 +17,41 @@ h1{font-size:24px;margin:10px 0 4px}.sub{color:var(--sub);font-size:13px}
 .sh{font-size:18px;margin:24px 0 2px}.sh span{font-size:13px;color:var(--sub);font-weight:600}.sn{font-size:12px;color:var(--sub);margin-bottom:4px}
 .stg{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:#FDE7D6;color:#8a3b0b;margin-right:6px}.se{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:#1E2A3A;color:#fff;margin-right:6px}
 .me{margin-top:10px;font-size:14px;background:#E6F4EA;color:#1d5a2c;border-radius:10px;padding:8px 10px}
+.tabs{display:flex;gap:6px;margin:14px 0 4px}.tabs button{flex:1;font:inherit;font-size:15px;font-weight:700;padding:10px;border-radius:12px;border:1px solid var(--line);background:#fff}.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tr{background:#fff;border:1px solid var(--line);border-radius:14px;margin:10px 0;padding:4px 16px}.tr summary{list-style:none;cursor:pointer;padding:12px 0}.tr summary::-webkit-details-marker{display:none}
+.tr .tt{font-weight:800;font-size:16px;line-height:1.45;margin-top:6px}.tr .tm{font-size:12px;color:var(--sub);margin-top:4px}
+.tl{border-left:2px solid var(--line);margin:4px 0 14px 6px;padding-left:14px}.ev{position:relative;padding:6px 0 10px}.ev:before{content:"";position:absolute;left:-20px;top:11px;width:10px;height:10px;border-radius:50%;background:#c9c3b6}.ev:last-child:before{background:#E8590C}
+.ev .d{font-size:12px;color:var(--sub)}.ev .x{font-size:14.5px;line-height:1.55;margin-top:2px}.ev a{font-size:12.5px;color:#26467a}
+.trk{display:inline-block;margin:10px 0 0 6px;font-size:13px;color:var(--navy);background:#EEF1F6;padding:6px 12px;border-radius:99px;cursor:pointer;border:0;font-family:inherit}
+.done{background:#E6F4EA;color:#1d5a2c}
 .empty{color:var(--sub);font-size:14px;padding:14px 2px}
 .lk{display:inline-block;margin-top:10px;font-size:13px;color:#fff;background:var(--navy);padding:6px 12px;border-radius:99px;text-decoration:none}.press{font-size:12px;color:var(--sub);margin-left:6px}
 </style></head><body><div class="w"><a class="back" href="../">← 대시보드</a>
-<h1>📰 오늘의 부동산 스크랩</h1><div class="sub">매일 아침 7시에 Claude가 모아요 · 기사 요약 + 원문 링크 · 🏛️ 정책·세금 변화 · 🎬 소재 추천 · 📋 전체 기사</div>
-<div class="days" id="days"></div><div class="chips" id="chips"></div><div class="src" id="src"></div><div id="list"></div><div class="all" id="all"></div></div>
+<h1>📰 오늘의 부동산 스크랩</h1><div class="sub">매일 아침 7시에 Claude가 모아요 · 기사 요약 + 원문 링크 · 🏛️ 정책·세금 변화 · 🎬 소재 추천 · 📈 정책 추적 · 📋 전체 기사</div>
+<div class="tabs"><button id="tb0" onclick="V=0;render()">📰 날짜별 스크랩</button><button id="tb1" onclick="V=1;render()">📈 정책 추적</button></div>
+<div id="trk"></div><div id="day"><div class="days" id="days"></div><div class="chips" id="chips"></div><div class="src" id="src"></div><div id="list"></div><div class="all" id="all"></div></div></div>
 <script>
-let D,I=0,C='전체';const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function render(){const d=D.days[I];
+let D,T={tracks:[]},I=0,C='전체',V=0,TS='서울',OPEN='';const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function goTrack(id){V=1;OPEN=id;TS='전체';render();setTimeout(()=>{const e=document.getElementById('t-'+id);if(e)e.scrollIntoView({behavior:'smooth'})},50)}
+function renderTracks(){const all=T.tracks,L=all.filter(t=>TS=='전체'||(TS=='서울'?t.seoul:t.status=='진행 중'));
+ document.getElementById('trk').innerHTML=`<div class="chips">${['서울','진행 중','전체'].map(c=>`<button class="${c==TS?'on':''}" onclick="TS='${c}';render()">${c} ${c=='서울'?all.filter(t=>t.seoul).length:c=='진행 중'?all.filter(t=>t.status=='진행 중').length:all.length}</button>`).join('')}</div><div class="src">정책·세금·정비사업이 발표 → 국회/조례 → 시행으로 바뀌는 흐름을 계속 쌓아요 · 최근 소식 순</div>`+
+ L.map(t=>{const ev=t.events||[],last=ev[ev.length-1]||{};return `<details class="tr" id="t-${esc(t.id)}"${OPEN==t.id?' open':''}><summary><span class="stg">${esc(last.stage||'')}</span>${t.seoul?'<span class="se">서울</span>':''}${t.status&&t.status!='진행 중'?`<span class="cat done">${esc(t.status)}</span>`:''}<span class="press">${esc([t.area!='서울'?t.area:'',t.topic].filter(Boolean).join(' · '))}</span><div class="tt">${esc(t.title)}</div><div class="tm">${esc((ev[0]||{}).date||'')} 시작 · 소식 ${ev.length}건 · 최근 ${esc((last.date||'').slice(5).replace('-','/'))}</div></summary><div class="tl">${ev.slice().reverse().map(e=>`<div class="ev"><div class="d">${esc(e.date)} · <b>${esc(e.stage)}</b>${e.press?' · '+esc(e.press):''}</div><div class="x">${esc(e.text)}</div>${e.link?`<a href="${esc(e.link)}" target="_blank">원문 보기 →</a>`:''}</div>`).join('')}</div></details>`}).join('')||'<div class="empty">아직 추적 중인 정책이 없어요.</div>'}
+function render(){document.getElementById('tb0').className=V==0?'on':'';document.getElementById('tb1').className=V==1?'on':'';
+ document.getElementById('tb1').textContent='📈 정책 추적 '+T.tracks.length;
+ document.getElementById('day').style.display=V==0?'':'none';document.getElementById('trk').style.display=V==1?'':'none';
+ if(V==1)return renderTracks();
+ const d=D.days[I];
  document.getElementById('days').innerHTML=D.days.map((x,i)=>`<button class="${i==I?'on':''}" onclick="I=${i};C='전체';render()">${x.date.slice(5).replace('-','/')}${i==0?' 오늘':''}</button>`).join('');
  const cats=['전체',...new Set(d.items.map(x=>x.cat))];
  document.getElementById('chips').innerHTML=cats.map(c=>`<button class="${c==C?'on':''}" onclick="C='${c}';render()">${c}</button>`).join('');
  document.getElementById('src').textContent=[d.source,d.items.length?'요약 '+d.items.length+'건':'',d.all?'전체 기사 '+d.all.length+'건':''].filter(Boolean).join(' · ');
+ const TI={};T.tracks.forEach(t=>TI[t.id]=t);
  const F=d.items.filter(x=>C=='전체'||x.cat==C);
- const card=x=>`<div class="it"><span class="cat">${esc(x.cat)}</span>${x.stage?`<span class="stg">${esc(x.stage)}</span>`:''}${x.seoul?'<span class="se">서울</span>':''}<span class="press">${esc(x.press||'')}</span><div class="t">${esc(x.title)}</div><ul>${(x.points||[]).map(p=>`<li>${esc(p)}</li>`).join('')}</ul>${x.me?`<div class="me">👉 ${esc(x.me)}</div>`:''}${x.unni?`<div class="u">💬 ${esc(x.unni)}</div>`:''}${x.idea?`<div class="idea">🎬 ${x.pick?'<b>'+esc(x.pick)+'</b> · ':''}${esc(x.idea)}</div>`:''}${x.link?`<a class="lk" href="${esc(x.link)}" target="_blank">원문 보기</a>`:''}</div>`;
+ const card=x=>`<div class="it"><span class="cat">${esc(x.cat)}</span>${x.stage?`<span class="stg">${esc(x.stage)}</span>`:''}${x.seoul?'<span class="se">서울</span>':''}<span class="press">${esc(x.press||'')}</span><div class="t">${esc(x.title)}</div><ul>${(x.points||[]).map(p=>`<li>${esc(p)}</li>`).join('')}</ul>${x.me?`<div class="me">👉 ${esc(x.me)}</div>`:''}${x.unni?`<div class="u">💬 ${esc(x.unni)}</div>`:''}${x.idea?`<div class="idea">🎬 ${x.pick?'<b>'+esc(x.pick)+'</b> · ':''}${esc(x.idea)}</div>`:''}${x.link?`<a class="lk" href="${esc(x.link)}" target="_blank">원문 보기</a>`:''}${x.track&&TI[x.track]?`<button class="trk" onclick="goTrack('${esc(x.track)}')">📈 흐름 보기 (${TI[x.track].events.length})</button>`:''}</div>`;
  const P=F.filter(x=>x.policy).sort((a,b)=>(b.seoul?1:0)-(a.seoul?1:0)),K=F.filter(x=>x.pick),R=F.filter(x=>!x.policy&&!x.pick);
  const sec=(h,n,arr)=>arr.length?`<h2 class="sh">${h} <span>${arr.length}</span></h2><div class="sn">${n}</div>`+arr.map(card).join(''):'';
  document.getElementById('list').innerHTML=(sec('🏛️ 정책·세금 변화','서울 관련 먼저 · 발표/시행/국회/조례 단계 표시',P)+sec('🎬 소재로 쓰기 좋은 것','서울 사람들이 궁금해할 것 · 릴스/블로그 추천',K)+sec('📰 그 밖의 소식','',R))||(d.all?'<div class="empty">요약 카드는 아침 7시에 올라와요. 아래 전체 목록부터 보세요.</div>':'');
  const O=['📍 마포·서대문·동대문','🗞️ 사설·칼럼','💸 정책·세금·대출','🏗️ 재건축·재개발','📝 청약·분양','🔑 전월세','📊 시세·매물','🏠 공급·입주·공공주택','🏢 건설사·업계','📰 기타'],A=d.all||[],G={};A.forEach(x=>(G[x.cat]=G[x.cat]||[]).push(x));
  document.getElementById('all').innerHTML=A.length?`<h2>📋 오늘 나온 부동산 기사 전체 (${A.length})</h2><div class="note">조선·한경·매경·연합 무료 공개 기사 · 제목을 누르면 신문사 원문으로 가요</div>`+Object.keys(G).sort((a,b)=>O.indexOf(a)-O.indexOf(b)).map((c,i)=>`<details${i<2?' open':''}><summary>${esc(c)} (${G[c].length})</summary>${G[c].map(x=>`<a class="row" href="${esc(x.link)}" target="_blank">${esc(x.title)}<span class="m">${esc(x.press)} ${esc(x.time)}${x.also&&x.also.length?' · 같은 소식: '+esc(x.also.join(', ')):''}</span></a>`).join('')}</details>`).join(''):''}
-fetch('data.json?v='+Date.now()).then(r=>r.json()).then(j=>{D=j;D.days.sort((a,b)=>b.date.localeCompare(a.date));render()});
+Promise.all([fetch('data.json?v='+Date.now()).then(r=>r.json()),fetch('tracks.json?v='+Date.now()).then(r=>r.ok?r.json():{tracks:[]}).catch(()=>({tracks:[]}))]).then(([j,t])=>{D=j;T=t;D.days.sort((a,b)=>b.date.localeCompare(a.date));if(location.hash=='#track')V=1;render()});
 </script></body></html>
