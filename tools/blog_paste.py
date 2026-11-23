@@ -145,7 +145,9 @@ class Post:
         self.b.append(("body",
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:0;{FONT}">안녕하세요. '
             f'<b><span style="color:#ffffff;background-color:#ff2d8a">착한언니복덕방</span></b> '
-            f'신촌자이엘라&amp;마포그랑자이 (착한언니) 부동산입니다.</p>'))
+            f'신촌자이엘라&amp;마포그랑자이 (착한언니) 부동산입니다.</p>'
+            f'<p style="text-align:center;font-size:15px;line-height:1.8;margin:0;color:#666666;{FONT}">'
+            f'2014년 겨울부터 신촌 한 자리, <b>12년째</b> 마포·서대문만 보고 있어요.</p>'))
 
     def voice(self, *qs):
         """손님 질문 (회색 따옴표)"""
@@ -200,14 +202,27 @@ class Post:
     def hl(self, s):
         self.b.append(("body", para(f"=={s}==", 17) + p()))
 
+    def note(self, *lines):
+        """착한언니 현장 노트 — 모든 글 필수. 내용이 없으면 직접 채울 칸으로."""
+        head = (f'<table style="width:100%;border-collapse:collapse;margin:24px 0 8px;"><tr>'
+                f'<td style="background-color:#fff7fb;border:2px solid {PK};border-radius:8px;padding:12px 14px;text-align:center;{FONT}">'
+                f'<b><span style="color:{PK};font-size:18px">📝 착한언니 현장 노트</span></b></td></tr></table>')
+        if lines:
+            self.b.append(("note", p() + head + "".join(para(l) + p() for l in lines)))
+        else:
+            self.b.append(("fill", p() + head + p("✍️ [직접 채우기: 이 글 주제로 사무소에서 실제로 받은 문의·현장에서 본 것·거래하며 느낀 점 2~3줄 — 가격 전망 없이]", 15, "#d0021b") + p()))
+            self.note_todo = True
+
     def outro(self, follow, extra_note):
+        if not any(b[0] == "note" or (b[0] == "fill" and "현장 노트" in b[1]) for b in self.b):
+            self.note()
         self.b.append(("body",
             p() +
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
             f'<span style="background-color:#13a89e;color:#ffffff">&nbsp;{esc(follow)}&nbsp;</span></p>'
             + p() +
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
-            f'<span style="background-color:#ffe812">&nbsp;카카오톡 채널 <b>착한언니복덕방</b> 친구 추가 후 매수·매도·전월세 상담을 편하게 남겨 주세요.&nbsp;</span></p>'
+            f'<span style="background-color:#ffe812">&nbsp;@@CTA@@&nbsp;</span></p>'
             + f'<p style="text-align:center;font-size:14px;line-height:1.8;margin:0;{FONT}"><a href="http://pf.kakao.com/_xcxoBxnX">pf.kakao.com/_xcxoBxnX</a></p>'
             + p() +
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
@@ -229,6 +244,9 @@ class Post:
     def signature(self, office="zaiella"):
         """office: zaiella = 오피스텔·신촌·이대 글 / grandxi = 아파트·마포 글 (실제 중개 사무소 기준)"""
         self.office = office
+        cta = {"zaiella": "🏠 방 구하기 문의 — 카카오톡 채널 <b>착한언니복덕방</b>에 「원하는 동네·예산·입주 날짜」만 남겨 주세요. 맞는 방을 골라 드려요.",
+               "grandxi": "🏢 매수·매도·전세 상담 — 카카오톡 채널 <b>착한언니복덕방</b>에 「단지·평형·예산」을 남겨 주세요. 동·층까지 비교해 드려요."}[office]
+        self.b = [(b[0], b[1].replace("@@CTA@@", cta)) + tuple(b[2:]) for b in self.b]
         lines = ["착한언니복덕방 | 신촌자이엘라 & 마포그랑자이 부동산",
                  "4인 전원 공인중개사 · 중개보조원 없음"] + self.OFFICES[office] + ["카카오톡 채널: pf.kakao.com/_xcxoBxnX"]
         self.b.append(("body", "".join(p(l, 13, "#666666") for l in lines)))
@@ -517,6 +535,7 @@ def lagrande():
            "✔ 매매는 2년간 12건뿐이라 아직 시세를 말하기 어려워요",
            "==제가 사는 동네라, 【동대문 생활 노트】로 계속 기록할게요.==")
     a.image("img/lagrande/16-flowers.jpg", "단지 화단 (2026.11)")
+    a.note('실제로 사무소에서 "여기 팔고 마포로 가고 싶어요"라는 상담을 받아요. 그만큼 이 단지에 사시는 분들도 다음 단계를 마포로 보시는 경우가 많아요.', '살아 보니 지하주차장으로 커뮤니티까지 다 이어져서 동선은 정말 편해요. 아쉬운 건 역까지 거리 하나예요.')
     a.outro("새 글 알림을 받고 싶으시다면 블로그 이웃 추가 해 두세요. 다음 글은 용두동 신속통합기획 후보지 이야기예요.",
             "국토교통부 매매·전월세 실거래(2025.1~2026.11 계약분, 2026.11.17 조회) 기준이에요 · 10~11월분은 신고 기한이 남아 늘 수 있어요 · 단지 규모는 언론 보도 기준 · 생활 정보는 2026년 11월 기준 제 경험이에요")
     a.signature("grandxi")
@@ -1818,7 +1837,6 @@ def nogosan():
                "공사가 시작되면 소음·통행 불편이 생겨요 — 계약 전 공사장과 거리를 직접 걸어서 확인해요")
     a.numbered("'심의 통과'는 '착공'이 아니에요", "정비계획 변경 고시 → 사업시행계획(변경)인가 → 관리처분(변경) → 이주·철거 → 착공 순서예요",
                "지금 5·6·7·10지구는 **철거 완료**, 3지구는 **철거 중**, 건너편 2-2지구는 **착공** — 같은 신촌인데 단계가 다 달라요")
-    a.fill("착한언니 현장 노트 — 자이엘라점에서 실제로 받는 노고산동 문의 (가격 전망 없이)")
 
     a.head(8, "정리하면")
     a.text("✔ 노고산동 재개발은 **지구 단위**라 속도가 제각각이에요",
@@ -1826,6 +1844,7 @@ def nogosan():
            "✔ **마포3구역 3지구**: 지상 42층·298세대, 외국인주민센터 (8.6 통합심의 조건부 의결, **철거 중 ~2027.1**)",
            "✔ **19-1 일대**: 신통 후보지 미선정 후 재도전 중 (추진위 활동)",
            "==자이엘라 사무소 바로 앞 동네라, 단계가 바뀔 때마다 도면과 함께 업데이트할게요.==")
+    a.note('11월에 노고산동 세 곳을 직접 걸어 봤어요. 4-10지구는 철거가 끝나 빈 땅이 됐고, 3지구는 가림막 안에서 철거가 한창이에요.', "같은 노고산동인데도 한쪽은 빈 땅, 한쪽은 철거 중, 언덕 위 19-1은 현수막만 걸린 단계라 '노고산동 재개발'을 한 덩어리로 보시면 안 돼요.")
     a.outro("새 글 알림을 받고 싶으시다면 블로그 이웃 추가 해 두세요. 바로 옆 아현1구역 이야기도 함께 보세요.",
             "도면 출처: 마포구의회 의견청취안(마포구청 제출, 2025.11·2026.2), 마포구 구역공개(2025.1) · 수치는 정비계획(안)·심의 단계 기준이라 최종 고시와 다를 수 있어요 · 이 글은 투자 권유가 아니에요")
     a.signature("zaiella")
@@ -1925,6 +1944,7 @@ def sinchon22_officetel():
            "✔ 입지는 **대학가 + 여의도 + 2호선 강남**, 신촌에서 검증된 조합이에요",
            "✔ 판단은 **전용 평당가 vs 주변 신축 시세**, 그리고 **직접 계산한 수익률**로",
            "==신촌 오피스텔 매매·임대 상담은 자이엘라점에서 도와드려요.==")
+    a.note('얼마 전 분양 직원분이 저희 사무소에 직접 다녀가셨어요. 그만큼 분양이 계속 진행 중이에요.', "상담하면서 제일 먼저 확인하는 건 '전용면적 기준 가격'이에요. 실사용·계약 평수로 들으면 같은 집도 훨씬 싸게 느껴지거든요.")
     a.outro("새 글 알림을 받고 싶으시다면 블로그 이웃 추가 해 두세요. 길 건너 노고산동 재개발 이야기는 「신촌 노고산동 재개발 2026」에서 보세요.",
             "출처: 현장 건축허가표지판(서대문구청, 2026.11 촬영) · 분양가는 분양 측 안내 가격표(2026.11) · 일정은 모집공고(2026.4.22)·언론 보도 · 투시도·조감도는 설계 저작물이라 싣지 않았어요 · 이 글은 투자 권유가 아니에요")
     a.signature("zaiella")
@@ -2008,6 +2028,7 @@ def daeheung():
            "✔ 거래는 **마포태영**에 몰려 있어요 (1년 44건)",
            "✔ 59㎡ 선호가 뚜렷해요 — 84㎡의 80~86% 가격",
            "==마포그랑자이점이 바로 이 동네에 있어요. 단지별 동·층 비교가 필요하시면 편하게 물어보세요.==")
+    a.note('마포그랑자이점이 바로 이 동네에 있어서, 요즘 마포태영·공덕 쪽 계약을 연달아 진행했어요.', '상담에서 체감하는 것도 숫자와 같아요. "84 대신 59"를 먼저 물어보시는 분이 확실히 늘었어요.')
     a.outro("새 글 알림을 받고 싶으시다면 블로그 이웃 추가 해 두세요. 다음 글은 마포태영·공덕삼성 실제 계약 후기예요.",
             "출처: 국토교통부 실거래가 공개시스템(2025.11~2026.10 신고분) · 청약 면적 비중·면적별 상승률은 2026.11.22 언론 보도 인용 · 가격 전망이 아닌 실거래 정리이며 투자 권유가 아니에요")
     a.signature("grandxi")
@@ -2239,12 +2260,47 @@ def define_yeonhui():
     return a, side
 
 
+SERIES = {
+    **{k: "【마포·서대문 아파트】" for k in ("2026-11-the-classy", "2026-11-maraepu", "2026-11-mapo-xi-hillstate-lachels", "2026-11-daeheung-apt")},
+    "2026-11-raemian-lagrande": "【착한언니 사는 동네】",
+    **{k: "【신촌·이대 오피스텔】" for k in ("2026-11-shinchon-zaiella", "2026-11-sinchon-room-guide", "2026-11-officetel-standard-price", "2026-11-sinchon2-2-officetel")},
+    **{k: "【재개발 현장】" for k in ("2026-11-nogosan-redevelopment", "2026-11-ahyeon1-nogosan", "2026-11-imun-hwigyeong-newtown", "2026-11-bukahyeon2-relocation",
+                                   "2026-11-define-yeonhui", "2026-11-swiss-grand-hotel", "2026-11-sillim")},
+    "2026-11-gyeonghuigung-epit": "【청약·분양】",
+    **{k: "【착한언니 체크】" for k in ("2026-11-jaechohwan", "2026-11-jongbuse-notice", "2026-11-jeonse-fraud-minimum", "2026-11-registry-fee",
+                                    "2026-11-public-redevelopment-fee")},
+    "2026-11-deal-story-template": "【거래 후기】",
+}
+BASE_TAGS = {
+    "zaiella": ["신촌부동산", "이대부동산", "신촌공인중개사", "서대문부동산", "신촌자이엘라부동산", "대현동부동산"],
+    "grandxi": ["마포부동산", "마포공인중개사", "대흥동부동산", "공덕부동산", "마포그랑자이부동산", "마포구아파트"],
+}
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     drafts = []
     for fn in (the_classy, lagrande, maraepu, zaiella, sillim, min_guarantee, jaechohwan,
                jongbuse, officetel_price, sinchon_room, lachels, bukahyeon2, imun_newtown, deal_story, public_redev_fee, registry_fee, swiss_grand, ahyeon_nogosan, nogosan, sinchon22_officetel, daeheung, gyeonghuigung_epit, define_yeonhui):
         post, side = fn()
+        ser = SERIES.get(post.slug, "")
+        side = list(side)
+        for i, x in enumerate(side):
+            if ser and (x.startswith("**제목(BEST)**:") or x.startswith("**제목(대안)**:")):
+                k, v = x.split(":", 1)
+                v = v.strip()
+                if not v.startswith("【"):
+                    side[i] = f"{k}: {ser} {v}"
+            if x.startswith("**태그**:"):
+                tg = [t.strip() for t in x.split(":", 1)[1].split(",") if t.strip()]
+                for t in BASE_TAGS.get(getattr(post, "office", ""), []):
+                    if len(tg) >= 15:
+                        break
+                    if t not in tg:
+                        tg.insert(-1 if tg and tg[-1] == "착한언니복덕방" else len(tg), t)
+                side[i] = "**태그**: " + ", ".join(tg)
+        if ser:
+            side.insert(0, f"**시리즈**: {ser} — 제목 맨 앞에 그대로 붙여요")
         path = os.path.join(OUT, post.slug + ".html")
         with open(path, "w", encoding="utf-8") as f:
             f.write(post.render(side))
@@ -2257,7 +2313,8 @@ if __name__ == "__main__":
                        "file": "naver/paste/" + post.slug + ".html",
                        "images": len(getattr(post, "images", [])),
                        "photos": [d for _, d in getattr(post, "todo_photos", [])],
-                       "fills": sum(1 for b in post.b if b[0] == "fill")})
+                       "fills": sum(1 for b in post.b if b[0] == "fill"),
+                       "series": ser, "note_todo": bool(getattr(post, "note_todo", False)) or any(b[0] == "fill" and "현장 노트" in b[1] for b in post.b)})
     import json as _j
     lib = os.path.join(OUT, "..", "library")
     os.makedirs(lib, exist_ok=True)
