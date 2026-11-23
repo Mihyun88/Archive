@@ -1,0 +1,16 @@
+{
+ "updated": "2026-11-23",
+ "_설명": "발행 상태는 여기 하나만 고치면 모든 기기에 반영돼요. 페이지의 체크박스는 그 기기에만 임시 저장돼요.",
+ "posts": {
+  "2026-11-registry-fee": {"status": "발행 완료", "memo": "11월 대표님 발행"},
+  "2026-11-raemian-lagrande": {"status": "발행 완료", "memo": "반응 좋음 → 이문아이파크자이 후속"},
+  "2026-11-the-classy": {"status": "발행 완료", "memo": "11/5 발행 · '마포 더클래시 실거래가' 9위"},
+  "2026-11-gyeonghuigung-epit": {"status": "발행 예정", "date": "2026-11-25", "memo": "특공 당일 아침 · 현장 사진 1장"},
+  "2026-11-jaechohwan": {"status": "발행 예정", "memo": "주식 비유 추가본 · 다음 주"},
+  "2026-11-nogosan-redevelopment": {"status": "사진 완료", "memo": "썸네일 캔바 저장 전"},
+  "2026-11-ahyeon1-nogosan": {"status": "사진 필요", "memo": "아현1 언덕 사진 1장 · 2027 시리즈 4편(12월)"},
+  "2026-11-define-yeonhui": {"status": "사진 필요", "memo": "공사 현장 사진"},
+  "2026-11-sinchon2-2-officetel": {"status": "초안", "memo": "에르노 플레이스 신촌"},
+  "2026-11-mapo-xi-hillstate-lachels": {"status": "초안", "memo": "더퍼스트 입주장 비교 추가 · 12월 매물 접수 후속글"}
+ }
+}
