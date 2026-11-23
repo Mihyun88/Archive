@@ -53,8 +53,8 @@ function render(){
   const l=loc();
   document.getElementById("list").innerHTML=L.map(d=>{const s=stat(d),m=S[d.slug]||{};
     return `<div class="it ${s==="발행 완료"?"done":""}"><input type="checkbox" class="ck" data-s="${d.slug}" ${s==="발행 완료"?"checked":""} title="발행했어요">
-    <div class="bx"><div class="t">${esc(d.title)}</div><div class="best">${esc(strip(d.best))}</div>
-    <div class="meta"><span class="b st st${ORDER.indexOf(s)}">${s}</span>${m.date?`<span class="b">📅 ${m.date}</span>`:""}<span class="b">${d.office||"-"}점</span>${d.images?`<span class="b">🖼 사진 ${d.images}장 들어감</span>`:""}${d.photos.length?`<span class="b">📷 찍을 것 ${d.photos.length}</span>`:""}${d.fills?`<span class="b">✍️ 채울 칸 ${d.fills}</span>`:""}</div>
+    <div class="bx"><div class="t">${d.series?`<span style="color:#ff2d8a">${esc(d.series)}</span> `:""}${esc(d.title)}</div><div class="best">${esc(strip(d.best))}</div>
+    <div class="meta"><span class="b st st${ORDER.indexOf(s)}">${s}</span>${m.date?`<span class="b">📅 ${m.date}</span>`:""}<span class="b">${d.office||"-"}점</span>${d.images?`<span class="b">🖼 사진 ${d.images}장 들어감</span>`:""}${d.photos.length?`<span class="b">📷 찍을 것 ${d.photos.length}</span>`:""}${d.note_todo?`<span class="b" style="background:#ffe3ef;color:#b0105a">📝 현장 노트 필요</span>`:""}${d.fills?`<span class="b">✍️ 채울 칸 ${d.fills}</span>`:""}</div>
     ${m.memo?`<div class="memo">💬 ${esc(m.memo)}</div>`:""}
     <div class="act"><a class="go" href="../../${d.file}">📋 붙여넣기 페이지</a><button data-copy="${esc(strip(d.best))}">제목 복사</button>${d.tags?`<button data-copy="${esc(d.tags)}">태그 복사</button>`:""}</div>
     ${d.photos.length?`<details><summary>📷 찍을 사진 보기</summary><ul>${d.photos.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></details>`:""}
