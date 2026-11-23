@@ -1,66 +1,152 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>블로그 보관함 · 착한언니복덕방</title>
 <style>
-:root{--bg:#f7f6f3;--card:#fff;--ink:#1c1c1a;--sub:#7a766c;--line:#e7e3d9;--navy:#1E2A3A;--y:#FFD84D;--pk:#ff2d8a}
+:root{--bg:#f7f6f3;--card:#fff;--ink:#1c1c1a;--sub:#7a766c;--line:#e7e3d9;--navy:#1E2A3A;--y:#FFD84D;--pk:#ff2d8a;--g:#03a14a}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-text-size-adjust:100%}
-.w{max-width:820px;margin:0 auto;padding:20px 16px 80px}
+.w{max-width:860px;margin:0 auto;padding:20px 16px 90px}
 a.back{font-size:14px;color:var(--sub);text-decoration:none}
-h1{font-size:24px;margin:10px 0 4px}.sub{color:var(--sub);font-size:13px;line-height:1.5}
-.sum{display:flex;gap:8px;margin:16px 0 8px;flex-wrap:wrap}.sum div{flex:1;min-width:90px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.top{display:flex;align-items:center;gap:8px}h1{font-size:24px;margin:10px 0 4px;flex:1}
+.gear{font:inherit;font-size:13px;border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 12px;cursor:pointer}
+.sync{font-size:12px;color:var(--sub);margin-bottom:6px}.sync b.ok{color:var(--g)}.sync b.no{color:#b0105a}
+.tabs{display:flex;gap:8px;margin:14px 0 10px}.tabs button{flex:1;font:inherit;font-weight:800;font-size:15px;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:6px 0 10px}.sum div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .sum b{display:block;font-size:22px}.sum span{font-size:12px;color:var(--sub)}
-.chips{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px}.chips button{flex:none;font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink)}
-.chips button.on{background:var(--y);border-color:var(--y);font-weight:700}
-.it{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:10px 0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
-.it.done{opacity:.6}
-.ck{flex:none;margin-top:3px;width:22px;height:22px;accent-color:var(--navy)}
-.bx{flex:1;min-width:0}.t{font-weight:800;font-size:16px;line-height:1.4}
-.best{font-size:13px;color:#555;margin-top:4px;line-height:1.45}
-.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:12px}.b{padding:3px 9px;border-radius:99px;background:#f0eee8;color:#555}
-.st{font-weight:700}.st0{background:#FFE3EF;color:#b0105a}.st1{background:#E3F4F7;color:#11606e}.st2{background:#FFF1C2;color:#7a5a00}.st3{background:#E3ECFA;color:#26467a}.st4{background:#DFF3E4;color:#1f6b3a}.st5{background:#FBE0DD;color:#9b2c20}
+@media(max-width:520px){.sum{grid-template-columns:repeat(2,1fr)}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;background:#fff;margin:4px 0 6px}.seg button{font:inherit;font-size:13px;padding:7px 14px;border:0;background:none;cursor:pointer}.seg button.on{background:var(--y);font-weight:700}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:4px 0 6px}.chips button{flex:none;font:inherit;font-size:13px;padding:6px 11px;border-radius:99px;border:1px solid var(--line);background:#fff;cursor:pointer}.chips button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+h2{font-size:17px;margin:22px 0 4px;display:flex;align-items:center;gap:8px}h2 small{font-size:12px;color:var(--sub);font-weight:400}
+.it{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:8px 0;overflow:hidden}
+.hd{padding:13px 15px;cursor:pointer}.t{font-weight:800;font-size:15.5px;line-height:1.4}.ser{color:var(--pk)}
+.meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;font-size:12px}.b{padding:3px 9px;border-radius:99px;background:#f0eee8;color:#555}
+.st0{background:#FFE3EF;color:#b0105a}.st1{background:#E3F4F7;color:#11606e}.st2{background:#FFF1C2;color:#7a5a00}.st3{background:#E3ECFA;color:#26467a}.st4{background:#DFF3E4;color:#1f6b3a}.st5{background:#FBE0DD;color:#9b2c20}
 .memo{font-size:13px;color:#6b665c;margin-top:6px}
-.act{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.act a,.act button{font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;cursor:pointer}
-.act a.go{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700}
-details{margin-top:8px;font-size:13px;color:#555}details li{margin:3px 0}
-.note{font-size:12px;color:var(--sub);margin-top:24px;line-height:1.6}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:99px;font-size:13px;display:none}
+.bd{display:none;border-top:1px solid var(--line);padding:12px 15px;font-size:14px}.it.open .bd{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0;align-items:center}.row label{font-size:12px;color:var(--sub);width:60px}
+.row select,.row input,.row textarea{font:inherit;font-size:14px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;flex:1;min-width:0;background:#fff}
+.act{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}.act a,.act button{font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;cursor:pointer}
+.act .go{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700}.act .sv{background:var(--g);color:#fff;border-color:var(--g);font-weight:700}
+details{margin-top:6px;font-size:13px;color:#555}
+.pf{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin:10px 0}
+.pf .row label{width:96px}
+table.mt{width:100%;min-width:640px;border-collapse:collapse;background:#fff;font-size:13px;margin-top:8px}table.mt th,table.mt td{border:1px solid var(--line);padding:7px 6px;text-align:center}table.mt th{background:var(--navy);color:#fff;font-weight:700;white-space:nowrap}table.mt td:first-child{white-space:nowrap}
+.note{font-size:12px;color:var(--sub);margin-top:18px;line-height:1.6}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}.modal.on{display:flex}
+.modal .in{background:#fff;border-radius:16px;padding:18px;max-width:440px;width:100%;font-size:14px;line-height:1.6}
+.modal input{width:100%;font:inherit;padding:9px;border:1px solid var(--line);border-radius:8px;margin:8px 0}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;display:none;z-index:10}
 </style></head><body><div class="w">
 <a class="back" href="../../">← 대시보드</a>
-<h1>📝 블로그 보관함</h1>
-<div class="sub">초안을 한눈에 보고, 올린 글은 ☑ 체크해 두세요. 제목 복사·붙여넣기 페이지로 바로 가요.</div>
-<div class="sum" id="sum"></div>
-<div class="chips" id="chips"></div>
-<div id="list"></div>
-<div class="note">☑ 체크는 <b>이 기기 브라우저에만</b> 저장돼요 (폰과 PC가 따로예요).<br>모든 기기에 남기려면 Claude에게 "○○ 글 발행했어"라고 말해 주세요 → <code>naver/library/status.json</code>에 기록돼요.</div>
-</div><div class="toast" id="toast">복사했어요</div>
+<div class="top"><h1>📝 블로그 보관함</h1><button class="gear" id="gear">⚙️ 저장 연결</button></div>
+<div class="sync" id="sync"></div>
+<div class="tabs"><button data-p="list" class="on">📚 글 목록</button><button data-p="perf">📈 월별 성과</button></div>
+<div id="p-list">
+ <div class="sum" id="sum"></div>
+ <div class="seg" id="view"><button data-v="status" class="on">상태별</button><button data-v="series">카테고리별</button></div>
+ <div class="chips" id="chips"></div>
+ <div id="list"></div>
+</div>
+<div id="p-perf" style="display:none">
+ <div class="pf">
+  <div class="row"><label>월</label><input type="month" id="pm"></div>
+  <div class="row"><label>방문자 수</label><input id="f_visitors" inputmode="numeric" placeholder="블로그 통계 → 방문자"></div>
+  <div class="row"><label>조회수</label><input id="f_views" inputmode="numeric" placeholder="블로그 통계 → 조회수"></div>
+  <div class="row"><label>이웃 수</label><input id="f_neighbors" inputmode="numeric" placeholder="월말 기준"></div>
+  <div class="row"><label>블로그 문의</label><input id="f_inquiries" inputmode="numeric" placeholder="블로그 보고 온 상담 건수"></div>
+  <div class="row"><label>계약</label><input id="f_contracts" inputmode="numeric" placeholder="그중 계약까지 간 건수"></div>
+  <div class="row"><label>잘 뜬 검색어</label><textarea id="f_keywords" rows="2" placeholder="예: 신촌자이엘라 1위, 재초환 계산법 6위"></textarea></div>
+  <div class="row"><label>메모</label><textarea id="f_memo" rows="2" placeholder="이번 달 잘된 글·느낀 점"></textarea></div>
+  <div class="row"><label>발행 글 수</label><span id="f_posts" style="font-weight:700"></span><span style="font-size:12px;color:var(--sub)">(발행 완료 + 발행일 기준 자동)</span></div>
+  <div class="act"><button class="sv" id="psave">💾 이 달 저장</button></div>
+ </div>
+ <h2>월별 한눈에</h2>
+ <div style="overflow-x:auto"><table class="mt" id="ptable"></table></div>
+</div>
+<div class="note">💾 저장은 GitHub에 바로 기록돼서 <b>폰·PC 어디서 열어도 같이 보여요.</b> 기기마다 처음 한 번 「⚙️ 저장 연결」에서 토큰을 넣어 주세요 (토큰은 그 기기 브라우저에만 저장되고 다른 곳으로 가지 않아요).<br>새 초안 목록은 Claude가 글을 만들 때 자동으로 채워요.</div>
+</div>
+<div class="modal" id="modal"><div class="in">
+ <b>⚙️ 저장 연결 (기기마다 한 번)</b><br>
+ GitHub 토큰을 넣으면 이 페이지에서 바꾼 내용이 저장소에 바로 저장돼요.<br>
+ <span style="font-size:12px;color:#777">권장: Fine-grained token · 저장소 <b>Mihyun88/Archive</b>만 · 권한 <b>Contents: Read and write</b></span>
+ <input id="tok" type="password" placeholder="github_pat_ 로 시작하는 토큰" autocomplete="off">
+ <div class="act"><button class="sv" id="tsave">연결</button><button id="tdel">이 기기에서 지우기</button><button id="tclose">닫기</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
 <script>
+const REPO="Mihyun88/Archive",BR="main",SP="naver/library/status.json",PP="naver/library/perf.json";
 const ORDER=["발행 예정","사진 완료","사진 필요","초안","발행 완료","보류"];
-let D=[],S={},F="전체";
-const LS="gs-blog-published";
-function loc(){try{return JSON.parse(localStorage.getItem(LS)||"{}")}catch(e){return {}}}
-function save(o){try{localStorage.setItem(LS,JSON.stringify(o))}catch(e){}}
-function stat(d){const l=loc();if(l[d.slug])return "발행 완료";const s=S[d.slug];if(s&&s.status)return s.status;if(d.photos.length)return "사진 필요";return "초안"}
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-function strip(s){return s.replace(/\*\*/g,"")}
-function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",1500)}
-function render(){
-  const cnt={};D.forEach(d=>{const s=stat(d);cnt[s]=(cnt[s]||0)+1});
-  document.getElementById("sum").innerHTML=[["전체",D.length],["발행 예정",cnt["발행 예정"]||0],["사진 필요",cnt["사진 필요"]||0],["발행 완료",cnt["발행 완료"]||0]].map(([k,v])=>`<div><b>${v}</b><span>${k}</span></div>`).join("");
-  const chips=["전체","자이엘라","그랑자이",...ORDER];
-  document.getElementById("chips").innerHTML=chips.map(c=>`<button class="${c===F?"on":""}" data-c="${c}">${c}${cnt[c]?" "+cnt[c]:""}</button>`).join("");
-  document.querySelectorAll("#chips button").forEach(b=>b.onclick=()=>{F=b.dataset.c;render()});
-  let L=D.slice().sort((a,b)=>ORDER.indexOf(stat(a))-ORDER.indexOf(stat(b))||b.slug.localeCompare(a.slug));
-  if(F==="자이엘라"||F==="그랑자이")L=L.filter(d=>d.office===F);else if(F!=="전체")L=L.filter(d=>stat(d)===F);
-  const l=loc();
-  document.getElementById("list").innerHTML=L.map(d=>{const s=stat(d),m=S[d.slug]||{};
-    return `<div class="it ${s==="발행 완료"?"done":""}"><input type="checkbox" class="ck" data-s="${d.slug}" ${s==="발행 완료"?"checked":""} title="발행했어요">
-    <div class="bx"><div class="t">${d.series?`<span style="color:#ff2d8a">${esc(d.series)}</span> `:""}${esc(d.title)}</div><div class="best">${esc(strip(d.best))}</div>
-    <div class="meta"><span class="b st st${ORDER.indexOf(s)}">${s}</span>${m.date?`<span class="b">📅 ${m.date}</span>`:""}<span class="b">${d.office||"-"}점</span>${d.images?`<span class="b">🖼 사진 ${d.images}장 들어감</span>`:""}${d.photos.length?`<span class="b">📷 찍을 것 ${d.photos.length}</span>`:""}${d.note_todo?`<span class="b" style="background:#ffe3ef;color:#b0105a">📝 현장 노트 필요</span>`:""}${d.fills?`<span class="b">✍️ 채울 칸 ${d.fills}</span>`:""}</div>
-    ${m.memo?`<div class="memo">💬 ${esc(m.memo)}</div>`:""}
-    <div class="act"><a class="go" href="../../${d.file}">📋 붙여넣기 페이지</a><button data-copy="${esc(strip(d.best))}">제목 복사</button>${d.tags?`<button data-copy="${esc(d.tags)}">태그 복사</button>`:""}</div>
-    ${d.photos.length?`<details><summary>📷 찍을 사진 보기</summary><ul>${d.photos.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></details>`:""}
-    </div></div>`}).join("");
-  document.querySelectorAll(".ck").forEach(c=>c.onchange=()=>{const o=loc();if(c.checked)o[c.dataset.s]=new Date().toISOString().slice(0,10);else delete o[c.dataset.s];save(o);render()});
-  document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>navigator.clipboard.writeText(b.dataset.copy).then(()=>toast("복사했어요")));
+const SECT=[["🗓 발행 예정",["발행 예정"]],["✍️ 작업 중",["사진 완료","사진 필요","초안"]],["✅ 발행 완료",["발행 완료"]],["⏸ 보류",["보류"]]];
+let D=[],S={posts:{}},P={months:{}},shaS=null,shaP=null,V="status",F="전체";
+const $=id=>document.getElementById(id);
+function tok(){try{return localStorage.getItem("gs-gh-token")||""}catch(e){return ""}}
+function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display="none",1800)}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function strip(s){return String(s||"").replace(/\*\*/g,"")}
+function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,""))))}
+function b64e(s){return btoa(unescape(encodeURIComponent(s)))}
+async function ghGet(path){const r=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}?ref=${BR}&t=${Date.now()}`,{headers:{Authorization:"Bearer "+tok(),Accept:"application/vnd.github+json"}});if(!r.ok)throw new Error(r.status);const j=await r.json();return {data:JSON.parse(b64d(j.content)),sha:j.sha}}
+async function ghPut(path,obj,sha,msg){const r=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{method:"PUT",headers:{Authorization:"Bearer "+tok(),Accept:"application/vnd.github+json"},body:JSON.stringify({message:msg,content:b64e(JSON.stringify(obj,null,1)+"\n"),sha,branch:BR})});if(!r.ok)throw new Error(r.status);return (await r.json()).content.sha}
+async function loadAll(){
+  D=await fetch("drafts.json?"+Date.now()).then(r=>r.json());
+  if(tok()){try{const a=await ghGet(SP),b=await ghGet(PP);S=a.data;shaS=a.sha;P=b.data;shaP=b.sha;$("sync").innerHTML='<b class="ok">● 저장 연결됨</b> — 바꾼 내용이 폰·PC 모두에 저장돼요';}catch(e){$("sync").innerHTML='<b class="no">● 연결 실패('+e.message+')</b> — 토큰을 확인해 주세요. 지금은 보기만 돼요';await loadStatic()}}
+  else{await loadStatic();$("sync").innerHTML='<b class="no">● 보기 전용</b> — 「⚙️ 저장 연결」에서 토큰을 넣으면 여기서 바로 고칠 수 있어요'}
+  S.posts=S.posts||{};P.months=P.months||{};render();renderPerf();
 }
-Promise.all([fetch("drafts.json").then(r=>r.json()),fetch("status.json").then(r=>r.json()).catch(()=>({posts:{}}))]).then(([d,s])=>{D=d;S=s.posts||{};render()});
+async function loadStatic(){S=await fetch("status.json?"+Date.now()).then(r=>r.json()).catch(()=>({posts:{}}));P=await fetch("perf.json?"+Date.now()).then(r=>r.json()).catch(()=>({months:{}}))}
+function st(d){const s=S.posts[d.slug];if(s&&s.status)return s.status;return d.photos&&d.photos.length?"사진 필요":"초안"}
+function card(d){const s=st(d),m=S.posts[d.slug]||{},i=ORDER.indexOf(s);
+ return `<div class="it" data-s="${d.slug}"><div class="hd"><div class="t">${d.series?`<span class="ser">${esc(d.series)}</span> `:""}${esc(d.title)}</div>
+ <div class="meta"><span class="b st${i}">${s}</span>${m.date?`<span class="b">📅 ${m.date}</span>`:""}<span class="b">${d.office||"-"}점</span>${d.note_todo&&s!=="발행 완료"?`<span class="b st0">📝 현장 노트 필요</span>`:""}${d.photos&&d.photos.length&&s!=="발행 완료"?`<span class="b">📷 ${d.photos.length}</span>`:""}${m.url?`<span class="b">🔗 네이버</span>`:""}</div>
+ ${m.memo?`<div class="memo">💬 ${esc(m.memo)}</div>`:""}</div>
+ <div class="bd"><div style="font-size:13px;color:#555;margin-bottom:6px">${esc(strip(d.best))}</div>
+  <div class="row"><label>상태</label><select class="e-st">${ORDER.map(o=>`<option ${o===s?"selected":""}>${o}</option>`).join("")}</select></div>
+  <div class="row"><label>발행일</label><input type="date" class="e-date" value="${esc(m.date||"")}"></div>
+  <div class="row"><label>네이버 링크</label><input class="e-url" placeholder="https://blog.naver.com/..." value="${esc(m.url||"")}"></div>
+  <div class="row"><label>메모</label><input class="e-memo" value="${esc(m.memo||"")}"></div>
+  <div class="act"><button class="sv e-save">💾 저장</button><a class="go" href="../../${d.file}">📋 붙여넣기 페이지</a><button data-copy="${esc(strip(d.best))}">제목 복사</button>${d.tags?`<button data-copy="${esc(d.tags)}">태그 복사</button>`:""}${m.url?`<a href="${esc(m.url)}" target="_blank">네이버에서 보기</a>`:""}</div>
+  ${d.photos&&d.photos.length?`<details><summary>📷 찍을 사진</summary><ul>${d.photos.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></details>`:""}
+ </div></div>`}
+function render(){
+ const cnt={};D.forEach(d=>{const s=st(d);cnt[s]=(cnt[s]||0)+1});
+ const work=(cnt["사진 완료"]||0)+(cnt["사진 필요"]||0)+(cnt["초안"]||0);
+ $("sum").innerHTML=[["발행 예정",cnt["발행 예정"]||0],["작업 중",work],["발행 완료",cnt["발행 완료"]||0],["전체",D.length]].map(([k,v])=>`<div><b>${v}</b><span>${k}</span></div>`).join("");
+ const chips=["전체","자이엘라","그랑자이"];$("chips").innerHTML=chips.map(c=>`<button class="${c===F?"on":""}" data-c="${c}">${c==="전체"?"전체":c+"점"}</button>`).join("");
+ document.querySelectorAll("#chips button").forEach(b=>b.onclick=()=>{F=b.dataset.c;render()});
+ let L=D.filter(d=>F==="전체"||d.office===F);
+ let html="";
+ if(V==="status"){for(const [name,sts] of SECT){const g=L.filter(d=>sts.includes(st(d))).sort((a,b)=>sts.indexOf(st(a))-sts.indexOf(st(b))||String((S.posts[b.slug]||{}).date||b.slug).localeCompare(String((S.posts[a.slug]||{}).date||a.slug)));if(g.length)html+=`<h2>${name} <small>${g.length}편</small></h2>`+g.map(card).join("")}}
+ else{const sers=[...new Set(L.map(d=>d.series||"기타"))];for(const se of sers){const g=L.filter(d=>(d.series||"기타")===se).sort((a,b)=>ORDER.indexOf(st(a))-ORDER.indexOf(st(b)));const pub=g.filter(d=>st(d)==="발행 완료").length;html+=`<h2><span class="ser">${esc(se)}</span> <small>${g.length}편 · 발행 ${pub}</small></h2>`+g.map(card).join("")}}
+ $("list").innerHTML=html;
+ document.querySelectorAll(".it .hd").forEach(h=>h.onclick=()=>h.parentNode.classList.toggle("open"));
+ document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=e=>{e.stopPropagation();navigator.clipboard.writeText(b.dataset.copy).then(()=>toast("복사했어요"))});
+ document.querySelectorAll(".e-st").forEach(sel=>sel.onchange=()=>{const it=sel.closest(".it"),di=it.querySelector(".e-date");if(sel.value==="발행 완료"&&!di.value)di.value=new Date().toISOString().slice(0,10)});
+ document.querySelectorAll(".e-save").forEach(b=>b.onclick=()=>savePost(b.closest(".it")));
+}
+async function savePost(it){
+ if(!tok()){$("modal").classList.add("on");return}
+ const slug=it.dataset.s,v={status:it.querySelector(".e-st").value,date:it.querySelector(".e-date").value,url:it.querySelector(".e-url").value.trim(),memo:it.querySelector(".e-memo").value.trim()};
+ Object.keys(v).forEach(k=>{if(!v[k])delete v[k]});
+ for(let n=0;n<2;n++){try{const a=await ghGet(SP);S=a.data;S.posts=S.posts||{};S.posts[slug]=v;S.updated=new Date().toISOString().slice(0,10);shaS=await ghPut(SP,S,a.sha,"블로그 보관함: "+slug+" → "+v.status);toast("저장했어요 · 폰·PC 모두 반영");render();renderPerf();return}catch(e){if(n)toast("저장 실패 ("+e.message+") — 토큰 권한을 확인해 주세요")}}
+}
+function postsIn(ym){return D.filter(d=>st(d)==="발행 완료"&&((S.posts[d.slug]||{}).date||"").startsWith(ym)).length}
+const FIELDS=["visitors","views","neighbors","inquiries","contracts","keywords","memo"];
+function fillPerf(){const ym=$("pm").value,m=P.months[ym]||{};FIELDS.forEach(f=>$("f_"+f).value=m[f]||"");$("f_posts").textContent=postsIn(ym)+"편"}
+function renderPerf(){
+ if(!$("pm").value)$("pm").value=new Date().toISOString().slice(0,7);fillPerf();
+ const ms=Object.keys(P.months).sort().reverse();
+ $("ptable").innerHTML=`<tr><th>월</th><th>발행</th><th>방문자</th><th>조회수</th><th>이웃</th><th>문의</th><th>계약</th><th>메모</th></tr>`+(ms.length?ms.map(k=>{const m=P.months[k];return `<tr><td><b>${k}</b></td><td>${postsIn(k)}</td><td>${esc(m.visitors||"-")}</td><td>${esc(m.views||"-")}</td><td>${esc(m.neighbors||"-")}</td><td>${esc(m.inquiries||"-")}</td><td>${esc(m.contracts||"-")}</td><td style="text-align:left">${esc(m.keywords||"")}${m.keywords&&m.memo?"<br>":""}${esc(m.memo||"")}</td></tr>`}).join(""):`<tr><td colspan="8">아직 기록이 없어요</td></tr>`);
+}
+$("pm").onchange=fillPerf;
+$("psave").onclick=async()=>{
+ if(!tok()){$("modal").classList.add("on");return}
+ const ym=$("pm").value,v={};FIELDS.forEach(f=>{const x=$("f_"+f).value.trim();if(x)v[f]=x});
+ try{const a=await ghGet(PP);P=a.data;P.months=P.months||{};P.months[ym]=v;P.updated=new Date().toISOString().slice(0,10);shaP=await ghPut(PP,P,a.sha,"블로그 월별 성과: "+ym);toast(ym+" 성과 저장했어요");renderPerf()}catch(e){toast("저장 실패 ("+e.message+")")}
+};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));$("p-list").style.display=b.dataset.p==="list"?"":"none";$("p-perf").style.display=b.dataset.p==="perf"?"":"none"});
+document.querySelectorAll("#view button").forEach(b=>b.onclick=()=>{V=b.dataset.v;document.querySelectorAll("#view button").forEach(x=>x.classList.toggle("on",x===b));render()});
+$("gear").onclick=()=>{$("tok").value="";$("modal").classList.add("on")};
+$("tclose").onclick=()=>$("modal").classList.remove("on");
+$("tdel").onclick=()=>{try{localStorage.removeItem("gs-gh-token")}catch(e){}$("modal").classList.remove("on");toast("이 기기에서 토큰을 지웠어요");loadAll()};
+$("tsave").onclick=async()=>{const t=$("tok").value.trim();if(!t)return;try{localStorage.setItem("gs-gh-token",t)}catch(e){toast("이 브라우저는 저장이 안 돼요");return}$("modal").classList.remove("on");toast("연결 확인 중…");await loadAll()};
+loadAll();
 </script></body></html>
