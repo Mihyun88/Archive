@@ -218,6 +218,11 @@ class Post:
             self.note()
         self.b.append(("body",
             p() +
+            f'<table style="width:100%;border-collapse:collapse;margin:8px 0;"><tr><td style="background-color:{NAVY};border-radius:10px;padding:16px 14px;text-align:center;{FONT}">'
+            f'<span style="color:#ffde59;font-size:18px"><b>📊 착한언니복덕방 실거래 도구</b></span><br>'
+            f'<span style="color:#ffffff;font-size:15px;line-height:1.8">단지 시세 · 내 예산 진단 리포트<br>신촌 오피스텔 · 청약까지<br>공인중개사가 직접 만든<br><b>무료 도구</b>예요</span><br>'
+            f'<a href="https://unnizip.kr/app/" style="color:#ffffff;font-size:16px"><b>👉 unnizip.kr/app</b></a></td></tr></table>'
+            + p() +
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
             f'<span style="background-color:#13a89e;color:#ffffff">&nbsp;{esc(follow)}&nbsp;</span></p>'
             + p() +
