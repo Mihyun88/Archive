@@ -2,6 +2,9 @@
 """부동산 신문 스크랩 (무료 공개 RSS·기사 페이지만 사용, 개인 열람용)
 
 사용: python3 -I tools/news_scrap.py [--hours 24] [--chars 350] [--out 파일.md]
+      python3 -I tools/news_scrap.py --json 후보.json --add-to news/data.json
+        → 후보.json: 기사별 본문 앞부분 포함 (요약 재료, 저장소에 올리지 않기)
+        → news/data.json 오늘 날짜의 "all"(제목·언론사·시간·분류·링크만)을 채움
 - 조선일보(경제 RSS 중 부동산 + 사설·칼럼), 한국경제(부동산 RSS + 오피니언),
   매일경제(부동산 RSS · 본문은 앞 2줄만 공개), 연합뉴스(경제 RSS 키워드)
 - 본문은 앞부분만 잘라 보여 줌. 기사 전문·스크랩 결과는 저장소에 커밋하지 않기 (저작권).
@@ -183,13 +186,53 @@ def render(items, hours):
     return "\n".join(L)
 
 
+def to_json(items):
+    import json
+    rows = []
+    for a in items:
+        rows.append(dict(cat=categorize(a), title=a["title"], press=a["src"],
+                         time=f"{a['date'].astimezone(KST):%m/%d %H:%M}" if a["date"] else "",
+                         link=a["link"], also=sorted(set(a.get("also", []))), lead=a["lead"]))
+    return rows
+
+
+def add_to_page(rows, path):
+    """news/data.json 의 오늘 날짜 항목에 all(본문 없이 제목·링크만)을 넣는다. items(요약 카드)는 건드리지 않음."""
+    import json
+    today = datetime.now(KST).strftime("%Y-%m-%d")
+    data = json.load(open(path, encoding="utf-8"))
+    day = next((d for d in data["days"] if d["date"] == today), None)
+    if day is None:
+        day = {"date": today, "source": "", "items": []}
+        data["days"].insert(0, day)
+    day["all"] = [{k: r[k] for k in ("cat", "title", "press", "time", "link", "also")} for r in rows]
+    cutoff = (datetime.now(KST) - timedelta(days=60)).strftime("%Y-%m-%d")
+    data["days"] = sorted([d for d in data["days"] if d["date"] >= cutoff], key=lambda d: d["date"], reverse=True)
+    data["updated"] = today
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--hours", type=int, default=24)
     ap.add_argument("--chars", type=int, default=350, help="기사당 본문 앞부분 글자 수")
     ap.add_argument("--out")
+    ap.add_argument("--json", help="후보 기사 JSON 저장 경로 (본문 앞부분 포함)")
+    ap.add_argument("--add-to", help="news/data.json 경로: 오늘 날짜의 전체 기사 목록(all) 갱신")
     o = ap.parse_args()
-    md = render(dedupe(collect(o.hours, o.chars)), o.hours)
+    items = dedupe(collect(o.hours, o.chars))
+    if o.json or o.add_to:
+        import json
+        rows = to_json(items)
+        if o.json:
+            json.dump(rows, open(o.json, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        if o.add_to:
+            add_to_page(rows, o.add_to)
+        print(f"기사 {len(rows)}건" + (f" → {o.json}" if o.json else "") + (f" · {o.add_to} 갱신" if o.add_to else ""))
+        sys.exit(0)
+    md = render(items, o.hours)
     if o.out:
         open(o.out, "w", encoding="utf-8").write(md)
     print(md)
