@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+@font-face{font-family:G;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff) format('woff');font-weight:700}
+@font-face{font-family:G;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff) format('woff');font-weight:500}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#bbb}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;background:#FFFBF2;color:#16202E;padding:96px 90px 0;margin-bottom:20px;font-family:Pretendard,sans-serif;letter-spacing:-.03em}
+.dark{background:#16202E;color:#fff}
+.ser{display:inline-flex;align-items:center;gap:12px;font-family:G;font-weight:500;font-size:28px;color:#D9502A}
+.ser i{font-style:normal;background:#D9502A;color:#fff;border-radius:10px;padding:6px 14px;font-size:26px}
+.dark .ser{color:#FFD34D}.dark .ser i{background:#FFD34D;color:#16202E}
+.foot{position:absolute;left:90px;right:90px;bottom:54px;display:flex;justify-content:space-between;font-size:24px;font-weight:600;color:#A39579}
+.dark .foot{color:rgba(255,255,255,.6)}
+.save{position:absolute;right:90px;top:96px;font-size:24px;font-weight:700;color:#A39579}
+/* cover */
+.ct{font-family:G;font-weight:700;font-size:92px;line-height:1.2;margin-top:40px}.ct em{font-style:normal;color:#FFD34D}
+.cs{font-size:36px;font-weight:600;line-height:1.5;margin-top:28px;color:rgba(255,255,255,.85)}
+.cs b{color:#fff}
+.stack{position:absolute;left:90px;right:90px;bottom:150px;height:470px}
+.doc{position:absolute;width:420px;height:300px;background:#FFFBF2;border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.35);padding:34px 36px;color:#16202E}
+.doc b{font-family:G;font-weight:700;font-size:34px;display:block}
+.doc .ln{height:14px;background:#EDE3CC;border-radius:7px;margin-top:22px}
+.doc .ln.y{background:#FFD34D}
+.doc .no{position:absolute;right:28px;top:24px;font-family:G;font-weight:700;font-size:56px;color:#D9502A}
+.big5{position:absolute;right:0;bottom:-10px;font-family:G;font-weight:700;font-size:400px;line-height:.8;color:#FFD34D;opacity:.95}
+/* problem */
+.h{font-family:G;font-weight:700;font-size:72px;line-height:1.25;margin-top:30px}.h em{font-style:normal;color:#D9502A}
+.p{font-size:34px;line-height:1.6;margin-top:30px;color:#3B4656;font-weight:500}.p b{color:#16202E}
+.ice{margin-top:56px;position:relative;height:620px}
+.ice .w{position:absolute;left:0;right:0;top:150px;height:6px;background:#7FA7D8;border-radius:3px}
+.ice .up{position:absolute;left:250px;width:400px;top:0;height:150px;background:#fff;border:4px solid #16202E;border-bottom:0;border-radius:24px 24px 0 0;display:flex;align-items:center;justify-content:center;font-family:G;font-weight:700;font-size:38px}
+.ice .dn{position:absolute;left:110px;right:110px;top:156px;height:400px;background:#E8F0FA;border:4px dashed #7FA7D8;border-top:0;border-radius:0 0 40px 40px;padding:44px 50px}
+.ice .dn div{font-size:38px;font-weight:800;padding:14px 0;color:#16202E}.ice .dn div span{color:#D9502A;margin-right:12px}
+.ice .lb{position:absolute;font-size:24px;font-weight:700;color:#7FA7D8;right:0;top:110px}
+/* item */
+.num{font-family:G;font-weight:700;font-size:150px;line-height:.9;color:#D9502A;margin-top:34px}
+.it{font-family:G;font-weight:700;font-size:70px;line-height:1.2;margin-top:18px}
+.why{font-size:34px;font-weight:600;line-height:1.55;margin-top:24px;color:#3B4656}.why b{color:#D9502A}
+.paper{margin-top:44px;background:#fff;border-radius:26px;padding:38px 44px;box-shadow:0 10px 30px rgba(22,32,46,.08);position:relative}
+.paper .t{font-size:24px;font-weight:700;color:#A39579;letter-spacing:0}
+.row{display:flex;gap:24px;align-items:flex-start;padding:22px 0;border-bottom:2px solid #F1EADB}.row:last-child{border-bottom:0}
+.row .k{width:56px;height:56px;flex:none;border-radius:16px;background:#16202E;color:#FFD34D;font-family:G;font-weight:700;font-size:30px;display:flex;align-items:center;justify-content:center}
+.row .v{font-size:33px;font-weight:800;line-height:1.35}.row .v small{display:block;font-size:27px;font-weight:500;color:#5B6574;margin-top:6px;line-height:1.45}
+mark{background:linear-gradient(transparent 55%,#FFD34D 55%);color:inherit;padding:0 4px}
+.where{position:absolute;left:90px;right:90px;bottom:120px;display:flex;gap:16px}
+.where div{flex:1;background:#16202E;color:#fff;border-radius:20px;padding:22px 26px;font-size:26px;font-weight:600;line-height:1.4}
+.where div b{display:block;color:#FFD34D;font-size:22px;font-weight:700;margin-bottom:4px}
+/* summary */
+.tb{width:100%;border-collapse:collapse;margin-top:44px;background:#fff;border-radius:24px;overflow:hidden}
+.tb th{background:#16202E;color:#FFD34D;font-size:30px;font-weight:700;padding:20px 18px;text-align:left}
+.tb td{font-size:32px;padding:30px 20px;border-bottom:2px solid #F1EADB;vertical-align:top;line-height:1.4;font-weight:600;color:#3B4656}
+.tb td:first-child{font-weight:900;color:#16202E;white-space:nowrap}
+.tb td.c{width:60px;text-align:center}.bx{display:inline-block;width:36px;height:36px;border:4px solid #16202E;border-radius:8px}
+/* cta */
+.big{font-family:G;font-weight:700;font-size:84px;line-height:1.25;margin-top:60px}.big em{font-style:normal;color:#FFD34D}
+.btn{margin-top:56px;background:#FFFBF2;color:#16202E;border-radius:28px;padding:36px 44px}
+.btn div{font-size:38px;font-weight:800;padding:14px 0;display:flex;gap:18px;align-items:center}
+.btn div span{font-size:44px}
+.fol{margin-top:44px;font-size:32px;line-height:1.55;color:rgba(255,255,255,.85);font-weight:500}.fol b{color:#FFD34D}
+.ph{position:relative;margin-top:34px;border-radius:20px;overflow:hidden;box-shadow:0 12px 30px rgba(22,32,46,.15);background:#fff}
+.ph img{display:block;width:900px}
+.ph .hl{position:absolute;border:5px solid #D9502A;border-radius:12px}
+.ph .tg{position:absolute;background:#D9502A;color:#fff;font-size:24px;font-weight:800;padding:6px 14px;border-radius:10px;white-space:nowrap}
+
+.sch{margin-top:44px;background:#fff;border-radius:26px;padding:16px 40px;box-shadow:0 10px 30px rgba(22,32,46,.08)}
+.sch .r{display:flex;justify-content:space-between;align-items:center;padding:26px 0;border-bottom:2px solid #F1EADB;font-size:34px;font-weight:700}
+.sch .r:last-child{border-bottom:0}.sch .r b{font-family:G;font-weight:700;font-size:38px}.sch .r.hot{color:#D9502A}.sch .r.hot b{color:#D9502A}
+.sch .r small{display:block;font-size:24px;color:#8A8F98;font-weight:600;margin-top:4px}
+.bar{margin-top:30px}.bar .it{margin-bottom:34px}.bar .nm{font-size:30px;font-weight:800;display:flex;justify-content:space-between}.bar .nm span{font-size:24px;color:#8A8F98;font-weight:600}
+.bar .tr{height:64px;background:#F1EADB;border-radius:16px;margin-top:12px;position:relative;overflow:hidden}
+.bar .f{position:absolute;left:0;top:0;bottom:0;border-radius:16px;display:flex;align-items:center;justify-content:flex-end;padding-right:22px;font-family:G;font-weight:700;font-size:32px;color:#fff}
+.note{font-size:22px;color:#A39579;margin-top:16px;line-height:1.5}
+</style></head><body>
+
+<div class="s dark" id="s1">
+ <div class="ser"><i>🚨 1순위 내일</i> 11/24(화)</div>
+ <div class="ct" style="font-size:88px">문래 신축 84㎡<br><em>18억</em>,<br>넣어도 될까요?</div>
+ <div class="cs">해링턴 플레이스 문래 · 218세대<br><b>옆 단지 실거래</b>랑 먼저 비교해 봤어요</div>
+ <div style="position:absolute;left:90px;right:90px;bottom:150px;background:rgba(255,255,255,.06);border-radius:28px;padding:40px 44px">
+  <div style="font-size:26px;font-weight:700;color:rgba(255,255,255,.6)">84㎡ 비교</div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:22px"><span style="font-size:32px;font-weight:700">분양가</span><span style="font-family:G;font-weight:700;font-size:64px;color:#FFD34D">18.3억</span></div>
+  <div style="height:22px;background:#FFD34D;border-radius:11px;margin-top:10px"></div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:30px"><span style="font-size:32px;font-weight:700">옆 준신축 실거래</span><span style="font-family:G;font-weight:700;font-size:64px">14.8~16.4억</span></div>
+  <div style="height:22px;width:86%;background:rgba(255,255,255,.75);border-radius:11px;margin-top:10px"></div>
+ </div>
+ <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>📌 저장 · 1/6</span></div>
+</div>
+
+<div class="s" id="s2">
+ <div class="ser"><i>일정</i> 청약홈 공고 기준</div>
+ <div class="h" style="font-size:64px">특공은 오늘,<br><em>1순위는 내일</em>이에요</div>
+ <div class="sch">
+  <div class="r"><span>특별공급</span><b>11/23(월)</b></div>
+  <div class="r hot"><span>1순위</span><b>11/24(화)</b></div>
+  <div class="r"><span>2순위</span><b>11/26(목)</b></div>
+  <div class="r"><span>당첨 발표</span><b>12/2(수)</b></div>
+  <div class="r"><span>계약</span><b>12/14~16</b></div>
+  <div class="r"><span>입주 예정<small>공고 기준</small></span><b>2030년 3월</b></div>
+ </div>
+ <div class="note">84㎡ 단일 218세대 (일반 101 · 특공 117) · 접수는 청약홈</div>
+ <div class="foot"><span>착한언니복덕방</span><span>2/6</span></div>
+</div>
+
+<div class="s" id="s3">
+ <div class="ser"><i>분양가</i> 84㎡ 타입별 최고가</div>
+ <div class="h" style="font-size:64px">84㎡ 한 평형,<br><em>17억 7천~18억 3천</em></div>
+ <div class="sch">
+  <div class="r"><span>84A <small>51세대 (일반)</small></span><b>18억 2,700만</b></div>
+  <div class="r"><span>84B <small>25세대 (일반)</small></span><b>17억 8,500만</b></div>
+  <div class="r"><span>84C <small>25세대 (일반)</small></span><b>17억 7,500만</b></div>
+ </div>
+ <div class="paper" style="margin-top:34px;padding:26px 40px"><div class="t">교통 (보도 기준)</div>
+  <div style="font-size:30px;font-weight:700;line-height:1.6;margin-top:10px">2호선 문래역 · 1호선·KTX 영등포역<br>2·5호선 영등포구청역 · 5호선 영등포시장역</div></div>
+ <div class="foot"><span>착한언니복덕방</span><span>3/6</span></div>
+</div>
+
+<div class="s" id="s4">
+ <div class="ser"><i>비교</i> 옆 단지 84㎡ 실거래</div>
+ <div class="h" style="font-size:62px">옆 준신축보다<br><em>2~3억</em> 높아요</div>
+ <div class="bar">
+  <div class="it"><div class="nm">해링턴 플레이스 문래 (분양가)<span>2030 입주</span></div><div class="tr"><div class="f" style="width:100%;background:#D9502A">17.8~18.3억</div></div></div>
+  <div class="it"><div class="nm">영등포아트자이<span>2014 · 실거래 1건</span></div><div class="tr"><div class="f" style="width:89.8%;background:#16202E">16.4억</div></div></div>
+  <div class="it"><div class="nm">문래모아미래도<span>2017 · 실거래 2건</span></div><div class="tr"><div class="f" style="width:83.7%;background:#16202E">14.8~15.3억</div></div></div>
+ </div>
+ <div class="paper" style="margin-top:6px;padding:26px 40px"><div style="font-size:32px;font-weight:800;line-height:1.5">"로또 청약"은 아니에요.<br><mark>2030년 새 아파트 값</mark>이라고 보시면 돼요.</div></div>
+ <div class="note">국토부 실거래 2026.8~11 · 해제거래 제외 · 건수가 적어 참고용</div>
+ <div class="foot"><span>착한언니복덕방</span><span>4/6</span></div>
+</div>
+
+<div class="s" id="s5">
+ <div class="ser"><i>언니 체크</i> 넣기 전에</div>
+ <div class="h" style="font-size:64px">넣기 전에<br><em>이 3가지</em>만</div>
+ <div class="paper" style="margin-top:40px">
+  <div class="row"><div class="k">1</div><div class="v">1순위 <mark>자격</mark>부터<small>규제지역 공고라 조건이 있어요 · 청약홈 공고문에서 확인</small></div></div>
+  <div class="row"><div class="k">2</div><div class="v">18억, <mark>잔금까지</mark> 되는지<small>계약금 · 중도금 · 잔금 일정과 대출 가능 금액 먼저</small></div></div>
+  <div class="row"><div class="k">3</div><div class="v"><mark>2030년 3월</mark>까지 계획<small>입주까지 3년 넘게 · 그동안 살 곳과 자금</small></div></div>
+ </div>
+ <div class="foot"><span>착한언니복덕방</span><span>5/6</span></div>
+</div>
+
+<div class="s dark" id="s6">
+ <div class="ser"><i>정리</i></div>
+ <div class="big" style="font-size:76px">청약 넣기 전엔<br><em>옆 단지 실거래</em>부터</div>
+ <div class="btn">
+  <div><span>📅</span>1순위 <b style="color:#D9502A">11/24(화)</b> · 접수는 청약홈</div>
+  <div><span>📌</span>저장 · 📤 청약 넣는 친구에게 공유</div>
+ </div>
+ <div class="fol">분양가 옆에 주변 실거래 같이 보는 건<br><b>프로필 링크 → 청약</b>에서 바로 💛</div>
+ <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>6/6</span></div>
+</div>
+</body></html>
