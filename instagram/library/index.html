@@ -32,7 +32,7 @@ h1{font-size:24px;margin:10px 0 4px}.sub{color:var(--sub);font-size:13px}
 <h1>📚 콘텐츠 보관함</h1><div class="sub" id="upd"></div>
 <div class="tabs"><button data-k="reels" class="on">🎬 릴스 대본</button><button data-k="cards">🖼️ 카드뉴스</button></div>
 <div class="chips" id="chips"></div><div class="cnt" id="cnt"></div><div id="list"></div>
-<div class="tk" id="tk"></div><div class="note">🎬 릴스 대본마다 <b>📅 촬영 예정</b> · <b>✅ 촬영 완료</b> · <b>⏸ 보류</b> · <b>🗑 삭제</b> 버튼이 있어요. 삭제는 한 번 더 물어봐요. 누르면 상태가 바로 바뀌고, 다시 누르면 취소돼요.<br><b>🔑 이 기기 연결</b>을 해 두면 버튼을 누를 때마다 보관함 데이터에 바로 저장돼서 폰·PC·Claude가 모두 같은 상태를 봐요. 연결 안 한 기기에서는 그 브라우저에만 저장돼요.</div>
+<div class="tk" id="tk"></div><div class="note">🎬 릴스 대본마다 <b>📅 촬영 예정</b> · <b>✅ 촬영 완료</b> · <b>⏸ 보류</b> 버튼이 있어요. 삭제는 Claude에게 "○○ 삭제해 줘"라고 말해 주세요. 누르면 상태가 바로 바뀌고, 다시 누르면 취소돼요.<br><b>🔑 이 기기 연결</b>을 해 두면 버튼을 누를 때마다 보관함 데이터에 바로 저장돼서 폰·PC·Claude가 모두 같은 상태를 봐요. 연결 안 한 기기에서는 그 브라우저에만 저장돼요.</div>
 </div><div class="toast" id="toast"></div>
 <script>
 let D,K='reels',F='전체';
@@ -82,7 +82,7 @@ function render(){
  document.getElementById('cnt').textContent=L.length+'개';
  document.getElementById('list').innerHTML=L.map(x=>{const s=st(x);const m=[`<span class="b s-${s.replace(/ /g,'_')}">${s}</span>`,x.format||x.kind?`<span class="b">${x.format||x.kind}</span>`:'',x.date?`<span class="b">📅 ${x.date}</span>`:'',x.keyword?`<span class="b">💬 ${esc(x.keyword)}</span>`:''].join('');
   const links=[x.insta?`<a href="${x.insta}" target="_blank">인스타 보기</a>`:'',x.file?`<a href="${x.file}" target="_blank">원본 파일</a>`:'',x.folder?`<a href="${x.folder}" target="_blank">원본 폴더</a>`:''].join('');
-  const act=K=='reels'?`<div class="act"><button class="${s=='촬영 예정'?'on1':''}" onclick="setSt('${x.id}','촬영 예정',event)">📅 촬영 예정</button><button class="${s=='촬영 완료'?'on2':''}" onclick="setSt('${x.id}','촬영 완료',event)">✅ 촬영 완료</button><button class="${s=='보류'?'on3':''}" onclick="setSt('${x.id}','보류',event)">⏸ 보류</button><button class="del" onclick="setSt('${x.id}','__del__',event)">🗑 삭제</button></div>`:'';
+  const act=K=='reels'?`<div class="act"><button class="${s=='촬영 예정'?'on1':''}" onclick="setSt('${x.id}','촬영 예정',event)">📅 촬영 예정</button><button class="${s=='촬영 완료'?'on2':''}" onclick="setSt('${x.id}','촬영 완료',event)">✅ 촬영 완료</button><button class="${s=='보류'?'on3':''}" onclick="setSt('${x.id}','보류',event)">⏸ 보류</button></div>`:'';
   return `<div class="it ${s=='촬영 완료'?'shot':''}"><div class="hd" onclick="this.parentNode.classList.toggle('open')"><div class="t">${esc(x.title)}</div><div class="meta">${m}</div>${x.memo?`<div class="memo">${esc(x.memo)}</div>`:''}${act}</div>
   <div class="bd">${x.resource?`<div><b>연결 자료</b> · ${esc(x.resource)}</div>`:''}${md(x.body)}<div class="links">${links}</div></div></div>`}).join('')}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(z=>z.classList.remove('on'));b.classList.add('on');K=b.dataset.k;F='전체';render()});
