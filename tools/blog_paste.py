@@ -220,7 +220,7 @@ class Post:
             p() +
             f'<table style="width:100%;border-collapse:collapse;margin:8px 0;"><tr><td style="background-color:{NAVY};border-radius:10px;padding:16px 14px;text-align:center;{FONT}">'
             f'<span style="color:#ffde59;font-size:18px"><b>📊 착한언니복덕방 실거래 도구</b></span><br>'
-            f'<span style="color:#ffffff;font-size:15px;line-height:1.8">단지&nbsp;시세&nbsp;·&nbsp;내&nbsp;예산&nbsp;진단&nbsp;리포트<br>신촌&nbsp;오피스텔&nbsp;·&nbsp;청약까지<br>공인중개사가&nbsp;직접&nbsp;만든<br><b>무료&nbsp;도구</b>예요</span><br>'
+            f'<span style="color:#ffffff;font-size:15px;line-height:1.8">단지&nbsp;시세&nbsp;·&nbsp;내&nbsp;예산&nbsp;진단&nbsp;리포트<br>신촌&nbsp;오피스텔&nbsp;·&nbsp;청약까지<br><br>중개사가&nbsp;매일&nbsp;보는&nbsp;시세표,<br><b>그대로&nbsp;열어&nbsp;드려요</b></span><br>'
             f'<a href="https://unnizip.kr/app/" style="color:#ffffff;font-size:16px"><b>👉 unnizip.kr/app</b></a></td></tr></table>'
             + p() +
             f'<p style="text-align:center;font-size:16px;line-height:1.8;margin:8px 0;{FONT}">'
