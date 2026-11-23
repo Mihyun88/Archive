@@ -97,5 +97,6 @@ function render(){
   return `<div class="it ${s=='촬영 완료'?'shot':''}"><div class="hd" onclick="this.parentNode.classList.toggle('open')"><div class="t">${esc(x.title)}</div><div class="meta">${m}</div>${x.memo?`<div class="memo">${esc(x.memo)}</div>`:''}${act}</div>
   <div class="bd">${x.resource?`<div><b>연결 자료</b> · ${esc(x.resource)}</div>`:''}${md(x.body)}<div class="links">${links}</div></div></div>`}).join('')}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(z=>z.classList.remove('on'));b.classList.add('on');K=b.dataset.k;F='전체';render()});
+const QF=new URLSearchParams(location.search).get('f');if(QF)F=QF;
 fetch('data.json?v='+Date.now()).then(r=>r.json()).then(j=>{D=j;document.getElementById('upd').textContent='업데이트 '+j.updated+' · 제목을 누르면 대본·캡션이 펼쳐져요';render();tokUI()});
 </script></body></html>
