@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>오늘의 부동산 스크랩 · 착한언니복덕방</title>
+<style>:root{--bg:#f7f6f3;--ink:#1c1c1a;--sub:#7a766c;--line:#e7e3d9;--navy:#1E2A3A;--y:#FFD84D}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.w{max-width:760px;margin:0 auto;padding:20px 16px 80px}a.back{font-size:14px;color:var(--sub);text-decoration:none}
+h1{font-size:24px;margin:10px 0 4px}.sub{color:var(--sub);font-size:13px}
+.days{display:flex;gap:6px;overflow-x:auto;margin:16px 0 8px;padding-bottom:4px}.days button{flex:none;font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:#fff}.days button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}.chips button{font:inherit;font-size:13px;padding:6px 11px;border-radius:99px;border:1px solid var(--line);background:#fff}.chips button.on{background:var(--y);border-color:var(--y);font-weight:700}
+.src{font-size:12px;color:var(--sub);margin:2px 2px 8px}
+.it{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0}
+.cat{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:#E3ECFA;color:#26467a;margin-right:6px}
+.t{font-weight:800;font-size:16px;line-height:1.45;margin-top:6px}ul{margin:8px 0 0;padding-left:18px;font-size:14.5px;line-height:1.6}li{margin:3px 0}
+.u{margin-top:10px;font-size:14px;background:#FFF6D6;border-radius:10px;padding:8px 10px}.idea{margin-top:8px;font-size:14px;background:#FFE3EF;color:#7a0c3e;border-radius:10px;padding:8px 10px}
+.lk{display:inline-block;margin-top:10px;font-size:13px;color:#fff;background:var(--navy);padding:6px 12px;border-radius:99px;text-decoration:none}.press{font-size:12px;color:var(--sub);margin-left:6px}
+</style></head><body><div class="w"><a class="back" href="../">← 대시보드</a>
+<h1>📰 오늘의 부동산 스크랩</h1><div class="sub">매일 아침 7시에 Claude가 모아요 · 기사 요약 + 원문 링크 · 💬 언니 한 줄 · 🎬 콘텐츠 소재</div>
+<div class="days" id="days"></div><div class="chips" id="chips"></div><div class="src" id="src"></div><div id="list"></div></div>
+<script>
+let D,I=0,C='전체';const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function render(){const d=D.days[I];
+ document.getElementById('days').innerHTML=D.days.map((x,i)=>`<button class="${i==I?'on':''}" onclick="I=${i};C='전체';render()">${x.date.slice(5).replace('-','/')}${i==0?' 오늘':''}</button>`).join('');
+ const cats=['전체',...new Set(d.items.map(x=>x.cat))];
+ document.getElementById('chips').innerHTML=cats.map(c=>`<button class="${c==C?'on':''}" onclick="C='${c}';render()">${c}</button>`).join('');
+ document.getElementById('src').textContent=(d.source||'')+' · '+d.items.length+'건';
+ document.getElementById('list').innerHTML=d.items.filter(x=>C=='전체'||x.cat==C).map(x=>`<div class="it"><span class="cat">${esc(x.cat)}</span><span class="press">${esc(x.press||'')}</span><div class="t">${esc(x.title)}</div><ul>${(x.points||[]).map(p=>`<li>${esc(p)}</li>`).join('')}</ul>${x.unni?`<div class="u">💬 ${esc(x.unni)}</div>`:''}${x.idea?`<div class="idea">🎬 ${esc(x.idea)}</div>`:''}${x.link?`<a class="lk" href="${esc(x.link)}" target="_blank">원문 보기</a>`:''}</div>`).join('')}
+fetch('data.json?v='+Date.now()).then(r=>r.json()).then(j=>{D=j;D.days.sort((a,b)=>b.date.localeCompare(a.date));render()});
+</script></body></html>
