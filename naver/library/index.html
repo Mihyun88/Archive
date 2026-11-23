@@ -62,7 +62,7 @@ table.mt{width:100%;min-width:640px;border-collapse:collapse;background:#fff;fon
  <h2>월별 한눈에</h2>
  <div style="overflow-x:auto"><table class="mt" id="ptable"></table></div>
 </div>
-<div class="note">💾 저장은 GitHub에 바로 기록돼서 <b>폰·PC 어디서 열어도 같이 보여요.</b> 기기마다 처음 한 번 「⚙️ 저장 연결」에서 토큰을 넣어 주세요 (토큰은 그 기기 브라우저에만 저장되고 다른 곳으로 가지 않아요).<br>새 초안 목록은 Claude가 글을 만들 때 자동으로 채워요.</div>
+<div class="note">💾 <b>연결한 기기에서 저장하면 폰·PC 어디서 열어도 같은 내용이 보여요</b> (반영까지 1~2분). 보기만 하는 기기는 연결할 필요 없어요. 폰에서도 직접 고치고 싶을 때만 폰에서 한 번 더 연결하세요.<br>콘텐츠 보관함(인스타)과 같은 연결을 써요 — 한쪽에서 연결했으면 이 페이지도 이미 연결돼 있어요.</div>
 </div>
 <div class="modal" id="modal"><div class="in">
  <b>⚙️ 저장 연결 (기기마다 한 번)</b><br>
@@ -89,7 +89,7 @@ async function ghPut(path,obj,sha,msg){const r=await fetch(`https://api.github.c
 async function loadAll(){
   D=await fetch("drafts.json?"+Date.now()).then(r=>r.json());
   if(tok()){try{const a=await ghGet(SP),b=await ghGet(PP);S=a.data;shaS=a.sha;P=b.data;shaP=b.sha;$("sync").innerHTML='<b class="ok">● 저장 연결됨</b> — 바꾼 내용이 폰·PC 모두에 저장돼요';}catch(e){$("sync").innerHTML='<b class="no">● 연결 실패('+e.message+')</b> — 토큰을 확인해 주세요. 지금은 보기만 돼요';await loadStatic()}}
-  else{await loadStatic();$("sync").innerHTML='<b class="no">● 보기 전용</b> — 「⚙️ 저장 연결」에서 토큰을 넣으면 여기서 바로 고칠 수 있어요'}
+  else{await loadStatic();$("sync").innerHTML='<b class="no">● 보기 전용</b> — 연결된 기기(PC)에서 저장한 내용은 여기서도 보여요. 이 기기에서 고치려면 「⚙️ 저장 연결」'}
   S.posts=S.posts||{};P.months=P.months||{};render();renderPerf();
 }
 async function loadStatic(){S=await fetch("status.json?"+Date.now()).then(r=>r.json()).catch(()=>({posts:{}}));P=await fetch("perf.json?"+Date.now()).then(r=>r.json()).catch(()=>({months:{}}))}
