@@ -50,29 +50,75 @@ def vis(s):
     return len(_re.sub(r"\*\*|\[\[|\]\]|\{\{|\}\}|==", "", s))
 
 
-def wrap(s, lim=21):
-    """모바일(한 줄 약 20자)에 맞게 긴 문장을 짧은 줄로 나눔. 굵게·색 표시 안은 자르지 않음."""
+_CLAUSE = _re.compile(r"(,|—|:|지만|는데|은데|면서|니까|라서|아서|어서|해서|도록|려면|이라|하라|이하라|이면|라면|다면|으면|하면|되면|때|땐|고|아니라|아니고|대신)$")
+_PART = _re.compile(r"(은|는|이|가|을|를|에|에서|에게|도|만|과|와|로|으로|의|까지|부터|보다|처럼|,)$")
+
+
+def _plain(w):
+    return _re.sub(r"\*\*|\[\[|\]\]|\{\{|\}\}|==", "", w).replace("\x00", " ")
+
+
+def _split_long(words, lim):
+    """문장을 의미 단위로 둘씩 나눔 — 연결어미·쉼표 뒤 우선, 그다음 조사 뒤, 양쪽 길이가 비슷하게"""
+    if vis(" ".join(words)) <= lim or len(words) < 2:
+        return [words]
+    best, bi = None, 1
+    for i in range(1, len(words)):
+        L, R = vis(" ".join(words[:i])), vis(" ".join(words[i:]))
+        tail = _plain(words[i - 1])
+        score = abs(L - R) * 0.6
+        if _CLAUSE.search(tail):
+            score -= 9
+        elif _PART.search(tail):
+            score -= 4
+        if min(L, R) <= 4:
+            score += 25
+        if best is None or score < best:
+            best, bi = score, i
+    return _split_long(words[:bi], lim) + _split_long(words[bi:], lim)
+
+
+def _wordwise(s):
+    """**굵게** [[보라]] {{분홍}} 안의 공백을 기준으로 단어마다 표시를 다시 감싸서, 줄바꿈이 가능하게"""
+    for o, c in (("**", "**"), ("[[", "]]"), ("{{", "}}")):
+        pat = _re.compile(_re.escape(o) + r"(.+?)" + _re.escape(c))
+        s = pat.sub(lambda m: " ".join(f"{o}{w}{c}" for w in m.group(1).split(" ") if w), s)
+    return s
+
+
+def wrap(s, lim=19):
+    """모바일(네이버 앱 한 줄 약 19~20자)용 문맥 줄바꿈.
+    문장마다 새 줄 → 긴 문장은 연결어미·쉼표·조사 뒤에서, 양쪽 길이를 맞춰 나눔.
+    형광(==)·괄호 ( ) 안은 자르지 않음"""
     if not s or vis(s) <= lim:
         return [s]
-    t = _MK.sub(lambda m: m.group(0).replace(" ", "\x00"), s)
+    t = _wordwise(s)
+    t = _re.sub(r"==.+?==", lambda m: m.group(0).replace(" ", "\x00"), t)
+    t = _re.sub(r"\([^()]*\)", lambda m: m.group(0).replace(" ", "\x00"), t)
     if t.startswith("✔ "):
         t = "✔\x00" + t[2:]
-    lines, cur = [], ""
-    for w in t.split(" "):
-        cand = f"{cur} {w}" if cur else w
-        if cur and vis(cand) > lim:
-            lines.append(cur); cur = w
-        else:
-            cur = cand
-        plain = _re.sub(r"\*\*|\]\]|\}\}|==", "", cur)
-        if vis(cur) >= 10 and _re.search(r"(,|—|:|\)|요|요\.|다\.|\?)$", plain):
-            lines.append(cur); cur = ""
+    words = [w for w in t.split(" ") if w]
+    sents, cur = [], []
+    for w in words:
+        cur.append(w)
+        if _re.search(r"[.?!]$", _plain(w)):
+            sents.append(cur); cur = []
     if cur:
-        lines.append(cur)
-    return [l.replace("\x00", " ") for l in lines]
+        sents.append(cur)
+    out = []
+    for sw in sents:
+        for part in _split_long(sw, lim):
+            out.append(" ".join(part))
+    res = []
+    for l in out:
+        l = l.replace("\x00", " ")
+        for o, c in (("**", "**"), ("[[", "]]"), ("{{", "}}")):
+            l = l.replace(f"{c} {o}", " ")
+        res.append(l)
+    return res
 
 
-def para(s, size=16, color=None, lim=21):
+def para(s, size=16, color=None, lim=19):
     return "".join(p(l, size, color) for l in wrap(s, lim))
 
 
@@ -85,7 +131,7 @@ class Post:
         self.b.append(("body", p()))
 
     def text(self, *lines, size=16, color=None):
-        lim = 21 if size >= 16 else 26
+        lim = 19 if size >= 16 else 25
         long_ = any(vis(l) > lim for l in lines) or any(l.startswith("✔") for l in lines)
         out = ""
         for i, l in enumerate(lines):
@@ -133,7 +179,7 @@ class Post:
             for c in r) + "</tr>" for r in rows)
         t = f'<table style="width:100%;border-collapse:collapse;margin:12px 0;"><tr>{th}</tr>{tr}</table>'
         if note:
-            t += para(note, 13, "#888888", 28)
+            t += para(note, 13, "#888888", 26)
         self.b.append(("table", t + p()))
 
     def photo(self, desc):
@@ -144,7 +190,7 @@ class Post:
         """공식 도면 등 실제 이미지: 미리보기에 표시 + 업로드 안내"""
         self.b.append(("photo",
             f'<p style="text-align:center;margin:12px 0 4px"><img src="{rel}" alt="{esc(desc)}" style="max-width:100%;border:1px solid #ddd"></p>'
-            + para(f"▲ {desc}", 13, "#999999", 28) + p()))
+            + para(f"▲ {desc}", 13, "#999999", 26) + p()))
         self.images = getattr(self, "images", []) + [(rel, desc)]
 
     def fill(self, desc):
