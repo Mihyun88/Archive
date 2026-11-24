@@ -2406,7 +2406,7 @@ def imun_ipark_xi():
 SERIES = {
     **{k: "【마포·서대문 아파트】" for k in ("2026-11-the-classy", "2026-11-maraepu", "2026-11-mapo-xi-hillstate-lachels", "2026-11-daeheung-apt")},
     "2026-11-raemian-lagrande": "【착한언니 사는 동네】",
-    "2026-11-imun-ipark-xi": "【착한언니 사는 동네】",
+    "2026-11-imun-ipark-xi": "【동대문 아파트】",
     **{k: "【신촌·이대 오피스텔】" for k in ("2026-11-shinchon-zaiella", "2026-11-sinchon-room-guide", "2026-11-officetel-standard-price", "2026-11-sinchon2-2-officetel")},
     **{k: "【재개발 현장】" for k in ("2026-11-nogosan-redevelopment", "2026-11-ahyeon1-nogosan", "2026-11-imun-hwigyeong-newtown", "2026-11-bukahyeon2-relocation",
                                    "2026-11-define-yeonhui", "2026-11-swiss-grand-hotel", "2026-11-sillim")},
