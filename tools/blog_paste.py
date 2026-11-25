@@ -2424,9 +2424,86 @@ def imun_ipark_xi():
     return a, side
 
 
+def hillstate_mapo():
+    a = Post("2026-11-hillstate-mapo-the-first", "힐스테이트마포더퍼스트 입주 3개월",
+             "출처: 국토부 아파트 매매·전월세 실거래 (2025.11~2026.10 신고분) · 단지 규모는 단지 정보 사이트 · 현장 촬영(2026.11) · 작성 규칙 MASTER v1.2")
+    I = "img/hsmapo/"
+    a.text("{{광흥창역과 서강대역 사이 새 아파트, 전세 얼마면 들어갈까요?}}")
+    a.text("답은 **\"84㎡ 10억 안팎\"**이에요.", "다만 입주 직후엔 같은 84㎡가", "7억대에 계약된 적도 있어요.")
+    a.text("신수동 **힐스테이트마포더퍼스트**,", "입주한 지 3개월 된 단지예요.")
+    a.text("분양 광고 말고,", "**현장과 지난 1년 실거래가**를 근거로", "팩트로 한번 따져보겠습니다.")
+    a.blank(); a.greet(); a.blank()
+    a.quote("**한 줄 요약** 신수동 488세대 · 2026년 8월 입주 · 84㎡ 전세 중위 10억 · 매매 19~23억대 · 광흥창역·서강대역 사이", "기본")
+    a.image(I + "01-hillstate-tower.jpg", "힐스테이트마포더퍼스트 — 독막로 쪽에서 본 모습 (직접 촬영 2026.11)")
+
+    a.head(1, "어떤 단지예요?")
+    a.table(["항목", "내용"],
+            [["위치", "마포구 **신수동** (독막로 · 광성고 옆)"], ["규모", "**488세대** (향후 2차 포함 약 700세대 규모라는 얘기도 있어요)"],
+             ["입주", "**2026년 8월**부터"], ["시공", "현대건설 (힐스테이트)"],
+             ["역", "6호선 **광흥창역** · 경의중앙선 **서강대역** (걸어서 이동 가능)"]],
+            note="세대수는 단지 정보 사이트(1차 기준) · 2차 규모는 확인되지 않은 이야기라 참고만")
+    a.image(I + "02-gate-102.jpg", "단지 정문 — 102동과 상가 (직접 촬영)")
+    a.image(I + "03-hillstate-sign.jpg", "HILLSTATE 사인과 단지 진입로 (직접 촬영)")
+
+    a.head(2, "단지 안은 이래요")
+    a.image(I + "04-clubhills-entrance.jpg", "커뮤니티 CLUB HILLS 입구 (직접 촬영)")
+    a.image(I + "05-clubhills-reception.jpg", "CLUB HILLS 안내데스크 (직접 촬영)")
+    a.image(I + "06-underground-path.jpg", "동과 커뮤니티를 잇는 지하 연결 통로 (직접 촬영)")
+    a.image(I + "07-cloud-playground.jpg", "CLOUD 놀이터 — 뒤로 광성고가 바로 보여요 (직접 촬영)")
+    a.image(I + "08-daycare.jpg", "단지 안 어린이집 (직접 촬영)")
+    a.image(I + "09-golden-lounge.jpg", "경로당 GOLDEN LOUNGE (직접 촬영)")
+    a.fill("CLUB HILLS 시설 구성(피트니스·골프·독서실 등)·이용료, 관리비 수준 — 아시는 것만 2~3줄")
+
+    a.head(3, "교통 — 역이 두 개예요")
+    a.image(I + "11-gwangheungchang-exit4.jpg", "6호선 광흥창역 4번 출구 (직접 촬영)")
+    a.image(I + "12-sogang-exit2.jpg", "경의중앙선 서강대역 2번 출구 (직접 촬영)")
+    a.image(I + "14-road-sign.jpg", "단지 앞 도로표지판 — 합정·서강대교·강변북로·신촌로터리 (직접 촬영)")
+    a.text("✔ 6호선(광흥창)과 경의중앙선(서강대)을 같이 쓰고, **서강대교만 건너면 여의도**예요",
+           "✔ 강변북로 진입도 가까워서 차로 다니기도 편해요")
+    a.image(I + "10-gwangseong-hs.jpg", "단지 바로 옆 광성고등학교 (직접 촬영)")
+
+    a.head(4, "전세 — 입주장에 어떻게 계약됐나")
+    a.table(["계약 월", "59㎡ 전세", "84㎡ 전세"],
+            [["6~7월 (입주 전)", "8억 5,000 ~ 9억", "10억 ~ 11억 5,000"],
+             ["8~9월 (입주 시작)", "8억 3,000 ~ 8억 5,000", "**7억 7,000** ~ 12억 (중위 약 10억)"],
+             ["10월", "-", "9억 5,000 ~ 10억 5,000"]],
+            note="국토부 전월세 실거래 · 월세 0원 신규 계약 · 2026.6~10 계약분 · 최근분은 신고가 더 늘 수 있어요")
+    a.text("✔ 입주 전후 넉 달에 전세 계약이 몰렸고, 84㎡는 같은 시기에 **7억 7천~12억**까지 벌어졌어요",
+           "✔ 잔금이 급한 집은 낮게, 여유 있는 집은 제값을 받은 흐름이에요. 10월엔 **10억 안팎**으로 모였어요")
+
+    a.head(5, "매매, 그리고 옆 단지와 비교")
+    a.table(["단지", "84㎡ 매매", "84㎡ 전세 중위"],
+            [["**힐스테이트마포더퍼스트** (2026)", "19억 ~ 22억 9,500만 (중개거래 3건, 26.9~10)", "약 10억"],
+             ["마포아이파크포레 (옛 신촌숲아이파크, 2019)", "중위 **24억 5,250만** (18건)", "10억 7,000만"]],
+            note="국토부 실거래 2025.11~2026.10 신고분 · 직거래·해제 거래 제외 · 더퍼스트는 입주 초기라 거래가 적고 층·타입별 차이가 커요")
+    a.text("✔ 바로 옆 **마포아이파크포레**(옛 신촌숲아이파크)보다 매매는 아직 낮게 거래됐고, 전세는 비슷한 수준이에요",
+           "✔ 입주 1년이 안 돼서 **시세가 자리 잡는 중**이에요. 숫자 한두 건으로 판단하기보다 동·층별 호가를 같이 보세요")
+
+    a.head(6, "착한언니 체크")
+    a.numbered("전세로 들어간다면", "입주장이 끝나 가는 지금은 **10억 안팎**이 기준 · 2년 뒤 만기가 한꺼번에 돌아오는 단지예요")
+    a.numbered("매수를 생각한다면", "서울 전역 토지거래허가 — **실거주 요건** 확인 · 거래가 적어 동·층별 비교가 꼭 필요해요")
+    a.numbered("주변 개발도 같이", "근처 **신수동 250번지 일대**에 신속통합 재개발 추진준비위원회가 생겼어요 (아직 초기 단계)")
+
+    a.head(7, "정리하면")
+    a.text("✔ **힐스테이트마포더퍼스트**: 신수동 488세대, 2026년 8월 입주, 광흥창역·서강대역",
+           "✔ 84㎡ 전세 **10억 안팎**, 매매 **19~23억대** (거래 적음)",
+           "✔ 옆 마포아이파크포레보다 매매는 아직 낮고 전세는 비슷",
+           "==신수동·광흥창 쪽 매수·전세 상담 편하게 남겨 주세요.==")
+    a.note("광흥창역에서 서강대역까지 단지 주변을 직접 걸어봤어요. 새 단지답게 커뮤니티와 지하 연결 통로가 깔끔했고, 광성고가 바로 옆이라 학부모 문의가 많을 것 같은 자리예요.")
+    a.outro("새 글 알림을 받고 싶으시다면 블로그 이웃 추가 해 두세요. 공덕 라첼스 입주장 글도 같이 보세요.",
+            "출처: 국토부 실거래(2026.10 신고분까지) · 단지 정보 사이트 · 사진은 직접 촬영(얼굴·번호판 가림) · 이 글은 투자 권유가 아니에요")
+    a.signature("grandxi")
+    side = ["**제목(BEST)**: 힐스테이트마포더퍼스트 입주 3개월｜전세 10억 안팎, 단지·커뮤니티 직접 가봤어요",
+            "**제목(대안)**: 힐스테이트마포더퍼스트 전세·매매 시세 2026｜광흥창역 신축, 마포아이파크포레와 비교",
+            "**태그**: 힐스테이트마포더퍼스트, 힐스테이트마포, 신수동아파트, 광흥창역아파트, 서강대역아파트, 마포아이파크포레, 신촌숲아이파크, 마포신축, 입주장전세, 착한언니복덕방",
+            "**⚠️ 확인**: 매매 실거래가 사이트 데이터라 빠진 거래가 있을 수 있어요 → 부동산 앱 실거래 캡처 주시면 정정 · CLUB HILLS 시설·관리비 채우기",
+            "**사진 15장 (11/25 촬영)**: 번호판·행인 가림 · 서강대역 주변 단지(삼익·금호·래미안·IPARK) 사진은 다른 글용으로 보관"]
+    return a, side
+
+
 
 SERIES = {
-    **{k: "【마포·서대문 아파트】" for k in ("2026-11-the-classy", "2026-11-maraepu", "2026-11-mapo-xi-hillstate-lachels", "2026-11-daeheung-apt")},
+    **{k: "【마포·서대문 아파트】" for k in ("2026-11-hillstate-mapo-the-first", "2026-11-the-classy", "2026-11-maraepu", "2026-11-mapo-xi-hillstate-lachels", "2026-11-daeheung-apt")},
     "2026-11-raemian-lagrande": "【착한언니 사는 동네】",
     "2026-11-imun-ipark-xi": "【동대문 아파트】",
     **{k: "【신촌·이대 오피스텔】" for k in ("2026-11-shinchon-zaiella", "2026-11-sinchon-room-guide", "2026-11-officetel-standard-price", "2026-11-sinchon2-2-officetel")},
@@ -2447,7 +2524,7 @@ if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     drafts = []
     for fn in (the_classy, lagrande, maraepu, zaiella, sillim, min_guarantee, jaechohwan,
-               jongbuse, officetel_price, sinchon_room, lachels, bukahyeon2, imun_newtown, deal_story, public_redev_fee, registry_fee, swiss_grand, ahyeon_nogosan, nogosan, sinchon22_officetel, daeheung, gyeonghuigung_epit, define_yeonhui, imun_ipark_xi):
+               jongbuse, officetel_price, sinchon_room, lachels, bukahyeon2, imun_newtown, deal_story, public_redev_fee, registry_fee, swiss_grand, ahyeon_nogosan, nogosan, sinchon22_officetel, daeheung, gyeonghuigung_epit, define_yeonhui, imun_ipark_xi, hillstate_mapo):
         post, side = fn()
         ser = SERIES.get(post.slug, "")
         side = list(side)
