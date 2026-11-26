@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+@font-face{font-family:G;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff) format('woff');font-weight:700}
+@font-face{font-family:G;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff) format('woff');font-weight:500}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#bbb}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;background:#FFFBF2;color:#16202E;padding:96px 90px 0;margin-bottom:20px;font-family:Pretendard,sans-serif;letter-spacing:-.03em}
+.dark{background:#16202E;color:#fff}
+.ser{display:inline-flex;align-items:center;gap:12px;font-family:G;font-weight:500;font-size:28px;color:#D9502A}
+.ser i{font-style:normal;background:#D9502A;color:#fff;border-radius:10px;padding:6px 14px;font-size:26px}
+.dark .ser{color:#FFD34D}.dark .ser i{background:#FFD34D;color:#16202E}
+.foot{position:absolute;left:90px;right:90px;bottom:54px;display:flex;justify-content:space-between;font-size:24px;font-weight:600;color:#A39579}
+.dark .foot{color:rgba(255,255,255,.6)}
+.save{position:absolute;right:90px;top:96px;font-size:24px;font-weight:700;color:#A39579}
+/* cover */
+.ct{font-family:G;font-weight:700;font-size:92px;line-height:1.2;margin-top:40px}.ct em{font-style:normal;color:#FFD34D}
+.cs{font-size:36px;font-weight:600;line-height:1.5;margin-top:28px;color:rgba(255,255,255,.85)}
+.cs b{color:#fff}
+.stack{position:absolute;left:90px;right:90px;bottom:150px;height:470px}
+.doc{position:absolute;width:420px;height:300px;background:#FFFBF2;border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.35);padding:34px 36px;color:#16202E}
+.doc b{font-family:G;font-weight:700;font-size:34px;display:block}
+.doc .ln{height:14px;background:#EDE3CC;border-radius:7px;margin-top:22px}
+.doc .ln.y{background:#FFD34D}
+.doc .no{position:absolute;right:28px;top:24px;font-family:G;font-weight:700;font-size:56px;color:#D9502A}
+.big5{position:absolute;right:0;bottom:-10px;font-family:G;font-weight:700;font-size:400px;line-height:.8;color:#FFD34D;opacity:.95}
+/* problem */
+.h{font-family:G;font-weight:700;font-size:72px;line-height:1.25;margin-top:30px}.h em{font-style:normal;color:#D9502A}
+.p{font-size:34px;line-height:1.6;margin-top:30px;color:#3B4656;font-weight:500}.p b{color:#16202E}
+.ice{margin-top:56px;position:relative;height:620px}
+.ice .w{position:absolute;left:0;right:0;top:150px;height:6px;background:#7FA7D8;border-radius:3px}
+.ice .up{position:absolute;left:250px;width:400px;top:0;height:150px;background:#fff;border:4px solid #16202E;border-bottom:0;border-radius:24px 24px 0 0;display:flex;align-items:center;justify-content:center;font-family:G;font-weight:700;font-size:38px}
+.ice .dn{position:absolute;left:110px;right:110px;top:156px;height:400px;background:#E8F0FA;border:4px dashed #7FA7D8;border-top:0;border-radius:0 0 40px 40px;padding:44px 50px}
+.ice .dn div{font-size:38px;font-weight:800;padding:14px 0;color:#16202E}.ice .dn div span{color:#D9502A;margin-right:12px}
+.ice .lb{position:absolute;font-size:24px;font-weight:700;color:#7FA7D8;right:0;top:110px}
+/* item */
+.num{font-family:G;font-weight:700;font-size:150px;line-height:.9;color:#D9502A;margin-top:34px}
+.it{font-family:G;font-weight:700;font-size:70px;line-height:1.2;margin-top:18px}
+.why{font-size:34px;font-weight:600;line-height:1.55;margin-top:24px;color:#3B4656}.why b{color:#D9502A}
+.paper{margin-top:44px;background:#fff;border-radius:26px;padding:38px 44px;box-shadow:0 10px 30px rgba(22,32,46,.08);position:relative}
+.paper .t{font-size:24px;font-weight:700;color:#A39579;letter-spacing:0}
+.row{display:flex;gap:24px;align-items:flex-start;padding:22px 0;border-bottom:2px solid #F1EADB}.row:last-child{border-bottom:0}
+.row .k{width:56px;height:56px;flex:none;border-radius:16px;background:#16202E;color:#FFD34D;font-family:G;font-weight:700;font-size:30px;display:flex;align-items:center;justify-content:center}
+.row .v{font-size:33px;font-weight:800;line-height:1.35}.row .v small{display:block;font-size:27px;font-weight:500;color:#5B6574;margin-top:6px;line-height:1.45}
+mark{background:linear-gradient(transparent 55%,#FFD34D 55%);color:inherit;padding:0 4px}
+.where{position:absolute;left:90px;right:90px;bottom:120px;display:flex;gap:16px}
+.where div{flex:1;background:#16202E;color:#fff;border-radius:20px;padding:22px 26px;font-size:26px;font-weight:600;line-height:1.4}
+.where div b{display:block;color:#FFD34D;font-size:22px;font-weight:700;margin-bottom:4px}
+/* summary */
+.tb{width:100%;border-collapse:collapse;margin-top:44px;background:#fff;border-radius:24px;overflow:hidden}
+.tb th{background:#16202E;color:#FFD34D;font-size:30px;font-weight:700;padding:20px 18px;text-align:left}
+.tb td{font-size:32px;padding:30px 20px;border-bottom:2px solid #F1EADB;vertical-align:top;line-height:1.4;font-weight:600;color:#3B4656}
+.tb td:first-child{font-weight:900;color:#16202E;white-space:nowrap}
+.tb td.c{width:60px;text-align:center}.bx{display:inline-block;width:36px;height:36px;border:4px solid #16202E;border-radius:8px}
+/* cta */
+.big{font-family:G;font-weight:700;font-size:84px;line-height:1.25;margin-top:60px}.big em{font-style:normal;color:#FFD34D}
+.btn{margin-top:56px;background:#FFFBF2;color:#16202E;border-radius:28px;padding:36px 44px}
+.btn div{font-size:38px;font-weight:800;padding:14px 0;display:flex;gap:18px;align-items:center}
+.btn div span{font-size:44px}
+.fol{margin-top:44px;font-size:32px;line-height:1.55;color:rgba(255,255,255,.85);font-weight:500}.fol b{color:#FFD34D}
+.ph{position:relative;margin-top:34px;border-radius:20px;overflow:hidden;box-shadow:0 12px 30px rgba(22,32,46,.15);background:#fff}
+.ph img{display:block;width:900px}
+.ph .hl{position:absolute;border:5px solid #D9502A;border-radius:12px}
+.ph .tg{position:absolute;background:#D9502A;color:#fff;font-size:24px;font-weight:800;padding:6px 14px;border-radius:10px;white-space:nowrap}
+
+.sch{margin-top:44px;background:#fff;border-radius:26px;padding:16px 40px;box-shadow:0 10px 30px rgba(22,32,46,.08)}
+.sch .r{display:flex;justify-content:space-between;align-items:center;padding:26px 0;border-bottom:2px solid #F1EADB;font-size:34px;font-weight:700}
+.sch .r:last-child{border-bottom:0}.sch .r b{font-family:G;font-weight:700;font-size:38px}.sch .r.hot{color:#D9502A}.sch .r.hot b{color:#D9502A}
+.sch .r small{display:block;font-size:24px;color:#8A8F98;font-weight:600;margin-top:4px}
+.bar{margin-top:30px}.bar .it{margin-bottom:34px}.bar .nm{font-size:30px;font-weight:800;display:flex;justify-content:space-between}.bar .nm span{font-size:24px;color:#8A8F98;font-weight:600}
+.bar .tr{height:64px;background:#F1EADB;border-radius:16px;margin-top:12px;position:relative;overflow:hidden}
+.bar .f{position:absolute;left:0;top:0;bottom:0;border-radius:16px;display:flex;align-items:center;justify-content:flex-end;padding-right:22px;font-family:G;font-weight:700;font-size:32px;color:#fff}
+.note{font-size:22px;color:#A39579;margin-top:16px;line-height:1.5}
+.big170{font-family:G;font-weight:700;font-size:250px;line-height:1;color:#FFD34D;letter-spacing:-.04em}
+.calc{position:absolute;left:90px;right:90px;bottom:140px;background:rgba(255,255,255,.07);border-radius:28px;padding:34px 44px;font-size:32px;line-height:1.7;font-weight:600;color:rgba(255,255,255,.85)}
+.calc b{color:#FFD34D;font-family:G;font-weight:700}
+.chk{margin-top:40px;background:#fff;border-radius:26px;padding:20px 40px;box-shadow:0 10px 30px rgba(22,32,46,.08)}
+.chk .c{display:flex;gap:22px;align-items:flex-start;padding:26px 0;border-bottom:2px solid #F1EADB}.chk .c:last-child{border-bottom:0}
+.chk .c i{font-style:normal;flex:none;width:52px;height:52px;border-radius:14px;background:#16202E;color:#FFD34D;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900}
+.chk .c div{font-size:36px;font-weight:800;line-height:1.35}.chk .c small{display:block;font-size:26px;font-weight:500;color:#5B6574;margin-top:6px;line-height:1.45}
+.ox{display:flex;align-items:center;gap:26px;background:#fff;border-radius:24px;padding:28px 34px;margin-top:22px;box-shadow:0 10px 30px rgba(22,32,46,.08)}
+.ox .m{flex:none;width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:G;font-weight:700;font-size:58px;color:#fff}
+.ox .m.o{background:#2F7DE1}.ox .m.x{background:#D9502A}
+.ox .q{font-size:33px;font-weight:800;line-height:1.35}.ox .q small{display:block;font-size:26px;font-weight:500;color:#5B6574;margin-top:6px}
+</style></head><body>
+
+<div class="s dark" id="s1">
+ <div class="ser"><i>💸 연말정산</i> 월세 사는 분 필독</div>
+ <div class="ct" style="font-size:80px;margin-top:40px">월세 살면<br>연말정산에서<br><em>최대 170만 원</em><br>돌려받아요</div>
+ <div class="cs" style="font-size:34px"><b>집주인 동의 없이</b> 신청할 수 있어요</div>
+ <div class="calc">월세 83만 원 × 12달 = 약 1,000만 원<br>× 공제율 17% = <b>최대 170만 원</b></div>
+ <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>📌 저장 · 1/6</span></div>
+</div>
+
+<div class="s" id="s2">
+ <div class="ser"><i>대상</i> 이 4가지면 받아요</div>
+ <div class="h" style="font-size:64px">나도 받을 수<br><em>있을까?</em></div>
+ <div class="chk">
+  <div class="c"><i>1</i><div>무주택 세대주<small>세대원 모두 집이 없어야 해요</small></div></div>
+  <div class="c"><i>2</i><div>총급여 8,000만 원 이하<small>종합소득금액이면 7,000만 원 이하</small></div></div>
+  <div class="c"><i>3</i><div>전용 85㎡ 이하 또는 기준시가 4억 이하<small>오피스텔도 돼요</small></div></div>
+  <div class="c"><i>4</i><div>계약서 주소로 전입신고<small>주민등록 주소와 계약서 주소가 같아야 해요</small></div></div>
+ </div>
+ <div class="foot"><span>착한언니복덕방</span><span>2/6</span></div>
+</div>
+
+<div class="s" id="s3">
+ <div class="ser"><i>금액</i> 내 월세로 계산해 보면</div>
+ <div class="h" style="font-size:62px">월세의 <em>15~17%</em>를<br>돌려받아요</div>
+ <div class="sch">
+  <div class="r hot"><span>총급여 5,500만 원 이하</span><b>17%</b></div>
+  <div class="r"><span>총급여 8,000만 원 이하</span><b>15%</b></div>
+  <div class="r"><span>월세 인정 한도<small>1년 기준</small></span><b>1,000만 원</b></div>
+ </div>
+ <div class="paper" style="margin-top:30px;padding:24px 40px"><div class="t">예시 · 총급여 5,500만 원 이하</div>
+  <div style="font-size:32px;font-weight:800;line-height:1.7;margin-top:8px">월세 60만 원 → 1년 <mark>122만 원</mark><br>월세 80만 원 → 1년 <mark>163만 원</mark></div></div>
+ <div class="foot"><span>착한언니복덕방</span><span>3/6</span></div>
+</div>
+
+<div class="s" id="s4">
+ <div class="ser"><i>OX</i> 다들 헷갈리는 3가지</div>
+ <div class="h" style="font-size:62px">이것도<br><em>되나요?</em></div>
+ <div class="ox"><div class="m x">X</div><div class="q">집주인 동의가 필요하다?<small>필요 없어요. 계약서·이체 내역만 있으면 내가 신청해요</small></div></div>
+ <div class="ox"><div class="m o">O</div><div class="q">작년에 놓친 것도 받을 수 있다?<small>5년 안이면 '경정청구'로 돌려받아요</small></div></div>
+ <div class="ox"><div class="m x">X</div><div class="q">전입신고 안 해도 받는다?<small>계약서 주소로 주민등록이 돼 있어야 해요</small></div></div>
+ <div class="foot"><span>착한언니복덕방</span><span>4/6</span></div>
+</div>
+
+<div class="s" id="s5">
+ <div class="ser"><i>준비물</i> 회사에 내는 것</div>
+ <div class="h" style="font-size:64px">딱 <em>3가지</em>만<br>챙기세요</div>
+ <div class="paper" style="margin-top:40px">
+  <div class="row"><div class="k">1</div><div class="v">임대차계약서 사본<small>계약자가 나(또는 배우자)여야 해요</small></div></div>
+  <div class="row"><div class="k">2</div><div class="v">월세 이체 내역<small>계좌이체 확인증 · 현금으로 냈다면 증빙이 어려워요</small></div></div>
+  <div class="row"><div class="k">3</div><div class="v">주민등록등본<small>계약서 주소로 전입된 것 확인용</small></div></div>
+ </div>
+ <div class="note">회사 연말정산 때 제출 · 놓치면 5월 종합소득세 신고 때 신청</div>
+ <div class="foot"><span>착한언니복덕방</span><span>5/6</span></div>
+</div>
+
+<div class="s dark" id="s6">
+ <div class="ser"><i>정리</i></div>
+ <div class="big" style="font-size:72px">월세 영수증,<br><em>버리지 마세요</em></div>
+ <div class="btn">
+  <div><span>💸</span>최대 170만 원 · 집주인 동의 X</div>
+  <div><span>📄</span>계약서 + 이체 내역 + 등본</div>
+  <div><span>⏪</span>작년 것도 5년 안이면 OK</div>
+ </div>
+ <div class="fol">내년부터는 한도를 1,200만 원으로 늘리는 안이 추진 중이에요<br><b>(정부안 · 국회 통과 전)</b></div>
+ <div class="foot"><span>착한언니복덕방 @goodsister4080</span><span>6/6</span></div>
+</div>
+</body></html>
