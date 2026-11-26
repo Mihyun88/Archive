@@ -1,0 +1,25 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>@font-face{font-family:G;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff) format('woff');font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}body{background:transparent;font-family:Pretendard;letter-spacing:-.03em}
+.f{width:1080px;height:1920px;position:relative;overflow:hidden}
+.op{background:#0E1622 url(bg.jpg) center/cover;color:#fff}.op:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,16,26,.55),rgba(10,16,26,.85))}
+.op .in{position:absolute;left:70px;right:70px;top:520px;text-align:center}
+.op .nm{font-family:G;font-size:64px}.op .yr{font-size:36px;color:rgba(255,255,255,.75);margin-top:60px;font-weight:700}
+.op .p{font-family:G;font-size:150px;line-height:1.1}.op .p.old{color:rgba(255,255,255,.85)}.op .p.new{color:#FFD34D}
+.op .ar{font-size:90px;margin:20px 0}.op .src{position:absolute;bottom:90px;left:0;right:0;text-align:center;font-size:24px;color:rgba(255,255,255,.6)}
+.ls .panel{position:absolute;left:50px;right:50px;bottom:260px;background:rgba(14,22,34,.86);border-radius:36px;padding:40px 46px 34px;color:#fff}
+.ls .band{display:inline-block;font-family:G;font-size:56px;color:#16202E;background:#FFD34D;border-radius:18px;padding:8px 26px;margin-bottom:22px}
+.ls .r{display:flex;justify-content:space-between;align-items:center;font-size:38px;font-weight:800;padding:16px 18px;border-radius:16px}
+.ls .r span{font-size:26px;color:rgba(255,255,255,.6);font-weight:600;margin-left:12px}.ls .r b{font-family:G;font-weight:700;font-size:40px}
+.ls .r.hi{background:#FFD34D;color:#16202E;transform:scale(1.04)}.ls .r.hi span{color:#16202E;opacity:.7}
+.ls .src{margin-top:18px;font-size:22px;color:rgba(255,255,255,.55)}
+</style></head><body>
+<div class="f op" id="op"><div class="in"><div class="nm">강북 SK북한산시티 · 34평</div><div class="yr">2016년</div><div class="p old">3억 8,500</div><div class="ar">↓</div><div class="yr" style="margin-top:0">2026년</div><div class="p new">8억 9,000</div></div><div class="src">국토교통부 실거래 34평 중간값 (2016.6~9 / 2026.8~11)</div></div>
+<div id="lists"></div>
+<script>
+const B=[['7억대',[['용마한신','중랑','7억 2,500'],['정릉풍림아이원','성북','7억 4,500'],['관악산휴먼시아2단지','관악','7억 5,500'],['월계주공2','노원','7억 6,400'],['홍은동 두산','서대문','7억 8,000']],1],
+['8억대',[['SK북한산시티','강북','8억 5,000'],['상계주공4','노원','8억 5,000'],['창동주공3단지','도봉','8억 6,500'],['홍은동벽산','서대문','8억 9,300']],0],
+['9억대',[['공릉 풍림','노원','9억 3,000'],['구로 현대홈타운','구로','9억 3,100'],['남서울힐스테이트','금천','9억 7,900'],['돈암 한진','성북','9억 8,500']],3]];
+let h='';B.forEach((b,i)=>{[false,true].forEach(hl=>{h+=`<div class="f ls" id="b${i}${hl?'h':''}"><div class="panel"><div class="band">${b[0]}</div>`+b[1].map((r,j)=>`<div class="r ${hl&&j==b[2]?'hi':''}"><div>${r[0]}<span>${r[1]}</span></div></div>`).join('')+`<div class="src">국토교통부 실거래 · 전용 84㎡(34평) · 2026년 6~11월 거래 중간값 기준</div></div></div>`})});
+document.getElementById('lists').innerHTML=h;
+</script></body></html>
