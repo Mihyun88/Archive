@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>@font-face{font-family:G;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff) format('woff');font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}body{background:transparent;font-family:Pretendard;letter-spacing:-.03em}
+.f{width:1080px;height:1920px;position:relative;overflow:hidden}
+.top{position:absolute;top:150px;left:50px;right:50px;background:rgba(14,22,34,.9);border-radius:32px;padding:34px 20px;text-align:center;color:#fff}
+.top .t{font-family:G;font-size:70px}.top .s{font-family:G;font-size:46px;color:#FFD34D;margin-top:12px}
+.low{position:absolute;left:50px;right:50px;bottom:250px;background:rgba(14,22,34,.9);border-radius:36px;padding:40px 40px 30px;color:#fff;text-align:center}
+.nm{font-family:G;font-size:66px}.row{display:flex;justify-content:space-around;margin-top:30px}
+.c .y{font-size:34px;font-weight:700;color:rgba(255,255,255,.7)}.c .p{font-family:G;font-size:72px;margin-top:6px}.c.n .p{color:#fff}
+.ar{font-family:G;font-size:70px;align-self:center;color:rgba(255,255,255,.6)}
+.d{font-family:G;font-size:110px;color:#4DA3FF;margin-top:24px}.src{font-size:22px;color:rgba(255,255,255,.55);margin-top:16px}
+</style></head><body>
+<div class="f" id="top"><div class="top"><div class="t">서울아파트 10년간 가격변화</div><div class="s">(2016년 vs 2026년)</div></div></div>
+<div id="L"></div>
+<script>
+const D=[['아크로리버파크','18억 6천','54억','+35억 4,500'],['래미안퍼스티지','16억','49억 7,500','+33억 7,000'],['반포자이','14억 7천','45억 2,500','+30억 5,500'],['도곡렉슬','12억 5천','36억 5천','+24억'],['리센츠','11억','33억 6천','+22억 6천'],['파크리오','9억 2,500','29억 3천','+20억 500'],['래미안 옥수 리버젠','8억 5천','26억 9천','+18억 4천'],['신공덕 삼성래미안1차','6억 4천','19억 9,500','+13억 5,500'],['금호동 벽산','4억 9,900','18억','+13억 100']];
+document.getElementById('L').innerHTML=D.map((x,i)=>`<div class="f" id="c${i+1}"><div class="low"><div class="nm">${x[0]}</div><div class="row"><div class="c"><div class="y">2016년</div><div class="p">${x[1]}</div></div><div class="ar">→</div><div class="c n"><div class="y">2026년</div><div class="p">${x[2]}</div></div></div><div class="d">${x[3]}</div><div class="src">국토교통부 실거래가 34평 중간값 (2016.6~9 / 2026.8~11)</div></div></div>`).join('');
+</script></body></html>
